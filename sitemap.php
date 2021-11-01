@@ -24,24 +24,24 @@ echo'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http
   <lastmod>2021-08-13T16:52:51+00:00</lastmod>
 </url>
 <?php
-$response = sql_query("SELECT id, timestamp FROM folders");
+$response = sql_query("SELECT url, timestamp FROM folders");
 
 while ($row = $response->fetch_assoc()) {
     $lastmod = date(DATE_ATOM, strtotime($row["timestamp"]));
 
     echo "<url>
-  <loc>".get_baseurl()."/blog/folder?id=$row[id]</loc>
+  <loc>".get_baseurl()."/blog/folder/$row[url]</loc>
   <lastmod>$lastmod</lastmod>
 </url>";
 }
 
-$response = sql_query("SELECT id, timestamp FROM posts WHERE hash IS NULL");
+$response = sql_query("SELECT url, timestamp FROM posts WHERE hash IS NULL");
 
 while ($row = $response->fetch_assoc()) {
     $lastmod = date(DATE_ATOM, strtotime($row["timestamp"]));
 
     echo "<url>
-  <loc>".get_baseurl()."/blog/post?id=$row[id]</loc>
+  <loc>".get_baseurl()."/blog/post/$row[url]</loc>
   <lastmod>$lastmod</lastmod>
 </url>";
 }
