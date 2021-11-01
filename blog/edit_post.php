@@ -35,6 +35,10 @@ if ($response->num_rows === 0) {
                     sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=? WHERE id=?",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                             $html, $_POST["points"], $featured, $hash, $row['id']]);
+                } else if ($row["hash"]) {  // If changed from hidden to public
+                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
+                        [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                            $html, $_POST["points"], $featured, $row['id']]);
                 } else {
                     sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=NULL WHERE id=?",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
