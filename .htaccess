@@ -1,0 +1,18 @@
+
+# HTID:10667666: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:10667666:
+
+php_value output_buffering 4096
+
+RewriteEngine On
+
+RewriteRule ^blog/post/(.+) blog/post.php?url=$1 [QSA,L]
+RewriteRule ^blog/folder/(.+) blog/folder.php?url=$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+RewriteRule sitemap.xml sitemap.php [L]
+
+Redirect 301 /sw /projects/school_websites

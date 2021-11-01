@@ -1,0 +1,140 @@
+<?php require_once("../include/header.php");
+
+$response = sql_query("SELECT * FROM folders WHERE url=?", [$_GET["url"]]);
+$row = $response->fetch_assoc();
+
+if ($response->num_rows === 0) {
+    returnMessage("error_folder", "/blog/");
+}
+
+$response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
+                                    FROM ( 
+                                        SELECT 
+                                            @r AS _id, 
+                                            (SELECT @r := parent FROM folders WHERE id = _id) AS parent, 
+                                            @l := @l + 1 AS lvl 
+                                        FROM 
+                                            (SELECT @r := ?, @l := 0) vars, 
+                                            folders h 
+                                        WHERE @r <> 0) T1 
+                                    JOIN folders T2 
+                                    ON T1._id = T2.id 
+                                    ORDER BY T1.lvl DESC", [$row["id"]]);
+
+?>
+
+    <title>Blog - <?= htmlspecialchars($row['name']) ?></title>
+    <meta name="og:type" content="article" />
+    <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
+    <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
+    <meta name="og:title" content="Blog - <?= htmlspecialchars($row['name']) ?>" />
+    <meta name="og:image" content="<?= get_baseurl() ?>/img/blog/<?= $row['img'] ?>" />
+    <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
+    <meta property="og:article:section" content="1" />
+    <meta property="og:article:author" content="Jorian Woltjer" />
+    <meta name="twitter:card" content="summary_large_image">
+
+<style>
+    .tags {
+        margin-bottom: 10px;
+    }
+</style>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
+        <?php
+        $i = 0;
+        while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
+            $i++;
+            if ($i === $response_breadcrumbs->num_rows) { // If last row
+                echo "<li class='breadcrumb-item active' aria-current='page'><h1><code>$row_bc[name]</code></h1></li>";
+            } else {
+                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
+            }
+        } ?>
+    </ol>
+</nav>
+
+<?php
+$response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);
+
+while ($row_folders = $response_folders->fetch_assoc()) { ?>
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-sm-3">
+                <a href="/blog/folder/<?= $row_folders['url'] ?>">
+                    <img src="/img/blog/<?= $row_folders['img'] ? $row_folders['img'] : '../placeholder.png' ?>" class="card-img-top h-100" style="object-fit: cover;">
+                </a>
+            </div>
+            <div class="col-sm-9">
+                <table class="table-container">
+                    <tr><td valign="top">
+                        <div class="card-body card-center">
+                            <h3 class="card-title">
+                                <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['name'] ?></code></a>
+                            </h3>
+                            <p class="card-text"><?= $row_folders['description'] ?></p>
+                        </div>
+                    </td></tr>
+                    <tr><td valign="bottom">
+                        <div class="card-footer text-muted">
+                            <?= time_to_ago($row_folders['timestamp']) ?>
+                        </div>
+                    </td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+<?php }
+
+$response_posts = sql_query("SELECT * FROM posts WHERE hash IS NULL AND parent = ?", [$row["id"]]);
+
+while ($row_posts = $response_posts->fetch_assoc()) { ?>
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-sm-3">
+                <a href="/blog/post/<?= $row_posts['url'] ?>">
+                    <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
+                </a>
+            </div>
+            <div class="col-sm-9">
+                <table class="table-container">
+                    <tr><td valign="top">
+                        <div class="card-body">
+                            <p class="card-text tags">
+                                <?php
+                                $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row_posts['id']]);
+
+                                while ($tag_row = $tags->fetch_assoc()) {
+                                    echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";
+                                }
+                                ?>
+                                <?= $row_posts['points'] ? '+'.$row_posts['points'].' points' : '' ?>
+                            </p>
+                            <h3 class="card-title">
+                                <a href="/blog/post/<?= $row_posts['url'] ?>"><code><?= $row_posts['title'] ?></code></a>
+                            </h3>
+                            <p class="card-text"><?= $row_posts['description'] ?></p>
+                        </div>
+                    </td></tr>
+                    <tr><td valign="bottom">
+                        <div class="card-footer text-muted">
+                            <?= time_to_ago($row_posts['timestamp']) ?>
+                        </div>
+                    </td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+<?php }
+
+if ($response_folders->num_rows === 0 && $response_posts->num_rows === 0) {
+    echo '<p class="lead">No posts yet</p>';
+}
+
+?>
+
+<?php require_once("../include/footer.php"); ?>
