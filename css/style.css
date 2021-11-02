@@ -4,6 +4,7 @@
   --yellow: #fed330;
   --green: #26de81;
   --blue: #3498db;
+  --dark-blue: #5865F2;
   --purple: #a55eea;
   --gray: #888888;
 }
@@ -27,6 +28,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+a {
+  color: var(--blue);
+  transition: color 0.2s;
+}
+
 p {
   font-family: var(--bs-font-sans-serif);
 }
@@ -36,14 +42,14 @@ p.lead {
 }
 
 p a {
-  color: white;
+  color: inherit;
   text-decoration: underline;
   transition: 0.2s ease;
 }
 
 footer.bg-dark {
   background-color: #303030 !important;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
@@ -132,6 +138,9 @@ div.button {
 .button.purple .button-text:hover { background: var(--purple); }
 .button.gray { background: var(--gray);  box-shadow: 0 0 0 3px var(--gray); }
 .button.gray .button-text:hover { background: var(--gray); }
+
+.button.dark-blue { background: var(--dark-blue);  box-shadow: 0 0 0 3px var(--dark-blue); }
+.button.dark-blue .button-text:hover { background: var(--dark-blue); }
 
 p.button {
   margin: 10px 0;
@@ -432,6 +441,27 @@ color: var(--blue);
   cursor: pointer;
   border: 2px solid #303030;
   border-radius: 10px;
+}
+
+.pagination {
+  margin-top: 2rem;
+}
+.pagination .left {
+  flex: 1;
+  align-self: center;
+  text-align: left;
+}
+.pagination .center {
+  flex: 2;
+  text-align: center;
+}
+.pagination .right {
+  flex: 1;
+  align-self: center;
+  text-align: right;
+}
+.pagination .center p {
+  margin: 0;
 }
 
 .modal-header {

@@ -89,6 +89,37 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         <?= $row['html'] ?>
     </div>
 
+<?php
+$response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hash IS NULL;",
+    [$row["id"], $row["parent"]]);
+$prev = $response_prev->fetch_assoc();
+
+$response_next = sql_query("SELECT url FROM posts WHERE id = (SELECT min(id) FROM posts WHERE id > ?) AND parent=? AND hash IS NULL;",
+    [$row["id"], $row["parent"]]);
+$next = $response_next->fetch_assoc();
+?>
+    <div class="pagination">
+        <div class="left">
+            <?php
+            if ($prev) {
+                echo '<a href="/blog/post/'.$prev["url"].'"><i class="fas fa-caret-left"></i> Previous</a>';
+            }
+            ?>
+        </div>
+        <div class="center">
+            <div class="text-white-50">
+                <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank">Contacts</a></p>
+            </div>
+        </div>
+        <div class="right">
+            <?php
+            if ($next) {
+                echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fas fa-caret-right"></i></a>';
+            }
+            ?>
+        </div>
+    </div>
+
     <!-- Image Preview Modal -->
     <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">

@@ -14,15 +14,13 @@ $page = ($match[1] === "" ? "home" : $match[1]);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <meta id="nonce" content="d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBmdW5jdGlvbigpIHsgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihhdG9iKCJhVzFuVzJGc2REMGlkM2QzTGpBd01IZGxZbWh2YzNRdVkyOXRJbDA9IikpLnBhcmVudEVsZW1lbnQucGFyZW50RWxlbWVudC5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOyBzY3JpcHQucmVtb3ZlKCk7IG5vbmNlLnJlbW92ZSgpIH0p">
+    <meta id="nonce"
+          content="d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBmdW5jdGlvbigpIHsgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihhdG9iKCJhVzFuVzJGc2REMGlkM2QzTGpBd01IZGxZbWh2YzNRdVkyOXRJbDA9IikpLnBhcmVudEVsZW1lbnQucGFyZW50RWxlbWVudC5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOyBzY3JpcHQucmVtb3ZlKCk7IG5vbmNlLnJlbW92ZSgpIH0p">
     <script>
         // Clean url if message parameter
         var url = new URL(location.href);
@@ -38,17 +36,19 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         <a class="navbar-brand" href="/">
             <img src="/img/logo.png" style="width: 4rem">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <?php if ($admin) { ?>
-                <li class="nav-item">
-                    <a class="nav-link gray" id="logout" href="/logout" onclick="return confirm('Are you sure you want to log out?')">Logout</a>
-                    <script>document.getElementById("logout").href = "/logout?return="+encodeURIComponent((location.pathname+location.search).substr(1))</script>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link gray" id="logout" href="/logout"
+                           onclick="return confirm('Are you sure you want to log out?')">Logout</a>
+                        <script>document.getElementById("logout").href = "/logout?return=" + encodeURIComponent((location.pathname + location.search).substr(1))</script>
+                    </li>
                 <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link<?= $page == 'home' ? ' active' : '' ?>" href="/">Home</a>
