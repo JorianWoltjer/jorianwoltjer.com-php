@@ -1,6 +1,13 @@
 <?php require_once("../include/header.php");
 
-$response = sql_query("SELECT * FROM folders WHERE url=?", [$_GET["url"]]);
+if (isset($_GET["url"])) {
+    $response = sql_query("SELECT * FROM folders WHERE url=?", [$_GET["url"]]);
+} else if (isset($_GET["id"])) {
+    $response = sql_query("SELECT * FROM folders WHERE id=?", [$_GET["id"]]);
+} else {
+    returnMessage("error_folder", "/blog/");
+}
+
 $row = $response->fetch_assoc();
 
 if ($response->num_rows === 0) {
