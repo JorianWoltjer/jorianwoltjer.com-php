@@ -19,8 +19,6 @@ $page = ($match[1] === "" ? "home" : $match[1]);
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <meta id="nonce"
-          content="d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBmdW5jdGlvbigpIHsgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihhdG9iKCJhVzFuVzJGc2REMGlkM2QzTGpBd01IZGxZbWh2YzNRdVkyOXRJbDA9IikpLnBhcmVudEVsZW1lbnQucGFyZW50RWxlbWVudC5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiOyBzY3JpcHQucmVtb3ZlKCk7IG5vbmNlLnJlbW92ZSgpIH0p">
     <script>
         // Clean url if message parameter
         var url = new URL(location.href);
@@ -69,5 +67,4 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 
 <!-- Page Content -->
 <div id="page-content"<?= !isset($centerPage) ? "" : " class='center-page'" ?>>
-    <script id="script">eval(atob(nonce.content))</script>
     <div class="container">
