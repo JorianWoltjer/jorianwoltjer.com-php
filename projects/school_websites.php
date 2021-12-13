@@ -3,7 +3,7 @@ require_once("../include/header.php"); ?>
 
     <h1 class="my-4"><code>School Websites</code></h1>
     <br>
-    <div class="buttons">
+    <div class="buttons" id="buttons">
         <a href="https://digirooster.hanze.nl/"><div class="button red">
             <div class="button-icon"><i class="fas fa-calendar-alt"></i></div>
             <div class="button-text">Digirooster</div>
@@ -33,5 +33,17 @@ require_once("../include/header.php"); ?>
             <div class="button-text">RealTime</div>
         </div></a>
     </div>
+
+<script>
+    document.addEventListener('keydown', keyPress);
+
+    function keyPress(e) {
+        const n = parseInt(e.key);
+        if (1 <= n && n <= 7) {  // Range 1-7
+            // Set href to nth button
+            document.location.href = document.getElementById("buttons").children[n - 1].href;
+        }
+    }
+</script>
 
 <?php require_once("../include/footer.php"); ?>
