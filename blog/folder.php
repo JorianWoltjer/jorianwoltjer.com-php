@@ -30,7 +30,6 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
 
 ?>
 
-    <title>Blog - <?= htmlspecialchars($row['name']) ?></title>
     <meta name="og:type" content="article" />
     <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
     <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
@@ -62,6 +61,17 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         } ?>
     </ol>
 </nav>
+
+<title><?php  // Title: folder + name
+    if ($response_breadcrumbs->num_rows >= 2) {
+        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-2);
+        $folder = $response_breadcrumbs->fetch_assoc()['name'];
+    } else {
+        $folder = "Blog";  // If no parent
+    }
+
+    echo $folder." - ".$row['name'];
+    ?></title>
 
 <?php
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);

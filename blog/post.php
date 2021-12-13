@@ -25,7 +25,6 @@ sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]])
 ?>
 
     <link rel="stylesheet" href="/css/vs2015.css">
-    <title>Blog - <?= htmlspecialchars($row['title']) ?></title>
     <meta name="og:type" content="article" />
     <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
     <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
@@ -58,10 +57,17 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
             <?php
             while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
                 echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
-            } ?>
+            }
+            ?>
             <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $row['title'] ?></code></h1></li>
         </ol>
     </nav>
+
+    <title><?php  // Title: folder + name + 'writeup' if ctf
+        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
+        $folder = $response_breadcrumbs->fetch_assoc();
+        echo $folder['name']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+        ?></title>
 
     <p class="tags">
         <?php

@@ -12,10 +12,9 @@ if (!isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['fold
 ?>
 
     <link rel="stylesheet" href="/css/vs2015.css">
-    <title>Blog - <?= htmlspecialchars($_POST['title']) ?></title>
 
 <?php
-$response_breadcrumbs = sql_query("SELECT T2.id, T2.name 
+$response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
                                     FROM ( 
                                         SELECT 
                                             @r AS _id, 
@@ -35,11 +34,18 @@ $response_breadcrumbs = sql_query("SELECT T2.id, T2.name
             <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
             <?php
             while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
-                echo "<li class='breadcrumb-item'><a href='folder?id=$row_bc[id]'><code>$row_bc[name]</code></a></li>";
-            } ?>
+                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
+            }
+            ?>
             <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $_POST['title'] ?></code></h1></li>
         </ol>
     </nav>
+
+    <title><?php  // Title: folder + name + 'writeup' if ctf
+        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
+        $folder = $response_breadcrumbs->fetch_assoc();
+        echo $folder['name']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+        ?></title>
 
     <p class="tags">
         <?php
@@ -66,6 +72,16 @@ $response_breadcrumbs = sql_query("SELECT T2.id, T2.name
     <h1><?= $_POST['title'] ?></h1>
     <div class='blog-content'>
         <?= md_to_html($_POST['text']) ?>
+    </div>
+
+    <div class="pagination">
+        <div class="left"></div>
+        <div class="center">
+            <div class="text-white-50">
+                <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank">Contacts</a></p>
+            </div>
+        </div>
+        <div class="right"></div>
     </div>
 
     <!-- Image Preview Modal -->
