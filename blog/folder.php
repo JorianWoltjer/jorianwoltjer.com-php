@@ -69,27 +69,21 @@ $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["i
 while ($row_folders = $response_folders->fetch_assoc()) { ?>
     <div class="card">
         <div class="row no-gutters">
-            <div class="col-sm-3">
+            <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/folder/<?= $row_folders['url'] ?>">
                     <img src="/img/blog/<?= $row_folders['img'] ? $row_folders['img'] : '../placeholder.png' ?>" class="card-img-top h-100" style="object-fit: cover;">
                 </a>
             </div>
-            <div class="col-sm-9">
-                <table class="table-container">
-                    <tr><td valign="top">
-                        <div class="card-body card-center">
-                            <h3 class="card-title">
-                                <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['name'] ?></code></a>
-                            </h3>
-                            <p class="card-text"><?= $row_folders['description'] ?></p>
-                        </div>
-                    </td></tr>
-                    <tr><td valign="bottom">
-                        <div class="card-footer text-muted">
-                            <?= time_to_ago($row_folders['timestamp']) ?>
-                        </div>
-                    </td></tr>
-                </table>
+            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['name'] ?></code></a>
+                    </h3>
+                    <p class="card-text"><?= $row_folders['description'] ?></p>
+                </div>
+                <div class="card-footer text-muted">
+                    <?= time_to_ago($row_folders['timestamp']) ?>
+                </div>
             </div>
         </div>
     </div>
@@ -101,37 +95,31 @@ $response_posts = sql_query("SELECT * FROM posts WHERE hash IS NULL AND parent =
 while ($row_posts = $response_posts->fetch_assoc()) { ?>
     <div class="card">
         <div class="row no-gutters">
-            <div class="col-sm-3">
+            <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/post/<?= $row_posts['url'] ?>">
                     <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
                 </a>
             </div>
-            <div class="col-sm-9">
-                <table class="table-container">
-                    <tr><td valign="top">
-                        <div class="card-body">
-                            <p class="card-text tags">
-                                <?php
-                                $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row_posts['id']]);
+            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+                <div class="card-body">
+                    <p class="card-text tags">
+                        <?php
+                        $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row_posts['id']]);
 
-                                while ($tag_row = $tags->fetch_assoc()) {
-                                    echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";
-                                }
-                                ?>
-                                <?= $row_posts['points'] ? '+'.$row_posts['points'].' points' : '' ?>
-                            </p>
-                            <h3 class="card-title">
-                                <a href="/blog/post/<?= $row_posts['url'] ?>"><code><?= $row_posts['title'] ?></code></a>
-                            </h3>
-                            <p class="card-text"><?= $row_posts['description'] ?></p>
-                        </div>
-                    </td></tr>
-                    <tr><td valign="bottom">
-                        <div class="card-footer text-muted">
-                            <?= time_to_ago($row_posts['timestamp']) ?>
-                        </div>
-                    </td></tr>
-                </table>
+                        while ($tag_row = $tags->fetch_assoc()) {
+                            echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";
+                        }
+                        ?>
+                        <?= $row_posts['points'] ? '+'.$row_posts['points'].' points' : '' ?>
+                    </p>
+                    <h3 class="card-title">
+                        <a href="/blog/post/<?= $row_posts['url'] ?>"><code><?= $row_posts['title'] ?></code></a>
+                    </h3>
+                    <p class="card-text"><?= $row_posts['description'] ?></p>
+                </div>
+                <div class="card-footer text-muted">
+                    <?= time_to_ago($row_posts['timestamp']) ?>
+                </div>
             </div>
         </div>
     </div>
