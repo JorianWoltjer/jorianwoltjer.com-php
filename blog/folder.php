@@ -33,7 +33,6 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     <meta name="og:type" content="article" />
     <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
     <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
-    <meta name="og:title" content="Blog - <?= htmlspecialchars($row['name']) ?>" />
     <meta name="og:image" content="<?= get_baseurl() ?>/img/blog/<?= $row['img'] ?>" />
     <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
     <meta property="og:article:section" content="1" />
@@ -62,16 +61,17 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     </ol>
 </nav>
 
-<title><?php  // Title: folder + name
-    if ($response_breadcrumbs->num_rows >= 2) {
-        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-2);
-        $folder = $response_breadcrumbs->fetch_assoc()['name'];
-    } else {
-        $folder = "Blog";  // If no parent
-    }
-
-    echo $folder." - ".$row['name'];
-    ?></title>
+<?php  // Title: folder + name
+if ($response_breadcrumbs->num_rows >= 2) {
+    $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-2);
+    $folder = $response_breadcrumbs->fetch_assoc()['name'];
+} else {
+    $folder = "Blog";  // If no parent
+}
+$title = $folder." - ".$row['name'];
+?>
+<title><?= $title ?></title>
+<meta name="og:title" content="<?= $title ?>" />
 
 <?php
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);

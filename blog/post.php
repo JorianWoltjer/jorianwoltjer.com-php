@@ -26,11 +26,10 @@ sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]])
 
     <link rel="stylesheet" href="/css/vs2015.css">
     <meta name="og:type" content="article" />
-    <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
+    <meta name="description" content="<?= htmlspecialchars($row['description']) ?>" />
     <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
-    <meta name="og:title" content="Blog - <?= htmlspecialchars($row['title']) ?>" />
     <meta name="og:image" content="<?= get_baseurl() ?>/img/blog/<?= $row['img'] ?>" />
-    <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
+    <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>" />
     <meta property="og:article:section" content="1" />
     <meta property="og:article:author" content="Jorian Woltjer" />
     <meta name="twitter:card" content="summary_large_image">
@@ -63,11 +62,13 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         </ol>
     </nav>
 
-    <title><?php  // Title: folder + name + 'writeup' if ctf
-        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
-        $folder = $response_breadcrumbs->fetch_assoc();
-        echo $folder['name']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
-        ?></title>
+    <?php  // Title: folder + name + 'writeup' if ctf
+    $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
+    $folder = $response_breadcrumbs->fetch_assoc();
+    $title = $folder['name']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+    ?>
+    <title><?= $title ?></title>
+    <meta name="og:title" content="<?= $title ?>" />
 
     <p class="tags">
         <?php

@@ -41,11 +41,12 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         </ol>
     </nav>
 
-    <title><?php  // Title: folder + name + 'writeup' if ctf
-        $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
-        $folder = $response_breadcrumbs->fetch_assoc();
-        echo $folder['name']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
-        ?></title>
+    <?php  // Title: folder + name + 'writeup' if ctf
+    $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
+    $folder = $response_breadcrumbs->fetch_assoc();
+    $title = $folder['name']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+    ?>
+    <title><?= $title ?></title>
 
     <p class="tags">
         <?php
