@@ -135,7 +135,7 @@ $next = $response_next->fetch_assoc();
         </div>
     </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script src="/highlight/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script>
         // Copy button from code blocks

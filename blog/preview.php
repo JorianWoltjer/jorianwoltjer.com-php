@@ -83,7 +83,7 @@ $response_breadcrumbs = sql_query("SELECT T2.id, T2.name
         </div>
     </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script src="/highlight/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script>
         // Copy button from code blocks
