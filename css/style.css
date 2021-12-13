@@ -275,10 +275,10 @@ img.index-page {
   font-weight: bold;
 }
 
-.tag-editing, .tag-ctf, .tag-web, .tag-sqli, .tag-filter {
+.tag-editing, .tag-ctf, .tag-web, .tag-sqli, .tag-filter, .tag-forensics {
   background-color: #27ae60;
 }
-.tag-utility, .tag-hacking, .tag-warmup, .tag-reversing, .tag-binary, .tag-rce {
+.tag-utility, .tag-hacking, .tag-reversing, .tag-binary, .tag-rce {
   background-color: #e84118;
 }
 .tag-coding, .tag-scripting, .tag-xss, .tag-ssrf {
