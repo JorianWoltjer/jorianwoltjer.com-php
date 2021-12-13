@@ -92,7 +92,8 @@ if (!$admin) { // Admin only
         <br>
         <p class="tags" id="tags">
             <span id="tags-tabel" style="margin-right: 10px;">Tags:</span>
-            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)">
+
+            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
             <datalist id="tags-list">
                 <?php
                 $response = sql_query("SELECT name, class FROM tags");
@@ -138,6 +139,10 @@ if (!$admin) { // Admin only
 
         function add_tag(element) {
             const value = element.value;
+            // If not in datalist or already added
+            if (!document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']") || document.getElementsByClassName("tag-"+tag_class[value]).length) {
+                return true;
+            }
 
             const tag = document.createElement("span");
             tag.className = "tag selected-tag tag-"+tag_class[value];
@@ -171,6 +176,15 @@ if (!$admin) { // Admin only
             }
 
             return true;
+        }
+
+        document.addEventListener('keydown', keyPress);
+
+        function keyPress(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                return false;
+            }
         }
 
         $('#image').change(function() {

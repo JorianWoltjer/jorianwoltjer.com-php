@@ -112,7 +112,7 @@ if ($response->num_rows === 0) {
                 echo '<span class="tag selected-tag tag-'.$tag[1].'">'.$tag[0].'<i class="fas fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
             }
             ?>
-            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)">
+            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
             <datalist id="tags-list">
                 <?php
                 $response = sql_query("SELECT name, class FROM tags");
@@ -158,6 +158,10 @@ if ($response->num_rows === 0) {
 
         function add_tag(element) {
             const value = element.value;
+            // If not in datalist or already added
+            if (!document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']") || document.getElementsByClassName("tag-"+tag_class[value]).length) {
+                return true;
+            }
 
             const tag = document.createElement("span");
             tag.className = "tag selected-tag tag-"+tag_class[value];
@@ -191,6 +195,15 @@ if ($response->num_rows === 0) {
             }
 
             return true;
+        }
+
+        document.addEventListener('keydown', keyPress);
+
+        function keyPress(e) {
+            if(e.key === 'Enter') {
+                e.preventDefault();
+                return false;
+            }
         }
 
         $('#image').change(function() {
