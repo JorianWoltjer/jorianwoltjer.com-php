@@ -16,7 +16,7 @@ require_once("../include/header.php"); ?>
             <div class="button-icon"><i class="fas fa-home"></i></div>
             <div class="button-text">Hanze.nl</div>
         </div></a>
-        <a href="https://blackboard.hanze.nl/webapps/login/"><div class="button green">
+        <a href="https://blackboard.hanze.nl/webapps/bb-auth-provider-shibboleth-bb_bb60/execute/shibbolethLogin?returnUrl=https%3A%2F%2Fblackboard.hanze.nl%2Fwebapps%2Fportal%2Fexecute%2FdefaultTab&authProviderId=_109_1"><div class="button green">
             <div class="button-icon"><i class="fas fa-chalkboard"></i></div>
             <div class="button-text">Blackboard</div>
         </div></a>
