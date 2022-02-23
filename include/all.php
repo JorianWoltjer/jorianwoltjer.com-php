@@ -1,4 +1,4 @@
-<?php require_once(__DIR__."/../../mysqli_connect.php");
+<?php require_once(__DIR__."/../../mysqli_connect.php"); require_once(__DIR__."/../../secret.php");
 
 $admin = false;
 if (isset($_COOKIE["PHPSESSID"])) {

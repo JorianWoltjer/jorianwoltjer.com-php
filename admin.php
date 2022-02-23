@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     sql_query("INSERT INTO login_logs(ip) VALUES (?)", [$_SERVER["REMOTE_ADDR"]]);
     if (isset($_POST['password']) && isset($_POST['recaptcha_response'])) {
         $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-        $recaptcha_secret = '6LfptAMdAAAAALtgTfLT0JXJIcXmWtbPli8fxtfC';
+        $recaptcha_secret = $RECAPTCHA_SECRET;  # From secret.php
         $recaptcha_response = $_POST['recaptcha_response'];
 
         $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
@@ -34,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 require_once("include/header.php"); ?>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfptAMdAAAAAIE2whjGTZUlStx--EfRETnzkMUV"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd"></script>
     <script>
         grecaptcha.ready(function () {
-            grecaptcha.execute('6LfptAMdAAAAAIE2whjGTZUlStx--EfRETnzkMUV', { action: 'contact' }).then(function (token) {
+            grecaptcha.execute('6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd', { action: 'contact' }).then(function (token) {
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
                 recaptchaResponse.value = token;
             });
