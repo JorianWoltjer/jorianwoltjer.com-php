@@ -142,7 +142,7 @@ $next = $response_next->fetch_assoc();
         </div>
     </div>
 
-    <script src="/highlight/highlight.min.js"></script>
+    <script src="/assets/highlight/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script>
         // Copy button from code blocks

@@ -100,7 +100,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         </div>
     </div>
 
-    <script src="/highlight/highlight.min.js"></script>
+    <script src="/assets/highlight/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script>
         // Copy button from code blocks
