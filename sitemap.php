@@ -35,7 +35,7 @@ while ($row = $response->fetch_assoc()) {
 </url>";
 }
 
-$response = sql_query("SELECT url, timestamp FROM posts WHERE hash IS NULL");
+$response = sql_query("SELECT url, timestamp FROM posts WHERE hidden IS NULL");
 
 while ($row = $response->fetch_assoc()) {
     $lastmod = date(DATE_ATOM, strtotime($row["timestamp"]));

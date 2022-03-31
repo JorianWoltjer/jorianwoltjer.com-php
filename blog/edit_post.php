@@ -31,16 +31,16 @@ if ($response->num_rows === 0) {
                 $url = $parent_url."/".$url;
 
                 if ($hidden) {
-                    $hash = $row["hash"] ?? random_bytes(32);
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=? WHERE id=?",
+                    $hash = $row["hidden"] ?? random_bytes(32);
+                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                             $html, $_POST["points"], $featured, $hash, $row['id']]);
-                } else if ($row["hash"]) {  // If changed from hidden to public
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
+                } else if ($row["hidden"]) {  // If changed from hidden to public
+                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                             $html, $_POST["points"], $featured, $row['id']]);
                 } else {
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hash=NULL WHERE id=?",
+                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                             $html, $_POST["points"], $featured, $row['id']]);
                 }
@@ -68,7 +68,7 @@ if ($response->num_rows === 0) {
 
                 // Redirect to new post
                 if ($hidden) {
-                    header("Location: /blog/post/" . $url . "?hash=" . bin2hex($hash));
+                    header("Location: /blog/post/" . $url . "?hidden=" . bin2hex($hash));
                 } else {
                     header("Location: /blog/post/" . $url);
                 }
@@ -136,7 +136,7 @@ if ($response->num_rows === 0) {
             <label class="form-check-label" for="featured">Featured</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= $row["hash"] !== NULL ? " checked" : "" ?>>
+            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= $row["hidden"] !== NULL ? " checked" : "" ?>>
             <label class="form-check-label" for="hidden">Hidden</label>
         </div>
         <br>

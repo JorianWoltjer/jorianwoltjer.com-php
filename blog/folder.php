@@ -100,7 +100,7 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
     <br>
 <?php }
 
-$response_posts = sql_query("SELECT * FROM posts WHERE hash IS NULL AND parent = ?", [$row["id"]]);
+$response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ?", [$row["id"]]);
 
 while ($row_posts = $response_posts->fetch_assoc()) { ?>
     <div class="card">

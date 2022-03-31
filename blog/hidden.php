@@ -15,7 +15,7 @@ if (!$admin) { // Admin only
 </style>
 
 <?php
-$response_posts = sql_query("SELECT * FROM posts WHERE hash IS NOT NULL");
+$response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NOT NULL");
 
 while ($row = $response_posts->fetch_assoc()) { ?>
     <div class="card">
@@ -38,7 +38,7 @@ while ($row = $response_posts->fetch_assoc()) { ?>
                                     <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
                                 </p>
                                 <h3 class="card-title">
-                                    <a href="/blog/post/<?= $row['url'] ?>?hash=<?= bin2hex($row["hash"]) ?>"><code><?= $row['title'] ?></code></a>
+                                    <a href="/blog/post/<?= $row['url'] ?>?hidden=<?= bin2hex($row["hidden"]) ?>"><code><?= $row['title'] ?></code></a>
                                 </h3>
                                 <p class="card-text"><?= $row['description'] ?></p>
                             </div>

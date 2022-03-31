@@ -25,7 +25,7 @@ if (!$admin) { // Admin only
 
                 if ($hidden) {
                     $hash = random_bytes(32);
-                    sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, hash, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
+                    sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, hidden, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
                         [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                             $html, $_POST["points"], $featured, $hash]);
                 } else {
@@ -59,7 +59,7 @@ if (!$admin) { // Admin only
 
                 // Redirect to new post
                 if ($hidden) {
-                    header("Location: /blog/post/" . $url . "?hash=" . bin2hex($hash));
+                    header("Location: /blog/post/" . $url . "?hidden=" . bin2hex($hash));
                 } else {
                     header("Location: /blog/post/" . $url);
                 }

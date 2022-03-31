@@ -1,8 +1,9 @@
 <?php require_once("../include/header.php");
 
+# Find post
 if (isset($_GET["url"])) {
     $response = sql_query("SELECT * FROM posts WHERE url=?", [$_GET["url"]]);
-} else if (isset($_GET["id"])) {
+} else if (isset($_GET["id"])) {  # id for backwards compatibility
     $response = sql_query("SELECT * FROM posts WHERE id=?", [$_GET["id"]]);
 } else {
     returnMessage("error_post", "/blog/");
@@ -15,8 +16,9 @@ if ($response->num_rows === 0) {
 }
 
 // Verify hidden hash
-if ($row["hash"] !== NULL) {
-    if (!isset($_GET["hash"]) || $_GET["hash"] !== bin2hex($row["hash"])) {
+if ($row["hidden"] !== NULL) {
+    $hash = $_GET["hidden"] ?? $_GET["hash"];  // Get hidden parameter or hash for backwards compatibility
+    if ($hash !== bin2hex($row["hidden"])) {
         returnMessage("error_post", "/blog/");
     }
 }
@@ -82,7 +84,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     </p>
 
     <div class="text-muted">
-        <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hash"] === NULL ? $row["views"]." views" : "<b>Hidden</b>" ?>
+        <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === NULL ? $row["views"]." views" : "<b>Hidden</b>" ?>
     </div>
 
 <?php if ($admin) { ?>
@@ -97,11 +99,11 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     </div>
 
 <?php
-$response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hash IS NULL;",
+$response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hidden IS NULL;",
     [$row["id"], $row["parent"]]);
 $prev = $response_prev->fetch_assoc();
 
-$response_next = sql_query("SELECT url FROM posts WHERE id = (SELECT min(id) FROM posts WHERE id > ?) AND parent=? AND hash IS NULL;",
+$response_next = sql_query("SELECT url FROM posts WHERE id = (SELECT min(id) FROM posts WHERE id > ?) AND parent=? AND hidden IS NULL;",
     [$row["id"], $row["parent"]]);
 $next = $response_next->fetch_assoc();
 ?>
