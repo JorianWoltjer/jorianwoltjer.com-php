@@ -503,6 +503,10 @@ color: var(--blue);
   overflow: hidden;
 }
 
+.grecaptcha-badge {
+  z-index: 9001;
+}
+
 #particles-js {
   z-index: -1000;
   position: absolute;
