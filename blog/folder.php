@@ -73,6 +73,8 @@ $title = $folder." - ".$row['name'];
 <title><?= $title ?></title>
 <meta name="og:title" content="<?= $title ?>" />
 
+<p class="lead"><?= $row["description"] ?></p>
+
 <?php
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);
 
@@ -97,7 +99,6 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
             </div>
         </div>
     </div>
-    <br>
 <?php }
 
 $response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ?", [$row["id"]]);
@@ -133,7 +134,6 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
             </div>
         </div>
     </div>
-    <br>
 <?php }
 
 if ($response_folders->num_rows === 0 && $response_posts->num_rows === 0) {

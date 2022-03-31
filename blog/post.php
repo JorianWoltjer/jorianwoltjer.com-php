@@ -63,6 +63,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
             <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $row['title'] ?></code></h1></li>
         </ol>
     </nav>
+    <br>
 
     <?php  // Title: folder + name + 'writeup' if ctf
     $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);

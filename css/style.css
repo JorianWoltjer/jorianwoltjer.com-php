@@ -67,6 +67,7 @@ p {
 
 p.lead {
   font-weight: 350;
+  color: #999;
 }
 
 p a {
@@ -241,6 +242,7 @@ img.index-page {
   border: #303030 5px solid;
   border-radius: 25px;
   transition: 0.25s;
+  margin: 20px 0;
 }
 
 .card:hover {
@@ -290,6 +292,7 @@ img.index-page {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 .padding-top {
   margin-top: 10px;
@@ -406,6 +409,7 @@ color: var(--blue);
 .breadcrumb {
   background: none;
   padding-left: 0;
+  margin-bottom: 0 !important;
 }
 
 .breadcrumb-item {
