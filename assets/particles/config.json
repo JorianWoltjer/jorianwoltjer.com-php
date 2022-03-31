@@ -8,7 +8,7 @@
       }
     },
     "color": {
-      "value": "#71bdf0"
+      "value": "#bde4ff"
     },
     "shape": {
       "type": "circle",
@@ -68,23 +68,23 @@
     }
   },
   "interactivity": {
-    "detect_on": "canvas",
+    "detect_on": "window",
     "events": {
       "onhover": {
         "enable": true,
-        "mode": "grab"
+        "mode": "repulse"
       },
       "onclick": {
-        "enable": false,
+        "enable": true,
         "mode": "push"
       },
       "resize": true
     },
     "modes": {
       "grab": {
-        "distance": 203.7962037962038,
+        "distance": 200,
         "line_linked": {
-          "opacity": 0.43713723680695554
+          "opacity": 0.5
         }
       },
       "bubble": {
@@ -95,7 +95,7 @@
         "speed": 3
       },
       "repulse": {
-        "distance": 200,
+        "distance": 50,
         "duration": 0.4
       },
       "push": {
