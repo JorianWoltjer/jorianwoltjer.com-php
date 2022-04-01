@@ -73,6 +73,7 @@ $title = $folder." - ".$row['name'];
 <title><?= $title ?></title>
 <meta name="og:title" content="<?= $title ?>" />
 
+<hr>
 <p class="lead"><?= $row["description"] ?></p>
 
 <?php
@@ -134,12 +135,6 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
             </div>
         </div>
     </div>
-<?php }
-
-if ($response_folders->num_rows === 0 && $response_posts->num_rows === 0) {
-    echo '<hr><p class="lead">No posts yet</p>';
-}
-
-?>
+<?php } ?>
 
 <?php require_once("../include/footer.php"); ?>

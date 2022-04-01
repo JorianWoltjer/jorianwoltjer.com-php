@@ -56,7 +56,7 @@ while ($row = $response_posts->fetch_assoc()) { ?>
 <?php }
 
 if ($response_posts->num_rows === 0) {
-    echo '<p class="lead">No posts yet</p>';
+    echo '<hr><p class="lead">No posts yet</p>';
 }
 
 ?>
