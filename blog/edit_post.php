@@ -197,14 +197,14 @@ if ($response->num_rows === 0) {
             return true;
         }
 
-        document.addEventListener('keydown', keyPress);
-
-        function keyPress(e) {
-            if(e.key === 'Enter') {
-                e.preventDefault();
-                return false;
-            }
-        }
+        $(document).ready(function () {
+            $('input').on('keydown', function (e) {
+                if (e.keyCode === 13) {
+                    e.keyCode = 9;
+                    return false;
+                }
+            });
+        });
 
         $('#image').change(function() {
             const src = $(this).val();
