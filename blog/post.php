@@ -26,7 +26,8 @@ if ($row["hidden"] !== NULL) {
 sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]])
 ?>
 
-    <link rel="stylesheet" href="/css/vs2015.css">
+    <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
+<!--    <link rel="stylesheet" href="/assets/highlight/vs2015.min.css">-->
     <meta name="og:type" content="article" />
     <meta name="description" content="<?= htmlspecialchars($row['description']) ?>" />
     <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />

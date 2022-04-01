@@ -11,7 +11,7 @@ if (!isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['fold
 }
 ?>
 
-    <link rel="stylesheet" href="/css/vs2015.css">
+    <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
 
 <?php
 $response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
