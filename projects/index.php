@@ -48,6 +48,7 @@
                     </style>
                 <?php } ?>
                 <div class="card-body">
+                    <span class="tag tag-coding">Coding</span>
                     <h4 class="card-title">
                         <a href="#">
                             <code>This website!</code></a>
