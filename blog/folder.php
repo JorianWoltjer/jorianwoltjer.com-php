@@ -79,7 +79,7 @@ $title = $folder." - ".$row['name'];
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);
 
 while ($row_folders = $response_folders->fetch_assoc()) { ?>
-    <div class="card">
+    <div class="card card-horizontal">
         <div class="row no-gutters">
             <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/folder/<?= $row_folders['url'] ?>">
@@ -104,7 +104,7 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
 $response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ?", [$row["id"]]);
 
 while ($row_posts = $response_posts->fetch_assoc()) { ?>
-    <div class="card">
+    <div class="card card-horizontal">
         <div class="row no-gutters">
             <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/post/<?= $row_posts['url'] ?>">

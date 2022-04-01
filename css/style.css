@@ -252,6 +252,7 @@ img.index-page {
 
 .card-body {
   background-color: #303030;
+  padding-left: var(--bs-gutter-x);
   padding-bottom: 10px;
 }
 
@@ -275,16 +276,28 @@ img.index-page {
 .card-footer {
   position: relative;
   width: 100vw;
-  left: calc(-1 * var(--bs-gutter-x));
-  padding-left: calc(var(--bs-gutter-x) + 1rem);
+  padding-left: var(--bs-gutter-x);
   padding-bottom: calc(.5rem - 5px);
   background-color: rgba(0,0,0,.05);
+}
+
+.card img {
+  transition: filter 0.5s ease;
+}
+
+.card img:hover {
+  filter: brightness(1.2);
+}
+
+.card-horizontal .col-sm-9 {
+  padding-left: 0;
 }
 
 .table-container {
   height: 100%;
   border-collapse: collapse;
 }
+
 
 /* BLOG */
 
