@@ -91,7 +91,7 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 }
 
 hr {
-  border-color: rgba(255,255,255,0.1);
+  color: rgb(255 255 255 / 50%);
 }
 
 .modal {

@@ -137,7 +137,7 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
 <?php }
 
 if ($response_folders->num_rows === 0 && $response_posts->num_rows === 0) {
-    echo '<p class="lead">No posts yet</p>';
+    echo '<hr><p class="lead">No posts yet</p>';
 }
 
 ?>
