@@ -187,6 +187,13 @@ p.button i {
   background-color: #303030 !important;
 }
 
+.navbar-brand {
+  transition: 0.25s ease-out;
+}
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
 .nav-link {
   font-weight: bold !important;
   border: white 3px solid;
