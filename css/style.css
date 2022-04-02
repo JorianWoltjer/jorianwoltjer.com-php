@@ -219,19 +219,6 @@ p.button i {
   color: #303030 !important;
 }
 
-/* INDEX PAGE */
-
-img.index-page {
-  border: white 0.6ch solid;
-  border-radius: 3ch;
-  padding: 2ch 4ch;
-  width: 35ch;
-}
-
-.index-page code {
-  font-size: inherit;
-}
-
 /* PROJECT CARDS */
 
 .card {
