@@ -1,5 +1,8 @@
-<?php require_once("include/all.php");
+<?php
+$title = "Admin login";
+$description = "The administrator login page to manage my website.";
 $centerPage = true;
+require_once("include/all.php");
 
 if ($admin) {  // Redirect if already logged in
     returnMessage("login", "/blog");

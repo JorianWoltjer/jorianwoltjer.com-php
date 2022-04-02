@@ -9,6 +9,21 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <?php if (isset($title) and isset($description)) { ?>
+        <title><?= $title ?></title>
+        <meta property="og:title" content="<?= $title ?>">
+        <meta name="twitter:title" content="<?= $title ?>">
+        <meta name="description" content="<?= $description ?>">
+        <meta property="og:description" content="<?= $description ?>">
+        <meta name="twitter:description" content="<?= $description ?>">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary">
+        <meta property="og:url" content="<?= htmlspecialchars(get_baseurl().$_SERVER["REQUEST_URI"]) ?>">
+        <meta property="twitter:url" content="<?= htmlspecialchars(get_baseurl().$_SERVER["REQUEST_URI"]) ?>">
+        <meta property="og:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
+        <meta name="twitter:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
+        <meta property="twitter:domain" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
+    <?php } ?>
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -38,7 +53,6 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">

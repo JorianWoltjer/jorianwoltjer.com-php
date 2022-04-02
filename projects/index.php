@@ -1,4 +1,7 @@
-<?php require_once("../include/header.php"); ?>
+<?php
+$title = "Projects";
+$description = "A collection of the projects I have made, with links and images.";
+require_once("../include/header.php"); ?>
 
 <style>
     .wrap {

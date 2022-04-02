@@ -1,4 +1,7 @@
-<?php $centerPage = true;
+<?php
+$centerPage = true;
+$title = "Contact";
+$description = "A list of accounts that can be used to contact me.";
 require_once("include/header.php"); ?>
 
     <h1 class="my-4"><code>Contact</code></h1>

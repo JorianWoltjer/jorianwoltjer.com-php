@@ -1,5 +1,3 @@
-<title><?= ucfirst($page) ?></title>
-</div>
 </div>
 </div>
 

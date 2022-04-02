@@ -1,4 +1,7 @@
-<?php require_once("../include/header.php");
+<?php
+$title = "Hidden posts";
+$description = "List of all blog posts set to hidden";
+require_once("../include/header.php");
 
 if (!$admin) { // Admin only
     header("HTTP/1.1 403 Forbidden");

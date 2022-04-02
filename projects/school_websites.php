@@ -1,4 +1,6 @@
 <?php $centerPage = true;
+$title = "School Websites";
+$description = "A list of buttons that link to useful school websites for Hanze Hogeschool Groningen.";
 require_once("../include/header.php"); ?>
 
     <h1 class="my-4"><code>School Websites</code></h1>

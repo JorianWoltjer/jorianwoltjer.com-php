@@ -1,4 +1,7 @@
-<?php $centerPage = true;
+<?php
+$centerPage = true;
+$title = "Home";
+$description = "Hello, I am Jorian Woltjer. Welcome to my website!";
 require_once("include/header.php"); ?>
 
     <style>
