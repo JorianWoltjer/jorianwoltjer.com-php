@@ -15,7 +15,7 @@ require_once("include/header.php"); ?>
 
         #page-content img {
             max-width: 80%;
-            border: white 0.6ch solid;
+            box-shadow: 0 0 50px 0 rgb(0 0 0 / 70%);
             border-radius: 25px;
             padding: 30px 40px;
             width: 35ch;
