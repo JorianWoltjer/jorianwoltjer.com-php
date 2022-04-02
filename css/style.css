@@ -196,7 +196,7 @@ p.button i {
 
 .nav-link {
   font-weight: bold !important;
-  border: white 3px solid;
+  border: #cfcdcd 3px solid;
   border-radius: 12px;
   padding: 10px 20px !important;
   margin: 10px;
@@ -207,6 +207,7 @@ p.button i {
 
 .nav-link:hover {
   background-color: white;
+  border-color: white;
   color: #303030 !important;
 }
 
@@ -218,11 +219,12 @@ p.button i {
 }
 
 .nav-link.gray {
-  border-color: var(--gray);
-  color: #a7a7a7 !important;
+  border-color: #5a5a5a;
+  color: #7a7a7a !important;
 }
 .nav-link.gray:hover {
-  background-color: var(--gray);
+  background-color: #7a7a7a;
+  border-color: #7a7a7a;
   color: #303030 !important;
 }
 
