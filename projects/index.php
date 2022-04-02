@@ -48,7 +48,9 @@
                     </style>
                 <?php } ?>
                 <div class="card-body">
-                    <span class="tag tag-coding">Coding</span>
+                    <p class="card-text tags">
+                        <span class="tag tag-coding">Coding</span>
+                    </p>
                     <h4 class="card-title">
                         <a href="#">
                             <code>This website!</code></a>
@@ -72,7 +74,9 @@
                         <a href="<?= $row["href"] ?>" <?= ($row["category"] == "Utility") ? "" : "target='_blank'" ?>>
                             <img class="card-img-top" src="/img/projects/<?= $row["img"] ?>"></a>
                         <div class="card-body">
-                            <span class="tag tag-<?= $row["category"] ?>"><?= ucfirst($row["category"]) ?></span>
+                            <p class="card-text tags">
+                                <span class="tag tag-<?= $row["category"] ?>"><?= ucfirst($row["category"]) ?></span>
+                            </p>
                             <h4 class="card-title">
                                 <a href="<?= $row["href"] ?>" <?= ($row["category"] == "Utility") ? "" : "target='_blank'" ?>>
                                     <code><?= $row["title"] ?></code></a>

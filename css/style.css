@@ -306,8 +306,8 @@ img.index-page {
   flex-wrap: wrap;
   margin-bottom: 10px;
 }
-.padding-top {
-  margin-top: 10px;
+.card .tags {
+  margin-bottom: 0;
 }
 
 .tag {
@@ -315,6 +315,7 @@ img.index-page {
   border-radius: 100rem;
   padding: 0.3rem 0.8rem;
   margin-right: 10px;
+  margin-bottom: 5px;
   font-size: 0.8rem;
   font-weight: bold;
 }

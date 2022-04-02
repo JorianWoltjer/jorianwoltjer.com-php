@@ -39,12 +39,6 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     <meta property="og:article:author" content="Jorian Woltjer" />
     <meta name="twitter:card" content="summary_large_image">
 
-<style>
-    .tags {
-        margin-bottom: 10px;
-    }
-</style>
-
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-4">
         <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>

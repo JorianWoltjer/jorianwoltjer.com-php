@@ -8,12 +8,6 @@ if (!$admin) { // Admin only
 
 <h1 class="my-4"><code>Hidden posts</code></h1>
 
-<style>
-    .tags {
-        margin-bottom: 10px;
-    }
-</style>
-
 <?php
 $response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NOT NULL");
 
