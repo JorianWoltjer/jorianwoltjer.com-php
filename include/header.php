@@ -23,6 +23,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         <meta property="og:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
         <meta name="twitter:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
         <meta property="twitter:domain" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
+        <meta property="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
     <?php } ?>
 
     <!-- CSS -->
