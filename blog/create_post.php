@@ -85,10 +85,10 @@ if (!$admin) { // Admin only
         <label for="folder">Folder</label>
         <select class="form-control" id="folder" name="folder">
             <?php
-            $response = sql_query("SELECT id, name FROM folders");
+            $response = sql_query("SELECT id, title FROM folders");
 
             while($row = $response->fetch_assoc()) {
-                echo "<option value='$row[id]'>$row[name]</option>";
+                echo "<option value='$row[id]'>$row[title]</option>";
             }
             ?>
         </select>
@@ -125,8 +125,8 @@ if (!$admin) { // Admin only
         </div>
         <br>
         <br>
-        <input class="btn btn-light" type="submit" name="submit" id="submit_post" value="Create" onclick="this.form.target=''">
-        <input class="btn btn-secondary" type="submit" name="submit" id="submit_post" value="Preview" onclick="this.form.target='_blank'" formaction="preview">
+        <input class="btn btn-light" type="submit" name="submit" value="Create" onclick="this.form.target=''">
+        <input class="btn btn-secondary" type="submit" name="submit" value="Preview" onclick="this.form.target='_blank'" formaction="preview">
     </form>
 
     <script>

@@ -37,7 +37,7 @@ sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]])
     <meta name="twitter:card" content="summary_large_image">
 
 <?php
-$response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
+$response_breadcrumbs = sql_query("SELECT T2.url, T2.title 
                                     FROM ( 
                                         SELECT 
                                             @r AS _id, 
@@ -57,7 +57,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
             <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
             <?php
             while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
-                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
+                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
             }
             ?>
             <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $row['title'] ?></code></h1></li>
@@ -65,10 +65,10 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
     </nav>
     <br>
 
-    <?php  // Title: folder + name + 'writeup' if ctf
+    <?php  // Title: folder + title + 'writeup' if ctf
     $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
     $folder = $response_breadcrumbs->fetch_assoc();
-    $title = $folder['name']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+    $title = $folder['title']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
     ?>
     <title><?= $title ?></title>
     <meta name="og:title" content="<?= $title ?>" />

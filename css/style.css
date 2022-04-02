@@ -366,21 +366,21 @@ p.button i {
 
 a.folder {
   position: relative;
-  top: 0;
+  top: 5px;
   text-decoration: none;
   padding: 20px;
   margin-right: 20px;
   font-weight: bold;
   color: white;
   white-space: nowrap;
-  line-height: 5;
+  line-height: 4;
   border: 2px solid #404040;
   border-radius: 5px;
   transition: 0.25s;
 }
 
 a.folder:hover {
-  top: -5px;
+  top: 0;
   background-color: #404040;
 }
 

@@ -21,7 +21,7 @@ if (!$admin) { // Admin only
                 $parent_url = $parent->fetch_assoc()["url"];
                 $url = $parent_url."/".$url;
 
-                sql_query("INSERT INTO folders(parent, url, name, description, img, timestamp) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
+                sql_query("INSERT INTO folders(parent, url, title, description, img, timestamp) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
                     [$_POST['parent'], $url, $_POST['title'], $_POST['description'], $_POST['image']]);
 
                 header("Location: /blog/folder/".$url);
@@ -43,15 +43,15 @@ if (!$admin) { // Admin only
         <label for="parent">Parent folder</label>
         <select class="form-control" id="parent" name="parent">
             <?php
-            $response = sql_query("SELECT id, name FROM folders");
+            $response = sql_query("SELECT id, title FROM folders");
 
             while($row = $response->fetch_assoc()) {
-                echo "<option value='$row[id]'>$row[name]</option>";
+                echo "<option value='$row[id]'>$row[title]</option>";
             }
             ?>
         </select>
         <br>
-        <input class="btn btn-light" type="submit" name="submit" id="submit_post" value="Create">
+        <input class="btn btn-light" type="submit" name="submit" value="Create">
     </form>
 
     <script>

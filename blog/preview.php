@@ -14,7 +14,7 @@ if (!isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['fold
     <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
 
 <?php
-$response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
+$response_breadcrumbs = sql_query("SELECT T2.url, T2.title 
                                     FROM ( 
                                         SELECT 
                                             @r AS _id, 
@@ -34,17 +34,17 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
             <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
             <?php
             while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
-                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
+                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
             }
             ?>
             <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $_POST['title'] ?></code></h1></li>
         </ol>
     </nav>
 
-    <?php  // Title: folder + name + 'writeup' if ctf
+    <?php  // Title: folder + title + 'writeup' if ctf
     $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
     $folder = $response_breadcrumbs->fetch_assoc();
-    $title = $folder['name']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+    $title = $folder['title']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
     ?>
     <title><?= $title ?></title>
 

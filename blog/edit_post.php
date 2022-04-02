@@ -1,7 +1,7 @@
 <?php
 $title = "Edit post";
 $description = "Form to edit a post on my blog.";
-require_once("../include/header.php");
+require_once("../include/all.php");
 
 if (!$admin) { // Admin only
     header("HTTP/1.1 403 Forbidden");
@@ -14,71 +14,71 @@ $row = $response->fetch_assoc();
 if ($response->num_rows === 0) {
     returnMessage("error_post", "/blog/");
 }
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
+    if (isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['folder'], $_POST['tags'],
+        $_POST['text'], $_POST['points'])) {
+
+        $html = md_to_html($_POST["text"]);
+        $featured = isset($_POST["featured"]) && $_POST["featured"] === "on";
+        $hidden = isset($_POST["hidden"]) && $_POST["hidden"] === "on";
+        $url = text_to_url($_POST["title"]);
+
+        $parent = sql_query("SELECT url FROM folders WHERE id=?", [$_POST["folder"]]);
+        $parent_url = $parent->fetch_assoc()["url"];
+        $url = $parent_url."/".$url;
+
+        if ($hidden) {
+            $hash = $row["hidden"] ?? random_bytes(32);
+            sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
+                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    $html, $_POST["points"], $featured, $hash, $row['id']]);
+        } else if ($row["hidden"]) {  // If changed from hidden to public
+            sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
+                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    $html, $_POST["points"], $featured, $row['id']]);
+        } else {
+            sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
+                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    $html, $_POST["points"], $featured, $row['id']]);
+        }
+
+        // Convert tags to corresponding ids
+        $all_tags = sql_query("SELECT id, name FROM tags")->fetch_all();
+
+        $tag_to_id = array();
+        foreach ($all_tags as $tag) {
+            $tag_to_id[$tag[1]] = $tag[0];
+        }
+
+        // Create tag entries in database
+        sql_query("DELETE FROM post_tags WHERE post=?", [$row['id']]);
+        $stmt = $dbc->prepare("INSERT INTO post_tags(post, tag) VALUES (?, ?)");
+        $stmt->bind_param("ii", $row['id'], $tag_id);
+
+        foreach ($_POST["tags"] as $tag) {
+            if (array_key_exists($tag, $tag_to_id)) {
+                $tag_id = $tag_to_id[$tag];
+                $stmt->execute();
+            }
+        }
+        $stmt->close();
+
+        // Redirect to new post
+        if ($hidden) {
+            header("Location: /blog/post/" . $url . "?hidden=" . bin2hex($hash));
+        } else {
+            header("Location: /blog/post/" . $url);
+        }
+        exit();
+    }
+}
+require_once("../include/header.php");
 ?>
 
     <h1 class="my-4"><code>Edit post</code></h1>
 
     <form method="POST" id="form">
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            if (isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['folder'], $_POST['tags'],
-                $_POST['text'], $_POST['points'])) {
-
-                $html = md_to_html($_POST["text"]);
-                $featured = isset($_POST["featured"]) && $_POST["featured"] === "on";
-                $hidden = isset($_POST["hidden"]) && $_POST["hidden"] === "on";
-                $url = text_to_url($_POST["title"]);
-
-                $parent = sql_query("SELECT url FROM folders WHERE id=?", [$_POST["folder"]]);
-                $parent_url = $parent->fetch_assoc()["url"];
-                $url = $parent_url."/".$url;
-
-                if ($hidden) {
-                    $hash = $row["hidden"] ?? random_bytes(32);
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
-                        [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
-                            $html, $_POST["points"], $featured, $hash, $row['id']]);
-                } else if ($row["hidden"]) {  // If changed from hidden to public
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
-                        [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
-                            $html, $_POST["points"], $featured, $row['id']]);
-                } else {
-                    sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
-                        [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
-                            $html, $_POST["points"], $featured, $row['id']]);
-                }
-
-                // Convert tags to corresponding ids
-                $all_tags = sql_query("SELECT id, name FROM tags")->fetch_all();
-
-                $tag_to_id = array();
-                foreach ($all_tags as $tag) {
-                    $tag_to_id[$tag[1]] = $tag[0];
-                }
-
-                // Create tag entries in database
-                sql_query("DELETE FROM post_tags WHERE post=?", [$row['id']]);
-                $stmt = $dbc->prepare("INSERT INTO post_tags(post, tag) VALUES (?, ?)");
-                $stmt->bind_param("ii", $row['id'], $tag_id);
-
-                foreach ($_POST["tags"] as $tag) {
-                    if (array_key_exists($tag, $tag_to_id)) {
-                        $tag_id = $tag_to_id[$tag];
-                        $stmt->execute();
-                    }
-                }
-                $stmt->close();
-
-                // Redirect to new post
-                if ($hidden) {
-                    header("Location: /blog/post/" . $url . "?hidden=" . bin2hex($hash));
-                } else {
-                    header("Location: /blog/post/" . $url);
-                }
-                exit();
-            }
-        }
-        ?>
         <label for="title">Title</label>
         <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?>">
         <br>
@@ -94,13 +94,13 @@ if ($response->num_rows === 0) {
         <label for="folder">Folder</label>
         <select class="form-control" id="folder" name="folder">
             <?php
-            $response = sql_query("SELECT id, name FROM folders");
+            $response = sql_query("SELECT id, title FROM folders");
 
             while($row_folder = $response->fetch_assoc()) {
                 if ($row_folder['id'] === $row['parent']) {
-                    echo "<option value='$row_folder[id]' selected>$row_folder[name]</option>";
+                    echo "<option value='$row_folder[id]' selected>$row_folder[title]</option>";
                 } else {
-                    echo "<option value='$row_folder[id]'>$row_folder[name]</option>";
+                    echo "<option value='$row_folder[id]'>$row_folder[title]</option>";
                 }
             }
             ?>
@@ -144,8 +144,8 @@ if ($response->num_rows === 0) {
         </div>
         <br>
         <br>
-        <input class="btn btn-light" type="submit" name="submit" id="submit_post" value="Save" onclick="this.form.button=this; this.form.target=''">
-        <input class="btn btn-secondary" type="submit" name="submit" id="submit_post" value="Preview" onclick="this.form.button=this; this.form.target='_blank'" formaction="preview">
+        <input class="btn btn-light" type="submit" name="submit" value="Save" onclick="this.form.button=this; this.form.target=''">
+        <input class="btn btn-secondary" type="submit" name="submit" value="Preview" onclick="this.form.button=this; this.form.target='_blank'" formaction="preview">
     </form>
 
     <script>

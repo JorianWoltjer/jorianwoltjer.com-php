@@ -14,7 +14,7 @@ if ($response->num_rows === 0) {
     returnMessage("error_folder", "/blog/");
 }
 
-$response_breadcrumbs = sql_query("SELECT T2.url, T2.name 
+$response_breadcrumbs = sql_query("SELECT T2.url, T2.title 
                                     FROM ( 
                                         SELECT 
                                             @r AS _id, 
@@ -47,28 +47,32 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.name
         while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
             $i++;
             if ($i === $response_breadcrumbs->num_rows) { // If last row
-                echo "<li class='breadcrumb-item active' aria-current='page'><h1><code>$row_bc[name]</code></h1></li>";
+                echo "<li class='breadcrumb-item active' aria-current='page'><h1><code>$row_bc[title]</code></h1></li>";
             } else {
-                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[name]</code></a></li>";
+                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
             }
         } ?>
     </ol>
 </nav>
 
-<?php  // Title: folder + name
+<?php  // Title: folder + title
 if ($response_breadcrumbs->num_rows >= 2) {
     $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-2);
-    $folder = $response_breadcrumbs->fetch_assoc()['name'];
+    $folder = $response_breadcrumbs->fetch_assoc()['title'];
 } else {
     $folder = "Blog";  // If no parent
 }
-$title = $folder." - ".$row['name'];
+$title = $folder." - ".$row['title'];
 ?>
 <title><?= $title ?></title>
 <meta name="og:title" content="<?= $title ?>" />
 
 <hr>
 <p class="lead"><?= $row["description"] ?></p>
+
+<?php if ($admin) { ?>
+    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fas fa-edit"></i>Edit folder</a>
+<?php } ?>
 
 <?php
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);
@@ -84,7 +88,7 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
             <div class="col-sm-9" style="display: flex; flex-direction: column;">
                 <div class="card-body">
                     <h3 class="card-title">
-                        <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['name'] ?></code></a>
+                        <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['title'] ?></code></a>
                     </h3>
                     <p class="card-text"><?= $row_folders['description'] ?></p>
                 </div>

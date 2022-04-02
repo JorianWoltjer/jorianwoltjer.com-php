@@ -12,7 +12,7 @@ require_once("../include/header.php"); ?>
 
         if ($response) {
             while ($row = $response->fetch_assoc()) {
-                echo "<a class='folder' href='/blog/folder/$row[url]'><i class='fas $row[icon]'></i>$row[name]</a>";
+                echo "<a class='folder' href='/blog/folder/$row[url]'><i class='fas $row[icon]'></i>$row[title]</a>";
             }
         }
         ?>
