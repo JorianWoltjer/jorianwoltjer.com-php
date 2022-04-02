@@ -33,7 +33,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/img/logo.png" style="width: 4rem">
+            <img src="/img/logo.svg" style="width: 4rem">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

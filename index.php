@@ -14,7 +14,7 @@ require_once("include/header.php"); ?>
             max-width: 80%;
             border: white 0.6ch solid;
             border-radius: 25px;
-            padding: 20px 40px;
+            padding: 30px 40px;
             width: 35ch;
         }
         code {
@@ -32,7 +32,7 @@ require_once("include/header.php"); ?>
     </script>
 
     <h1 class="my-4"><?= randomCode("Hello, I am Jorian Woltjer"); ?></h1>
-    <img src="/img/logo.png">
+    <img src="/img/logo.svg">
     <h1 class="my-4"><?= randomCode("Welcome to my website!"); ?></h1>
 
 <?php require_once("include/footer.php"); ?>
