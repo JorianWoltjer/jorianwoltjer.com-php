@@ -25,17 +25,6 @@ function get_baseurl(): string
     return $protocol.$domain;  // https://jorianwoltjer.com
 }
 
-function randomCode($html)
-{
-    $html = explode(" ", $html);
-    foreach ($html as &$word) {
-        if (rand(0, 1) > 0.5) {
-            $word = "<code>$word</code>";
-        }
-    }
-    return implode(" ", $html);
-}
-
 function time_to_ago($time): string
 {
     $diff_time=(strtotime(date("Y/m/d H:i:s"))-strtotime($time))*1000;

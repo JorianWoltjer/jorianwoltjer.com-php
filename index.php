@@ -34,8 +34,8 @@ require_once("include/header.php"); ?>
         });
     </script>
 
-    <h1 class="my-4"><?= randomCode("Hello, I am Jorian Woltjer"); ?></h1>
+    <h1 class="my-4">Hello, I am <code>Jorian Woltjer</code></h1>
     <img src="/img/logo.svg">
-    <h1 class="my-4"><?= randomCode("Welcome to my website!"); ?></h1>
+    <h1 class="my-4"><code>Welcome</code> to my <code>website!</code></h1>
 
 <?php require_once("include/footer.php"); ?>
