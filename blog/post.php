@@ -70,8 +70,8 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
     $folder = $response_breadcrumbs->fetch_assoc();
     $title = $folder['title']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
     ?>
-    <title><?= $title ?></title>
-    <meta name="og:title" content="<?= $title ?>" />
+    <title><?= $title ?> | Jorian Woltjer</title>
+    <meta name="og:title" content="<?= $title ?> | Jorian Woltjer" />
 
     <p class="tags">
         <?php

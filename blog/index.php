@@ -1,6 +1,6 @@
 <?php
 $title = "Blog";
-$description = "A blog with hacking-related articles. Writeups of challenges, stories and guides with code examples and detailed explanations";
+$description = "A blog with cybersecurity-related articles. Writeups of challenges in Capture The Flag (CTF) events, stories about hacking and guides with code examples and detailed explanations.";
 require_once("../include/header.php"); ?>
 
     <h1 class="my-4"><code>Blog</code></h1>

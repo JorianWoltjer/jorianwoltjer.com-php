@@ -67,10 +67,13 @@ p.lead {
   color: #999;
 }
 
-p a {
-  color: inherit;
+p a, small a {
+  color: unset;
   text-decoration: underline;
   transition: 0.2s ease;
+}
+p a:hover, small a:hover {
+  color: var(--blue);
 }
 
 footer.bg-dark {

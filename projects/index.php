@@ -1,6 +1,6 @@
 <?php
 $title = "Projects";
-$description = "A collection of the projects I have made, with links and images.";
+$description = "Information about a few projects I made, with images and links to the projects. From websites and coding, to video editing, and utilities. These are some projects I have put a lot of time into.";
 require_once("../include/header.php"); ?>
 
 <style>

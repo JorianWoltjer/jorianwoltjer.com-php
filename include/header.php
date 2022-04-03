@@ -10,9 +10,9 @@ $page = ($match[1] === "" ? "home" : $match[1]);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php if (isset($title) and isset($description)) { ?>
-        <title><?= $title ?></title>
-        <meta property="og:title" content="<?= $title ?>">
-        <meta name="twitter:title" content="<?= $title ?>">
+        <title><?= $title ?> | Jorian Woltjer</title>
+        <meta property="og:title" content="<?= $title ?> | Jorian Woltjer">
+        <meta name="twitter:title" content="<?= $title ?> | Jorian Woltjer">
         <meta name="description" content="<?= $description ?>">
         <meta property="og:description" content="<?= $description ?>">
         <meta name="twitter:description" content="<?= $description ?>">

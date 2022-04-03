@@ -1,6 +1,6 @@
 <?php
 $title = "Blog - All posts";
-$description = "A list of all blog posts on my website.";
+$description = "See all posts on my blog about cybersecurity. Including writeups of Capture The Flag challenges, guides, and more.";
 require_once("../include/header.php"); ?>
 
 <h1 class="my-4"><code>All posts</code></h1>

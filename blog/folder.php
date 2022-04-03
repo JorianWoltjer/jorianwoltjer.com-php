@@ -64,8 +64,8 @@ if ($response_breadcrumbs->num_rows >= 2) {
 }
 $title = $folder." - ".$row['title'];
 ?>
-<title><?= $title ?></title>
-<meta name="og:title" content="<?= $title ?>" />
+<title><?= $title ?> | Jorian Woltjer</title>
+<meta name="og:title" content="<?= $title ?> | Jorian Woltjer" />
 
 <hr>
 <p class="lead"><?= $row["description"] ?></p>

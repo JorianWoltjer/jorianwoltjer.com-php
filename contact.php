@@ -1,7 +1,7 @@
 <?php
 $centerPage = true;
 $title = "Contact";
-$description = "A list of accounts that can be used to contact me.";
+$description = "A list of accounts you can use to contact me. Discord, Github, email, etc. If you have any questions or want to reach out, feel free to use any of these accounts.";
 require_once("include/header.php"); ?>
 
     <h1 class="my-4"><code>Contact</code></h1>

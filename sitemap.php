@@ -1,27 +1,33 @@
 <?php require_once ('include/all.php');
+
 header("Content-type: text/xml");
 echo'<?xml version="1.0" encoding="UTF-8"?>';
 echo'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+$date = date("Y-m-d\TH:i:sP");
 ?>
 <url>
   <loc><?= get_baseurl() ?>/</loc>
-  <lastmod>2021-08-13T16:52:51+00:00</lastmod>
+  <lastmod><?= $date ?></lastmod>
 </url>
 <url>
   <loc><?= get_baseurl() ?>/blog/</loc>
-  <lastmod>2021-08-13T16:52:51+00:00</lastmod>
+    <lastmod><?= $date ?></lastmod>
 </url>
 <url>
-  <loc><?= get_baseurl() ?>/projects/</loc>
-  <lastmod>2021-08-13T16:52:51+00:00</lastmod>
+    <loc><?= get_baseurl() ?>/blog/</loc>
+    <lastmod><?= $date ?></lastmod>
+</url>
+<url>
+  <loc><?= get_baseurl() ?>/blog/all_posts</loc>
+    <lastmod><?= $date ?></lastmod>
 </url>
 <url>
   <loc><?= get_baseurl() ?>/contact</loc>
-  <lastmod>2021-08-13T16:52:51+00:00</lastmod>
+    <lastmod><?= $date ?></lastmod>
 </url>
 <url>
   <loc><?= get_baseurl() ?>/projects/school_websites</loc>
-  <lastmod>2021-08-13T16:52:51+00:00</lastmod>
+    <lastmod><?= $date ?></lastmod>
 </url>
 <?php
 $response = sql_query("SELECT url, timestamp FROM folders");

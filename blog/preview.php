@@ -46,7 +46,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
     $folder = $response_breadcrumbs->fetch_assoc();
     $title = $folder['title']." - ".$_POST['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
     ?>
-    <title><?= $title ?></title>
+    <title><?= $title ?> | Jorian Woltjer</title>
 
     <p class="tags">
         <?php
