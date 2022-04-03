@@ -17,7 +17,7 @@ require_once("include/header.php"); ?>
             max-width: 80%;
             box-shadow: 0 0 50px 0 rgb(0 0 0 / 70%);
             border-radius: 25px;
-            padding: 30px 40px;
+            padding: 35px;
             width: 35ch;
         }
         code {

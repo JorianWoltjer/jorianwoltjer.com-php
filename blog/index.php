@@ -12,18 +12,19 @@ require_once("../include/header.php"); ?>
 
         if ($response) {
             while ($row = $response->fetch_assoc()) {
-                echo "<a class='folder' href='/blog/folder/$row[url]'><i class='fas $row[icon]'></i>$row[title]</a>";
+                echo "<a class='folder' href='/blog/folder/$row[url]'><i class='fa-solid $row[icon]'></i>$row[title]</a>";
             }
         }
         ?>
     </div>
     <br>
+    <a class='folder' href='/blog/all_posts'><i class="fa-solid fa-earth-americas"></i>All posts</a>
 
 <?php if ($admin) { ?>
     <h3 class="my-4"><code>Admin</code></h3>
-    <a href="create_post" class="folder"><i class="fas fa-plus"></i>Create post</a>
-    <a href="create_folder" class="folder"><i class="fas fa-folder-plus"></i>Create folder</a>
-    <a href="hidden" class="folder"><i class="fas fa-eye-slash"></i>Hidden posts</a>
+    <a href="create_post" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
+    <a href="create_folder" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
+    <a href="hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
 <?php } ?>
 
     <br>

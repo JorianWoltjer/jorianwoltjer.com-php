@@ -212,7 +212,7 @@ p.button i {
 }
 
 .nav-link.active {
-  border-color: var(--blue);
+  border-color: var(--blue) !important;
 }
 .nav-link.active:hover {
   background-color: var(--blue);
@@ -505,6 +505,21 @@ color: var(--blue);
 }
 .pagination .center p {
   margin: 0;
+}
+
+.page-number {
+  display: inline-block;
+}
+.page-number .nav-link {
+  margin: 3px;
+  width: 4.5ch;
+  height: 4ch;
+  padding: 0 !important;
+  line-height: 3.5ch;
+}
+.page-number .nav-link.active:hover {
+  background: inherit;
+  color: white !important;
 }
 
 .modal-header {

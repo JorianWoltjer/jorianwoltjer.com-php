@@ -71,7 +71,7 @@ $title = $folder." - ".$row['title'];
 <p class="lead"><?= $row["description"] ?></p>
 
 <?php if ($admin) { ?>
-    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fas fa-edit"></i>Edit folder</a>
+    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fa-solid fa-edit"></i>Edit folder</a>
 <?php } ?>
 
 <?php

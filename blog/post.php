@@ -89,7 +89,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
     </div>
 
 <?php if ($admin) { ?>
-    <a href="/blog/edit_post?id=<?= $row['id'] ?>" class="folder"><i class="fas fa-edit"></i>Edit post</a>
+    <a href="/blog/edit_post?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit post</a>
     <br>
     <br>
 <?php } ?>
@@ -112,7 +112,7 @@ $next = $response_next->fetch_assoc();
         <div class="left">
             <?php
             if ($prev) {
-                echo '<a href="/blog/post/'.$prev["url"].'"><i class="fas fa-caret-left"></i> Previous</a>';
+                echo '<a href="/blog/post/'.$prev["url"].'"><i class="fa-solid fa-caret-left"></i> Previous</a>';
             }
             ?>
         </div>
@@ -124,7 +124,7 @@ $next = $response_next->fetch_assoc();
         <div class="right">
             <?php
             if ($next) {
-                echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fas fa-caret-right"></i></a>';
+                echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fa-solid fa-caret-right"></i></a>';
             }
             ?>
         </div>

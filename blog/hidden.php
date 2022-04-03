@@ -49,7 +49,6 @@ while ($row = $response_posts->fetch_assoc()) { ?>
             </div>
         </div>
     </div>
-    <br>
 <?php }
 
 if ($response_posts->num_rows === 0) {

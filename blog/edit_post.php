@@ -112,7 +112,7 @@ require_once("../include/header.php");
             $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
 
             foreach ($tags->fetch_all() as $tag) {
-                echo '<span class="tag selected-tag tag-'.$tag[1].'">'.$tag[0].'<i class="fas fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
+                echo '<span class="tag selected-tag tag-'.$tag[1].'">'.$tag[0].'<i class="fa-solid fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
             }
             ?>
             <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
@@ -171,7 +171,7 @@ require_once("../include/header.php");
             tag.innerText = element.value
 
             const delete_button = document.createElement("i")
-            delete_button.className = "fas fa-times-circle tag-delete"
+            delete_button.className = "fa-solid fa-times-circle tag-delete"
             delete_button.onclick = function() { delete_tag(tag) };
 
             tag.appendChild(delete_button)
