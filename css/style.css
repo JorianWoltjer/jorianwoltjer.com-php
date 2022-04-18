@@ -552,3 +552,9 @@ color: var(--blue);
   background-size: cover;
   background-position: 50% 50%;
 }
+
+@media (max-width: 800px) {
+  .desktop-only {
+    display: none;
+  }
+}

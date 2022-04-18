@@ -68,7 +68,14 @@ $title = $folder." - ".$row['title'];
 <meta name="og:title" content="<?= $title ?> | Jorian Woltjer" />
 
 <hr>
-<p class="lead"><?= $row["description"] ?></p>
+<p class="lead">
+    <?php
+    $first = first_sentence($row["description"]);
+    $rest = substr($row["description"], strlen($first));
+    echo $first;
+    echo "<span class='desktop-only'>$rest</span>";
+    ?>
+</p>
 
 <?php if ($admin) { ?>
     <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fa-solid fa-edit"></i>Edit folder</a>

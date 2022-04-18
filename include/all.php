@@ -160,3 +160,9 @@ function text_to_url(string $text): string
 
     return $text;
 }
+
+function first_sentence(string $text): string
+{
+    preg_match('/^.*?(\w[!?.] |$)/', $text, $match);
+    return $match[0];
+}
