@@ -47,7 +47,7 @@ require_once("../include/header.php");
             ?>
         </select>
         <br>
-        <input class="btn btn-light" type="submit" name="submit" value="Create">
+        <input class="btn btn-primary" type="submit" name="submit" value="Create">
     </form>
 
     <script>

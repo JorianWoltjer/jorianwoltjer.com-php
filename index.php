@@ -13,13 +13,6 @@ require_once("include/header.php"); ?>
             vertical-align: bottom;
         }
 
-        #page-content img {
-            max-width: 80%;
-            box-shadow: 0 0 50px 0 #141414;
-            border-radius: 25px;
-            padding: 35px;
-            width: 35ch;
-        }
         code {
             font-size: inherit;
         }
@@ -35,7 +28,7 @@ require_once("include/header.php"); ?>
     </script>
 
     <h1 class="my-4">Hello, I am <code>Jorian Woltjer</code></h1>
-    <img src="/img/logo.svg">
+    <img src="/img/logo.svg" class="boxed-img">
     <h1 class="my-4"><code>Welcome</code> to my <code>website!</code></h1>
 
 <?php require_once("include/footer.php"); ?>

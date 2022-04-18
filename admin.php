@@ -47,14 +47,14 @@ require_once("include/header.php"); ?>
         });
     </script>
 
-    <div class="box">
+    <div class="boxed">
         <?php displayMessage() ?>
         <h1><code>Admin login</code></h1>
         <br>
         <form method="post">
             <input class="form-control" type="password" id="password" name="password" placeholder="Password" style="max-width: 300px; text-align: center">
             <br>
-            <input class="btn btn-light" type="submit" value="Submit">
+            <input class="btn btn-primary" type="submit" value="Submit">
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
         </form>
     </div>

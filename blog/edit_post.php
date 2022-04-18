@@ -140,7 +140,7 @@ require_once("../include/header.php");
         </div>
         <br>
         <br>
-        <input class="btn btn-light" type="submit" name="submit" value="Save" onclick="this.form.button=this; this.form.target=''">
+        <input class="btn btn-primary" type="submit" name="submit" value="Save" onclick="this.form.button=this; this.form.target=''">
         <input class="btn btn-secondary" type="submit" name="submit" value="Preview" onclick="this.form.button=this; this.form.target='_blank'" formaction="preview">
     </form>
 

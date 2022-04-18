@@ -20,17 +20,14 @@ if (isset($_GET['code'])) {
 require("include/header.php"); ?>
 
 <style>
-    .big-icon {
-        font-size: 100px;
-        color: var(--blue);
-    }
+
 </style>
 
-    <i class="fa-solid fa-triangle-exclamation big-icon"></i>
-    <h1 class="my-4"><code><?= htmlspecialchars($title) ?></code></h1>
-    <p class="lead">
-        There was an error loading this page.<br>
-        You can try going back to <a href="/">Home</a> or the <a href="#" onclick="history.back()">Previous Page</a>.
-    </p>
+<i class="fa-solid fa-triangle-exclamation big-icon"></i>
+<h1 class="my-4"><code><?= htmlspecialchars($title) ?></code></h1>
+<p class="lead">
+    There was an error loading this page.<br>
+    You can try going back to <a href="/">Home</a> or the <a href="#" onclick="history.back()">Previous Page</a>.
+</p>
 
 <?php require("include/footer.php"); ?>

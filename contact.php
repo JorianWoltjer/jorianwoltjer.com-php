@@ -19,11 +19,11 @@ require_once("include/header.php"); ?>
             <div class="button-icon"><i class="fab fa-twitter"></i></div>
             <div class="button-text">Twitter</div>
         </div></a>
-        <a id="copy" href="" onclick="return copy_discord(this)"  data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Copied!" aria-label="Copied!"><div class="button dark-blue">
+        <a id="copy" href="" onclick="return copy_discord(this)"  data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="Copied!" aria-label="Copied!"><div class="button discord-blue">
             <div class="button-icon"><i class="fab fa-discord"></i></div>
             <div class="button-text">Jorian#0135</div>
         </div></a>
-        <a href="https://stackoverflow.com/users/10508498" target="_blank"><div class="button green">
+        <a href="https://stackoverflow.com/users/10508498" target="_blank"><div class="button light-green">
             <div class="button-icon"><i class="fab fa-stack-overflow"></i></div>
             <div class="button-text">Stack Overflow</div>
         </div></a>
