@@ -7,6 +7,12 @@ if (isset($_COOKIE["PHPSESSID"])) {
         $admin = true;
     }
 }
+if (isset($admin_required) && $admin_required && !$admin) { // Admin only
+    header("HTTP/1.1 403 Forbidden");
+    $_GET['code'] = "403";
+    require("../error.php");
+    exit();
+}
 
 $html_messages = array(
     "error_folder" => '<div class="alert alert-danger animated bounceOut" role="alert">This folder does not exist</div>',

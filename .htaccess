@@ -19,3 +19,8 @@ RewriteRule ^([^\.]+)$ $1.php [NC,L]
 RewriteRule sitemap.xml sitemap.php [L]
 # Redirect for /sw
 Redirect 301 /sw /projects/school_websites
+
+# Error pages
+ErrorDocument 403 /error.php?code=403
+ErrorDocument 404 /error.php?code=404
+ErrorDocument 500 /error.php?code=500

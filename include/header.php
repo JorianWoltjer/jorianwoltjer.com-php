@@ -9,13 +9,14 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php if (isset($title) and isset($description)) { ?>
-        <title><?= $title ?> | Jorian Woltjer</title>
-        <meta property="og:title" content="<?= $title ?> | Jorian Woltjer">
-        <meta name="twitter:title" content="<?= $title ?> | Jorian Woltjer">
-        <meta name="description" content="<?= $description ?>">
-        <meta property="og:description" content="<?= $description ?>">
-        <meta name="twitter:description" content="<?= $description ?>">
+    <?php if (isset($title)) { ?>
+        <title><?= htmlspecialchars($title) ?> | Jorian Woltjer</title>
+        <meta property="og:title" content="<?= htmlspecialchars($title) ?> | Jorian Woltjer">
+        <meta name="twitter:title" content="<?= htmlspecialchars($title) ?> | Jorian Woltjer">
+    <?php if (isset($description)) { ?>
+        <meta name="description" content="<?= htmlspecialchars($description) ?>">
+        <meta property="og:description" content="<?= htmlspecialchars($description) ?>">
+        <meta name="twitter:description" content="<?= htmlspecialchars($description) ?>">
         <meta property="og:type" content="website">
         <meta name="twitter:card" content="summary">
         <meta property="og:url" content="<?= htmlspecialchars(get_baseurl().$_SERVER["REQUEST_URI"]) ?>">
@@ -24,7 +25,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         <meta name="twitter:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
         <meta property="twitter:domain" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
         <meta property="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
-    <?php } ?>
+    <?php }} ?>
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"

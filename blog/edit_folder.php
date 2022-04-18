@@ -1,12 +1,8 @@
 <?php
+$admin_required = true;
 $title = "Edit folder";
 $description = "Form to edit a folder for posts on my blog.";
 require_once("../include/all.php");
-
-if (!$admin) { // Admin only
-    header("HTTP/1.1 403 Forbidden");
-    exit();
-}
 
 $response = sql_query("SELECT * FROM folders WHERE id = ?", [$_GET['id']]);
 $row = $response->fetch_assoc();

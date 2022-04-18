@@ -1,12 +1,8 @@
 <?php
+$admin_required = true;
 $title = "Hidden posts";
 $description = "List of all blog posts set to hidden";
 require_once("../include/header.php");
-
-if (!$admin) { // Admin only
-    header("HTTP/1.1 403 Forbidden");
-    exit();
-}
 ?>
 
 <h1 class="my-4"><code>Hidden posts</code></h1>

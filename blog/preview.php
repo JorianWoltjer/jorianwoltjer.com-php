@@ -1,9 +1,6 @@
-<?php require_once("../include/header.php");
-
-if (!$admin) { // Admin only
-    header("HTTP/1.1 403 Forbidden");
-    exit();
-}
+<?php
+$admin_required = true;
+require_once("../include/header.php");
 
 if (!isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['folder'], $_POST['tags'],
     $_POST['text'], $_POST['points'])) {

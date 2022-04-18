@@ -1,12 +1,8 @@
 <?php
+$admin_required = true;
 $title = "Create folder";
 $description = "Form to create a folder for posts on my blog.";
 require_once("../include/header.php");
-
-if (!$admin) { // Admin only
-    header("HTTP/1.1 403 Forbidden");
-    exit();
-}
 ?>
 
     <h1 class="my-4"><code>Create folder</code></h1>
