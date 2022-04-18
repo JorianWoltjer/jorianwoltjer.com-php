@@ -1,5 +1,5 @@
 <?php
-$title = "Blog - All posts";
+$title = "Blog - All Posts";
 $description = "See all posts on my blog about cybersecurity. Including writeups of Capture The Flag challenges, guides, and more.";
 require_once("../include/header.php"); ?>
 

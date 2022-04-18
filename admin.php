@@ -1,5 +1,5 @@
 <?php
-$title = "Admin login";
+$title = "Admin Login";
 $description = "The administrator login page to manage my website.";
 $centerPage = true;
 require_once("include/all.php");
