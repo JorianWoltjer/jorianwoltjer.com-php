@@ -589,7 +589,7 @@ a.folder.brighter:hover {
   z-index: 9001;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 100ch) {
   .desktop-only {
     display: none;
   }
