@@ -64,7 +64,7 @@ if ($response->num_rows > 0) {
 </div>
 <div id="no-posts">
     <br>
-    <p class='lead'>No posts found.</p>
+    <p class='lead hidden'>No posts found.</p>
 </div>
 
 <script>
