@@ -3,6 +3,12 @@ $title = "Blog";
 $description = "A blog with cybersecurity-related articles. Writeups of challenges in Capture The Flag (CTF) events, stories about hacking and guides with code examples and detailed explanations.";
 require_once("../include/header.php"); ?>
 
+<style>
+    hr.higher-top {
+        margin-top: 1.5rem;
+    }
+</style>
+
     <h1 class="my-4"><code>Blog</code></h1>
     <?php displayMessage() ?>
 
@@ -17,8 +23,9 @@ require_once("../include/header.php"); ?>
         }
         ?>
     </div>
-    <br>
-    <a class='folder' href='/blog/all_posts'><i class="fa-solid fa-earth-americas"></i>All posts</a>
+    <hr class="higher-top">
+    <a class='folder brighter' href='/blog/search'><i class="fa-solid fa-magnifying-glass"></i>Search</a>
+
 
 <?php if ($admin) { ?>
     <h3 class="my-4"><code>Admin</code></h3>

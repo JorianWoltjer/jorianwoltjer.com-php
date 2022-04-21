@@ -54,7 +54,7 @@ require_once("include/header.php"); ?>
         <form method="post">
             <input class="form-control" type="password" id="password" name="password" placeholder="Password" style="max-width: 300px; text-align: center">
             <br>
-            <input class="btn btn-primary" type="submit" value="Submit">
+            <input class="btn btn-secondary" type="submit" value="Submit">
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
         </form>
     </div>

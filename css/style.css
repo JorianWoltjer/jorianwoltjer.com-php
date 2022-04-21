@@ -14,6 +14,7 @@
   --light-gray: #7a7a7a;
 
   --main-color: #3498db;
+  --main-color-light: #7bbfef;
   --main-color-dark: #1374b5;
   --background: #222222;
   --background-light: #303030;
@@ -387,17 +388,21 @@ a.folder {
   border-radius: 5px;
   transition: 0.25s;
 }
-
 a.folder:hover {
   top: 0;
   background-color: var(--dark-gray);
 }
-
 a.folder i {
   font-size: 1.5rem;
   color: var(--main-color);
   transform: translate(0, 15%);
   margin-right: 10px;
+}
+a.folder.brighter {
+  border-color: var(--gray);
+}
+a.folder.brighter:hover {
+  background-color: var(--gray);
 }
 
 .breadcrumb {
