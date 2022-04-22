@@ -3,9 +3,6 @@ $title = "Blog - Search";
 $description = "Search through all posts on my blog about cybersecurity. Quickly find what you're looking for by typing in the search bar.";
 require_once("../include/header.php");
 
-// TODO:
-// - Description to post match
-
 function text_only($html) {
     $text = preg_replace('/<[^>]*>/', ' ', $html);
     $text = preg_replace('/\s\s+|\n/', ' ', $text);
@@ -14,9 +11,6 @@ function text_only($html) {
 ?>
 
 <style>
-    span.highlight {
-        background-color: rgb(255 255 255 / 15%);
-    }
     .hidden {
         display: none;
     }
@@ -40,7 +34,7 @@ if ($response->num_rows > 0) {
                 </div>
                 <div class="col-sm-9" style="display: flex; flex-direction: column;">
                     <div class="card-body">
-                        <div style="display: none"><?= text_only($row["html"]) ?></div>
+                        <div id="post-content-search" class="hidden"><?= text_only($row["html"]) ?></div>
                         <p class="card-text tags">
                             <?php
                             $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
@@ -54,7 +48,8 @@ if ($response->num_rows > 0) {
                         <h3 class="card-title">
                             <a href="/blog/post/<?= $row['url'] ?>"><code><?= $row['title'] ?></code></a>
                         </h3>
-                        <p class="card-text"><?= $row['description'] ?></p>
+                        <p class="card-text hidden" id="post-content-preview"></p>
+                        <p class="card-text" id="post-description"><?= $row['description'] ?></p>
                     </div>
                 </div>
             </div>
@@ -113,6 +108,27 @@ if ($response->num_rows > 0) {
             }
         }
 
+        // Replace description with preview if highlighted
+        for (let i = 0; i < results.children.length; i++) {
+            let post = results.children[i];
+            // Find highlights in post content
+            let previewHighlight = post.querySelector(".card:not(.hidden) #post-content-search>span.highlight");
+            if (previewHighlight) {
+                // Show preview
+                const previewIndex = post.querySelector("#post-content-search").innerHTML.indexOf(previewHighlight.outerHTML);
+                const preview = post.querySelector("#post-content-search").innerHTML.substring(previewIndex, previewIndex + 200);
+                console.log(previewIndex, previewHighlight, preview);
+
+                post.querySelector("#post-content-preview").innerHTML = "..." + preview + "...";
+                post.querySelector("#post-content-preview").classList.remove("hidden");
+                post.querySelector("#post-description").classList.add("hidden");
+            } else {
+                // Show description
+                post.querySelector("#post-content-preview").classList.add("hidden");
+                post.querySelector("#post-description").classList.remove("hidden");
+            }
+        }
+
         if (query.length > 0) {
             history.replaceState(null, null, `?q=${query.join(" ")}`);  // Save search in URL
             if (!results.querySelector(".card:not(.hidden)")) {  // Show no-posts message if all posts are hidden
@@ -162,4 +178,8 @@ if ($response->num_rows > 0) {
     const params = new URLSearchParams(window.location.search);
     document.getElementById("query").value = params.get("q");
     search(document.getElementById("query").value);
+    //# sourceURL=search.js
 </script>
+
+<?php require_once("../include/footer.php"); ?>
+

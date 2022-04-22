@@ -197,6 +197,7 @@ p.button i {
 /* Navbar */
 .navbar {
   background-color: var(--background-light) !important;
+  box-shadow: 0 5px 20px 0 rgb(0 0 0 / 20%);
 }
 
 .navbar-brand {
@@ -606,4 +607,8 @@ a.folder.brighter:hover {
   border-radius: 25px;
   padding: 35px;
   width: 35ch;
+}
+
+span.highlight, ::target-text {
+  background-color: rgb(255 255 255 / 15%);
 }
