@@ -11,13 +11,19 @@ function text_only($html) {
 ?>
 
 <style>
-    .hidden {
-        display: none;
+    .hover-link {
+        color: white;
+        text-decoration: none;
+        transition: 0.25 ease;
+    }
+    .hover-link:hover {
+        color: white;
+        text-decoration: underline;
     }
 </style>
 
 <h1 class="my-4"><code>Search posts</code></h1>
-<input id="query" type="text" class="form-control" placeholder="Search" oninput="search(this.value)" autocomplete="off" autofocus>
+<input id="query" type="text" class="form-control" placeholder="Search" oninput="search(this.value)" onblur="saveURL()" autocomplete="off" autofocus>
 
 <div id="results">
 <?php
@@ -48,7 +54,7 @@ if ($response->num_rows > 0) {
                         <h3 class="card-title">
                             <a href="/blog/post/<?= $row['url'] ?>"><code><?= $row['title'] ?></code></a>
                         </h3>
-                        <p class="card-text hidden" id="post-content-preview"></p>
+                        <p class="card-text hidden" id="post-content-preview"><a href="" class="hover-link"></a></p>
                         <p class="card-text" id="post-description"><?= $row['description'] ?></p>
                     </div>
                 </div>
@@ -75,6 +81,10 @@ if ($response->num_rows > 0) {
             const firstOccurrence = !query.some(other => other === word && query.indexOf(other) < i);
             return longEnough && mostSpecific && firstOccurrence;
         });
+    }
+
+    function stripTags(str) {
+        return str.replace( /(<[^>]+)>/ig, '');
     }
 
     function search(query) {
@@ -117,9 +127,12 @@ if ($response->num_rows > 0) {
                 // Show preview
                 const previewIndex = post.querySelector("#post-content-search").innerHTML.indexOf(previewHighlight.outerHTML);
                 const preview = post.querySelector("#post-content-search").innerHTML.substring(previewIndex, previewIndex + 200);
-                console.log(previewIndex, previewHighlight, preview);
+                // Get first word from preview
+                const previewWord = stripTags(preview).match(/\w+/)[0];
+                const href = post.querySelector("h3>a").href;
 
-                post.querySelector("#post-content-preview").innerHTML = "..." + preview + "...";
+                post.querySelector("#post-content-preview>a").innerHTML = "…" + preview + "…";
+                post.querySelector("#post-content-preview>a").href = href + "#:~:text=" + previewWord;
                 post.querySelector("#post-content-preview").classList.remove("hidden");
                 post.querySelector("#post-description").classList.add("hidden");
             } else {
@@ -130,14 +143,11 @@ if ($response->num_rows > 0) {
         }
 
         if (query.length > 0) {
-            history.replaceState(null, null, `?q=${query.join(" ")}`);  // Save search in URL
             if (!results.querySelector(".card:not(.hidden)")) {  // Show no-posts message if all posts are hidden
                 document.getElementById("no-posts").classList.remove("hidden");
             } else {
                 document.getElementById("no-posts").classList.add("hidden");
             }
-        } else {
-            history.replaceState(null, null, "/blog/search");  // Clear URL bar
         }
     }
 
@@ -174,11 +184,24 @@ if ($response->num_rows > 0) {
         return [text, unmatched];
     }
 
+    function saveURL() {
+        const query = document.getElementById("query").value;
+        if (query.length > 0) {
+            history.replaceState({}, "", `?q=${query}`);  // Save search in URL
+        } else {
+            history.replaceState(null, null, "/blog/search");  // Clear URL bar
+        }
+    }
+
+    // Remove ::target-text on click
+    document.body.addEventListener('click', () => {
+        document.documentElement.style.setProperty("--target-text-color", "");
+    }, true);
+
     // Put search query from URL into search bar
     const params = new URLSearchParams(window.location.search);
     document.getElementById("query").value = params.get("q");
     search(document.getElementById("query").value);
-    //# sourceURL=search.js
 </script>
 
 <?php require_once("../include/footer.php"); ?>

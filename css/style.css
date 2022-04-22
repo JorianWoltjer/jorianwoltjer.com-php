@@ -609,6 +609,14 @@ a.folder.brighter:hover {
   width: 35ch;
 }
 
-span.highlight, ::target-text {
+span.highlight {
   background-color: rgb(255 255 255 / 15%);
+}
+
+::target-text {
+  background-color: rgb(52 149 201 / 30%)
+}
+
+.hidden {
+  display: none;
 }
