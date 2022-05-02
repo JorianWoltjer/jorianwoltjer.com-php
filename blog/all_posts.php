@@ -19,7 +19,7 @@ if ($response->num_rows > 0) {
             <div class="row no-gutters">
                 <div class="col-sm-2" style="padding: 0;">
                     <a href="/blog/post/<?= $row['url'] ?>">
-                        <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
+                        <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
                     </a>
                 </div>
                 <div class="col-sm-9" style="display: flex; flex-direction: column;">

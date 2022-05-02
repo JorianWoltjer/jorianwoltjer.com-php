@@ -23,6 +23,15 @@
   --foreground-light: #cccccc;
 }
 
+/* Fonts */
+@font-face {
+  font-family: "Fira Code";
+  src: local("Fira Code"), local("FiraCode-Regular");
+      url("/assets/fonts/FiraCode.woff2") format("woff2"),
+      url("/assets/fonts/FiraCode.woff") format("woff"),
+      url("/assets/fonts/FiraCode.ttf") format("truetype");
+}
+
 /* General styling */
 html,
 body {
@@ -105,6 +114,14 @@ blockquote p, li p {
 
 textarea {
   cursor: auto;
+}
+
+pre {
+  font-size: .81em;
+}
+pre code {
+  font-family: "Fira Code", monospace;
+  padding: 1ch 1.5ch !important;
 }
 
 .modal {
@@ -508,7 +525,7 @@ a.folder.brighter:hover {
 }
 
 .code-block p {
-  margin: 0.5em 1em;
+  margin: 0.4em 0.8em;
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   color: var(--foreground);
 }
