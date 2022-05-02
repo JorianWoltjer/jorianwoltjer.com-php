@@ -554,7 +554,6 @@ blockquote code {
 .blog-content img {
   display: block;
   max-width: calc(min(50ch, 100%));
-  margin: 2rem 0;
   cursor: pointer;
   border: 2px solid var(--background-light);
   border-radius: 10px;
