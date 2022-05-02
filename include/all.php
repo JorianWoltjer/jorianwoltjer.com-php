@@ -1,4 +1,6 @@
-<?php require_once(__DIR__."/../../mysqli_connect.php"); require_once(__DIR__."/../../secret.php");
+<?php use JetBrains\PhpStorm\NoReturn;
+
+require_once(__DIR__."/../../mysqli_connect.php"); require_once(__DIR__."/../../secret.php");
 
 $admin = false;
 if (isset($_COOKIE["PHPSESSID"])) {
@@ -66,15 +68,7 @@ function time_to_ago($time): string
     return round($value).' '.$unit.$s.' ago';
 }
 
-function htmlspecialchars_array($array)
-{
-    foreach ($array as $key => $value) {
-        $array[$key] = htmlspecialchars($value);
-    }
-    return $array;
-}
-
-function displayMessage()
+function displayMessage(): void
 {
     global $html_messages;
     if (isset($_GET["message"])) {
@@ -82,7 +76,7 @@ function displayMessage()
     }
 }
 
-function returnMessage($message, $location = "")
+#[NoReturn] function returnMessage($message, $location = ""): void
 {
     if (empty($location)) {
         $location = basename($_SERVER['PHP_SELF'], ".php");
@@ -96,7 +90,7 @@ function returnMessage($message, $location = "")
     exit();
 }
 
-function sql_query(string $sql, array $params = [])
+function sql_query(string $sql, array $params = []): mysqli_result|bool|null
 {
     global $dbc;
 
@@ -123,7 +117,8 @@ function sql_query(string $sql, array $params = [])
     return null;  // If anything failed
 }
 
-function md_to_html(string $text) {
+function md_to_html(string $text): array|string|null
+{
     require_once("../include/Parsedown.php");
 
     // Markdown to HTML
@@ -131,7 +126,13 @@ function md_to_html(string $text) {
     $text = $Parsedown->text($text);
 
     // Add id attribute to h2 headers
-    $text = header_ids($text);
+    $text = preg_replace_callback( '/<h2>(.*?)<\/h2>/i', function( $matches ) {
+        // Filter out encoded html characters, tags, and other chars
+        $id = preg_replace('/(&.*?;)|(<.*?>)|[^\w ]/i', '', $matches[1]);
+        $id = preg_replace('/ /', '-', $id);  // Replace spaces with dashes
+        $id = strtolower($id);  // Convert to lowercase
+        return '<h2 id="'.$id.'">'.$matches[1].'</h2>';
+    }, $text);
 
     // Image lightbox
     $text = preg_replace('/<img src="(.*?)" alt="(.*?)" \/>/',
@@ -139,32 +140,16 @@ function md_to_html(string $text) {
         $text);
 
     // Style code blocks
-    $text = preg_replace('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
+    return preg_replace('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
         '<div class="code-block"><p>$1<a class="copy" id="copy" onclick="copy_code(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Copied!"><i class="fa-solid fa-copy"></i></a style="float: right"></p><pre><code class="language-$1">$2</code></pre></div>',
         $text);
-    return $text;
-}
-
-// TODO: Combine these two functions
-function header_ids(string $text) {
-    $text = preg_replace_callback( '/<h2>(.*?)<\/h2>/i', function( $matches ) {
-        // Filter out encoded html characters, tags, and other chars
-        $id = preg_replace('/(&.*?;)|(<.*?>)|[^\w ]/i', '', $matches[1]);
-        $id = preg_replace('/ /i', '-', $id); // Replace spaces with dashes
-        $id = strtolower($id); // Convert to lowercase
-        return '<h2 id="'.$id.'">'.$matches[1].'</h2>';
-    }, $text );
-
-    return $text;
 }
 
 function text_to_url(string $text): string
 {
     $text = trim(preg_replace('/[^\w\d]+/', ' ', $text));  // Convert other characters to spaces + trim
     $text = preg_replace('/ /', '-', $text);  // Convert space to dashes
-    $text = strtolower($text);  // Lowercase
-
-    return $text;
+    return strtolower($text);  // Lowercase
 }
 
 function first_sentence(string $text): string

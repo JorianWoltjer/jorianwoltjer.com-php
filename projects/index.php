@@ -75,7 +75,7 @@ require_once("../include/header.php"); ?>
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="card h-100">
                         <a href="<?= $row["href"] ?>" <?= ($row["category"] == "Utility") ? "" : "target='_blank'" ?>>
-                            <img class="card-img-top" src="/img/projects/<?= $row["img"] ?>"></a>
+                            <img class="card-img-top" src="/img/projects/<?= $row["img"] ?>" alt="Project thumbnail"></a>
                         <div class="card-body">
                             <p class="card-text tags">
                                 <span class="tag tag-<?= $row["category"] ?>"><?= ucfirst($row["category"]) ?></span>

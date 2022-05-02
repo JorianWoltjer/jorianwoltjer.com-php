@@ -68,7 +68,7 @@ require_once("../include/header.php");
     </form>
 
     <script>
-        $('#image').change(function() {
+        $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
         }).change();

@@ -104,7 +104,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
         function copy_code(element) {
             const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;
             navigator.clipboard.writeText(code);
-            var tooltip = new bootstrap.Tooltip(element);
+            const tooltip = new bootstrap.Tooltip(element);
             tooltip.show();
             setTimeout(function() {
                 tooltip.dispose();
@@ -112,7 +112,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
         }
 
         // Open all links in new tab
-        window.addEventListener('DOMContentLoaded', (event) => {
+        window.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll(".blog-content a:not(.copy)").forEach((e) => {
                 e.target = "_blank";
             });

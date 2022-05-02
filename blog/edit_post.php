@@ -103,7 +103,7 @@ require_once("../include/header.php");
         </select>
         <br>
         <p class="tags" id="tags">
-            <span id="tags-tabel" style="margin-right: 10px;">Tags:</span>
+            <label for="tag-add" style="margin-right: 10px;">Tags:</label>
             <?php
             $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
 
@@ -180,7 +180,7 @@ require_once("../include/header.php");
             tag.parentNode.removeChild(tag);
         }
 
-        document.getElementById("form").onsubmit = function (e) {
+        document.getElementById("form").onsubmit = function () {
             document.getElementById("tag-inputs").innerHTML = ""
             const tags = document.getElementsByClassName("selected-tag");
 
@@ -196,16 +196,15 @@ require_once("../include/header.php");
             return true;
         }
 
-        $(document).ready(function () {
+        $(document).on("ready", function () {
             $('input').on('keydown', function (e) {
-                if (e.keyCode === 13) {
-                    e.keyCode = 9;
+                if (e.key === 'Enter') {  // Don't submit on Enter
                     return false;
                 }
             });
         });
 
-        $('#image').change(function() {
+        $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
         }).change();
@@ -213,8 +212,8 @@ require_once("../include/header.php");
         document.getElementById('text').addEventListener('keydown', function(e) {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                var start = this.selectionStart;
-                var end = this.selectionEnd;
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
 
                 // set textarea value to: text before caret + tab + text after caret
                 this.value = this.value.substring(0, start) +

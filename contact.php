@@ -36,7 +36,7 @@ require_once("include/header.php"); ?>
 
 <script>
     function copy_discord(e) {
-        var tooltip = new bootstrap.Tooltip(document.getElementById("copy"))
+        const tooltip = new bootstrap.Tooltip(document.getElementById("copy"));
         navigator.clipboard.writeText(e.innerText);
         tooltip.show();
         setTimeout(function() {

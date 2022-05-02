@@ -35,11 +35,11 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 
     <script>
         // Clean url if message parameter
-        var url = new URL(location.href);
+        const url = new URL(location.href);
         url.searchParams.delete('message');
         window.history.replaceState({}, null, url.toString());
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/assets/jquery/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="d-flex flex-column">
 
@@ -47,7 +47,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/img/logo.svg" style="width: 4rem">
+            <img src="/img/logo.svg" style="width: 4rem" alt="JW Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,11 +55,11 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <?php if ($admin) { ?>
+                <?php if (isset($admin) && $admin) { ?>
                     <li class="nav-item">
                         <a class="nav-link gray" id="logout" href="/logout"
                            onclick="return confirm('Are you sure you want to log out?')">Logout</a>
-                        <script>document.getElementById("logout").href = "/logout?return=" + encodeURIComponent((location.pathname + location.search).substr(1))</script>
+                        <script>document.getElementById("logout").href = "/logout?return=" + encodeURIComponent((location.pathname + location.search).substring(1))</script>
                     </li>
                 <?php } ?>
                 <li class="nav-item">

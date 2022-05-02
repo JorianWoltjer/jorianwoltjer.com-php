@@ -29,9 +29,9 @@ require_once("../include/header.php"); ?>
 
 <?php if ($admin) { ?>
     <h3 class="my-4"><code>Admin</code></h3>
-    <a href="create_post" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
-    <a href="create_folder" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
-    <a href="hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
+    <a href="/blog/create_post" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
+    <a href="/blog/create_folder" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
+    <a href="/blog/hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
 <?php } ?>
 
     <br>
@@ -45,7 +45,7 @@ if ($response->num_rows > 0) {
         <div class="col">
             <div class="card h-100">
                 <a href="/blog/post/<?= $row['url'] ?>">
-                    <img class="card-img-top" src="/img/blog/<?= $row['img'] ?>">
+                    <img class="card-img-top" src="/img/blog/<?= $row['img'] ?>" alt="Post thumbnail">
                 </a>
                 <div class="card-body">
                     <p class="card-text tags">

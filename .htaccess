@@ -14,7 +14,7 @@ RewriteRule ^blog/post/(.+) blog/post.php?url=$1 [QSA,L]
 RewriteRule ^blog/folder/(.+) blog/folder.php?url=$1 [QSA,L]
 # Remove .php file extension
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^([^.]+)$ $1.php [NC,L]
 # Map sitemap.xml to sitemap.php file (dynamically updates)
 RewriteRule sitemap.xml sitemap.php [L]
 # Redirect for /sw

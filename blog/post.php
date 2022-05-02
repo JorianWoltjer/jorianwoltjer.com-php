@@ -88,7 +88,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
         <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === NULL ? $row["views"]." views" : "<b>Hidden</b>" ?>
     </div>
 
-<?php if ($admin) { ?>
+<?php if (isset($admin) && $admin) { ?>
     <a href="/blog/edit_post?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit post</a>
     <br>
     <br>
@@ -152,7 +152,7 @@ $next = $response_next->fetch_assoc();
         function copy_code(element) {
             const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;
             navigator.clipboard.writeText(code);
-            var tooltip = new bootstrap.Tooltip(element);
+            const tooltip = new bootstrap.Tooltip(element);
             tooltip.show();
             setTimeout(function() {
                 tooltip.dispose();
@@ -160,7 +160,7 @@ $next = $response_next->fetch_assoc();
         }
 
         // Open all links in new tab
-        window.addEventListener('DOMContentLoaded', (event) => {
+        window.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll(".blog-content a:not(.copy)").forEach((e) => {
                 e.target = "_blank";
             });

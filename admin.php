@@ -41,7 +41,7 @@ require_once("include/header.php"); ?>
     <script>
         grecaptcha.ready(function () {
             grecaptcha.execute('6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd', { action: 'contact' }).then(function (token) {
-                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                const recaptchaResponse = document.getElementById('recaptchaResponse');
                 recaptchaResponse.value = token;
             });
         });

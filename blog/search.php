@@ -3,24 +3,12 @@ $title = "Blog - Search";
 $description = "Search through all posts on my blog about cybersecurity. Quickly find what you're looking for by typing in the search bar.";
 require_once("../include/header.php");
 
-function text_only($html) {
+function text_only($html): array|string|null
+{
     $text = preg_replace('/<[^>]*>/', ' ', $html);
-    $text = preg_replace('/\s\s+|\n/', ' ', $text);
-    return $text;
+    return preg_replace('/\s\s+|\n/', ' ', $text);
 }
 ?>
-
-<style>
-    .hover-link {
-        color: white;
-        text-decoration: none;
-        transition: 0.25 ease;
-    }
-    .hover-link:hover {
-        color: white;
-        text-decoration: underline;
-    }
-</style>
 
 <h1 class="my-4"><code>Search posts</code></h1>
 <input id="query" type="text" class="form-control" placeholder="Search" oninput="search(this.value)" onblur="saveURL()" autocomplete="off" autofocus>
@@ -35,7 +23,7 @@ if ($response->num_rows > 0) {
             <div class="row no-gutters">
                 <div class="col-sm-2" style="padding: 0;">
                     <a href="/blog/post/<?= $row['url'] ?>">
-                        <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
+                        <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
                     </a>
                 </div>
                 <div class="col-sm-9" style="display: flex; flex-direction: column;">
@@ -54,7 +42,7 @@ if ($response->num_rows > 0) {
                         <h3 class="card-title">
                             <a href="/blog/post/<?= $row['url'] ?>"><code><?= $row['title'] ?></code></a>
                         </h3>
-                        <p class="card-text hidden" id="post-content-preview"><a href="" class="hover-link"></a></p>
+                        <p class="card-text hidden" id="post-content-preview"><a href="" class="hover-only-link"></a></p>
                         <p class="card-text" id="post-description"><?= $row['description'] ?></p>
                     </div>
                 </div>
@@ -152,7 +140,7 @@ if ($response->num_rows > 0) {
     }
 
     function addHighlights(text, words) {
-        const maxWordLength = Math.max(...words.map(word => word.length));  // Find length of longest word
+        const maxWordLength = Math.max(...words.map(word => word.length));  // Find length of the longest word
         let foundWords = new Array(words.length).fill(false);
         let inHTML = false;
         for (let i = 0; i < text.length; i++) {
@@ -167,7 +155,7 @@ if ($response->num_rows > 0) {
             }
             const substring = text.substring(i, i+maxWordLength)
             for (let j = 0; j < words.length; j++) {  // Go through all words
-                if (substring.toLowerCase().startsWith(words[j].toLowerCase())) {  // If word matches (case insensitive)
+                if (substring.toLowerCase().startsWith(words[j].toLowerCase())) {  // If word matches (case-insensitive)
                     const highlighted = `<span class="highlight">${text.substring(i, i+words[j].length)}</span>`
                     text = text.substring(0, i) + highlighted + text.substring(i+words[j].length);
                     i += highlighted.length;  // Skip next few characters because word already found

@@ -89,7 +89,7 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
         <div class="row no-gutters">
             <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/folder/<?= $row_folders['url'] ?>">
-                    <img src="/img/blog/<?= $row_folders['img'] ? $row_folders['img'] : '../placeholder.png' ?>" class="card-img-top h-100" style="object-fit: cover;">
+                    <img src="/img/blog/<?= $row_folders['img'] ?? '../placeholder.png' ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Folder thumbnail">
                 </a>
             </div>
             <div class="col-sm-9" style="display: flex; flex-direction: column;">
@@ -114,7 +114,7 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
         <div class="row no-gutters">
             <div class="col-sm-3" style="padding: 0;">
                 <a href="/blog/post/<?= $row_posts['url'] ?>">
-                    <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
+                    <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
                 </a>
             </div>
             <div class="col-sm-9" style="display: flex; flex-direction: column;">

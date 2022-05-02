@@ -90,8 +90,7 @@ require_once("../include/header.php");
         </select>
         <br>
         <p class="tags" id="tags">
-            <span id="tags-tabel" style="margin-right: 10px;">Tags:</span>
-
+            <label for="tag-add" style="margin-right: 10px;">Tags:</label>
             <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
             <datalist id="tags-list">
                 <?php
@@ -161,7 +160,7 @@ require_once("../include/header.php");
             tag.parentNode.removeChild(tag);
         }
 
-        document.getElementById("form").onsubmit = function (e) {
+        document.getElementById("form").onsubmit = function () {
             document.getElementById("tag-inputs").innerHTML = ""
             const tags = document.getElementsByClassName("selected-tag");
 
@@ -177,16 +176,15 @@ require_once("../include/header.php");
             return true;
         }
 
-        $(document).ready(function () {
+        $(document).on("ready", function () {
             $('input').on('keydown', function (e) {
-                if (e.keyCode === 13) {
-                    e.keyCode = 9;
+                if (e.key === 'Enter') {  // Don't submit on Enter
                     return false;
                 }
             });
         });
 
-        $('#image').change(function() {
+        $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
         }).change();

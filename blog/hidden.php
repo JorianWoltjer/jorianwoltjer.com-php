@@ -14,11 +14,11 @@ while ($row = $response_posts->fetch_assoc()) { ?>
     <div class="card">
         <div class="row no-gutters">
             <div class="col-sm-3">
-                <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;">
+                <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
             </div>
             <div class="col-sm-9">
                 <table class="table-container">
-                    <tr><td valign="top">
+                    <tr><td style="vertical-align: top;">
                             <div class="card-body">
                                 <p class="card-text tags">
                                     <?php
@@ -36,7 +36,7 @@ while ($row = $response_posts->fetch_assoc()) { ?>
                                 <p class="card-text"><?= $row['description'] ?></p>
                             </div>
                         </td></tr>
-                    <tr><td valign="bottom">
+                    <tr><td style="vertical-align: bottom;">
                             <div class="card-footer text-muted">
                                 <?= time_to_ago($row['timestamp']) ?>
                             </div>
