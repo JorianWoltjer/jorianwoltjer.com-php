@@ -354,13 +354,13 @@ p.button i {
 .tag-editing, .tag-ctf, .tag-web, .tag-sqli, .tag-filter, .tag-forensics {
   background-color: var(--green);
 }
-.tag-utility, .tag-hacking, .tag-reversing, .tag-binary, .tag-rce {
+.tag-utility, .tag-hacking, .tag-reversing, .tag-binary, .tag-rce, .tag-hardware {
   background-color: var(--red);
 }
 .tag-coding, .tag-scripting, .tag-xss, .tag-ssrf {
   background-color: var(--blue);
 }
-.tag-encoding, .tag-crypto, .tag-xxe, .tag-lfi, .tag-misc {
+.tag-encoding, .tag-crypto, .tag-xxe, .tag-lfi, .tag-misc, .tag-linux {
   background-color: var(--yellow);
 }
 
