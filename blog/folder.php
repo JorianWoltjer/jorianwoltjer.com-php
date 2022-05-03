@@ -82,7 +82,7 @@ $title = $folder." - ".$row['title'];
 <?php } ?>
 
 <?php
-$response_folders = sql_query("SELECT * FROM folders WHERE parent = ?", [$row["id"]]);
+$response_folders = sql_query("SELECT * FROM folders WHERE parent = ? ORDER BY timestamp DESC", [$row["id"]]);
 
 while ($row_folders = $response_folders->fetch_assoc()) { ?>
     <div class="card card-horizontal">
@@ -107,7 +107,7 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
     </div>
 <?php }
 
-$response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ?", [$row["id"]]);
+$response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ? ORDER BY timestamp DESC", [$row["id"]]);
 
 while ($row_posts = $response_posts->fetch_assoc()) { ?>
     <div class="card card-horizontal">
