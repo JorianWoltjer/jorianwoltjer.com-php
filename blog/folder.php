@@ -107,7 +107,11 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
     </div>
 <?php }
 
-$response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ? ORDER BY timestamp DESC", [$row["id"]]);
+if ($admin) {
+    $response_posts = sql_query("SELECT * FROM posts WHERE parent = ? ORDER BY timestamp DESC", [$row["id"]]);
+} else {
+    $response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ? ORDER BY timestamp DESC", [$row["id"]]);
+}
 
 while ($row_posts = $response_posts->fetch_assoc()) { ?>
     <div class="card card-horizontal">
@@ -135,7 +139,8 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
                     <p class="card-text"><?= $row_posts['description'] ?></p>
                 </div>
                 <div class="card-footer text-muted">
-                    <?= time_to_ago($row_posts['timestamp']) ?>
+                    <?= time_to_ago($row_posts['timestamp']) ?> -
+                    <span class="darken"><i class="far fa-eye"></i> <?= $row_posts["hidden"] === NULL ? $row_posts["views"]." views" : "<b>Hidden</b>" ?></span>
                 </div>
             </div>
         </div>

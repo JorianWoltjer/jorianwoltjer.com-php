@@ -350,6 +350,10 @@ p.button i {
   border-collapse: collapse;
 }
 
+.fa-eye {
+  opacity: 80%;
+}
+
 /* Blog navigation */
 .tags {
   font-family: "Montserrat", sans-serif;
@@ -663,6 +667,10 @@ span.highlight {
 
 .hidden {
   display: none;
+}
+
+.darken {
+  opacity: 80%;
 }
 
 .hover-only-link {

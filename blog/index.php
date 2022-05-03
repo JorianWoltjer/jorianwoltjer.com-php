@@ -65,7 +65,8 @@ if ($response->num_rows > 0) {
                     <p class="card-text"><?= $row['description'] ?></p>
                 </div>
                 <div class="card-footer text-muted">
-                    <?= time_to_ago($row['timestamp']) ?>
+                    <?= time_to_ago($row['timestamp']) ?> -
+                    <span class="darken"><i class="far fa-eye"></i> <?= $row["hidden"] === NULL ? $row["views"]." views" : "<b>Hidden</b>" ?></span>
                 </div>
             </div>
         </div>
