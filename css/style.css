@@ -376,16 +376,16 @@ p.button i {
   font-weight: bold;
 }
 
-.tag-editing, .tag-ctf, .tag-web, .tag-sqli, .tag-filter, .tag-forensics {
+.tag-green {
   background-color: var(--green);
 }
-.tag-utility, .tag-hacking, .tag-reversing, .tag-binary, .tag-rce, .tag-hardware {
+.tag-red {
   background-color: var(--red);
 }
-.tag-coding, .tag-scripting, .tag-xss, .tag-ssrf {
+.tag-blue {
   background-color: var(--blue);
 }
-.tag-encoding, .tag-crypto, .tag-xxe, .tag-lfi, .tag-misc, .tag-linux {
+.tag-yellow {
   background-color: var(--yellow);
 }
 

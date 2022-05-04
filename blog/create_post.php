@@ -137,10 +137,13 @@ require_once("../include/header.php");
 
         function add_tag(element) {
             const value = element.value;
+            const option_element = document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']");
+            const existing_tag = Array.from(document.querySelectorAll('span.tag')).some(el => el.textContent ===value);
             // If not in datalist or already added
-            if (!document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']") || document.getElementsByClassName("tag-"+tag_class[value]).length) {
+            if (!option_element || existing_tag) {
                 return true;
             }
+            option_element.remove();
 
             const tag = document.createElement("span");
             tag.className = "tag selected-tag tag-"+tag_class[value];
@@ -156,8 +159,10 @@ require_once("../include/header.php");
         }
 
         function delete_tag(element) {
-            const tag = element
-            tag.parentNode.removeChild(tag);
+            const option_element = document.createElement("option");
+            option_element.value = element.textContent;
+            document.getElementById("tags-list").appendChild(option_element);
+            element.parentNode.removeChild(element);
         }
 
         document.getElementById("form").onsubmit = function () {
@@ -178,6 +183,7 @@ require_once("../include/header.php");
 
         $(document).on("ready", function () {
             $('input').on('keydown', function (e) {
+                console.log(e.key)
                 if (e.key === 'Enter') {  // Don't submit on Enter
                     return false;
                 }

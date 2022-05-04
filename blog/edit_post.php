@@ -107,7 +107,9 @@ require_once("../include/header.php");
             <?php
             $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
 
+            $post_tags = array();
             foreach ($tags->fetch_all() as $tag) {
+                $post_tags[] = $tag[0];
                 echo '<span class="tag selected-tag tag-'.$tag[1].'">'.$tag[0].'<i class="fa-solid fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
             }
             ?>
@@ -117,7 +119,9 @@ require_once("../include/header.php");
                 $response = sql_query("SELECT name, class FROM tags");
 
                 while($row_tag = $response->fetch_assoc()) {
-                    echo "<option value='$row_tag[name]'>";
+                    if (!in_array($row_tag['name'], $post_tags)) {
+                        echo "<option value='$row_tag[name]'>";
+                    }
                 }
                 ?>
             </datalist>
@@ -157,10 +161,13 @@ require_once("../include/header.php");
 
         function add_tag(element) {
             const value = element.value;
+            const option_element = document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']");
+            const existing_tag = Array.from(document.querySelectorAll('span.tag')).some(el => el.textContent ===value);
             // If not in datalist or already added
-            if (!document.querySelector("#tags-list option[value='"+CSS.escape(value)+"']") || document.getElementsByClassName("tag-"+tag_class[value]).length) {
+            if (!option_element || existing_tag) {
                 return true;
             }
+            option_element.remove();
 
             const tag = document.createElement("span");
             tag.className = "tag selected-tag tag-"+tag_class[value];
@@ -176,8 +183,10 @@ require_once("../include/header.php");
         }
 
         function delete_tag(element) {
-            const tag = element
-            tag.parentNode.removeChild(tag);
+            const option_element = document.createElement("option");
+            option_element.value = element.textContent;
+            document.getElementById("tags-list").appendChild(option_element);
+            element.parentNode.removeChild(element);
         }
 
         document.getElementById("form").onsubmit = function () {
