@@ -51,9 +51,9 @@ if ($response->num_rows > 0) {
 <?php }
 }?>
 </div>
-<div id="no-posts">
+<div id="no-posts" class="hidden">
     <br>
-    <p class='lead hidden'>No posts found.</p>
+    <p class='lead'>No posts found.</p>
 </div>
 
 <script>
@@ -73,6 +73,13 @@ if ($response->num_rows > 0) {
 
     function stripTags(str) {
         return str.replace( /(<[^>]+)>/ig, '');
+    }
+
+    function hide(element) {
+        element.classList.add("hidden");
+    }
+    function show(element) {
+        element.classList.remove("hidden");
     }
 
     function search(query) {
@@ -121,21 +128,19 @@ if ($response->num_rows > 0) {
 
                 post.querySelector("#post-content-preview>a").innerHTML = "…" + preview + "…";
                 post.querySelector("#post-content-preview>a").href = href + "#:~:text=" + previewWord;
-                post.querySelector("#post-content-preview").classList.remove("hidden");
-                post.querySelector("#post-description").classList.add("hidden");
+                show(post.querySelector("#post-content-preview"));
+                hide(post.querySelector("#post-description"));
             } else {
                 // Show description
-                post.querySelector("#post-content-preview").classList.add("hidden");
-                post.querySelector("#post-description").classList.remove("hidden");
+                hide(post.querySelector("#post-content-preview"));
+                show(post.querySelector("#post-description"));
             }
         }
 
-        if (query.length > 0) {
-            if (!results.querySelector(".card:not(.hidden)")) {  // Show no-posts message if all posts are hidden
-                document.getElementById("no-posts").classList.remove("hidden");
-            } else {
-                document.getElementById("no-posts").classList.add("hidden");
-            }
+        if (!results.querySelector(".card:not(.hidden)")) {  // Show no-posts message if all posts are hidden
+            show(document.getElementById("no-posts"));
+        } else {
+            hide(document.getElementById("no-posts"));
         }
     }
 

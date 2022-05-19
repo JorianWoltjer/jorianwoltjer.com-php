@@ -666,7 +666,7 @@ span.highlight {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .darken {
