@@ -121,23 +121,23 @@ function md_to_html(string $text): array|string|null
 {
     require_once("../include/Parsedown.php");
 
+    // Replace images with /img/blog URL
+    $text = preg_replace('/!\[(.*?)\]\((.*\/)*(.*?)\)/',
+        '![$1](/img/blog/$3)', $text);
+
     // Markdown to HTML
     $Parsedown = new Parsedown();
     $text = $Parsedown->text($text);
 
     // Add id attribute to h2 headers
     $text = preg_replace_callback( '/<h2>(.*?)<\/h2>/i', function( $matches ) {
-        // Filter out encoded html characters, tags, and other chars
-        $id = preg_replace('/(&.*?;)|(<.*?>)|[^\w ]/i', '', $matches[1]);
-        $id = preg_replace('/ /', '-', $id);  // Replace spaces with dashes
-        $id = strtolower($id);  // Convert to lowercase
+        $id = text_to_url($matches[1]);
         return '<h2 id="'.$id.'">'.$matches[1].'</h2>';
     }, $text);
 
     // Image lightbox
     $text = preg_replace('/<img src="(.*?)" alt="(.*?)" \/>/',
-        '<img src="$1" class="lightbox" alt="$2" />',
-        $text);
+        '<img src="$1" class="lightbox" alt="$2" />', $text);
 
     // Style code blocks
     return preg_replace('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
@@ -147,6 +147,7 @@ function md_to_html(string $text): array|string|null
 
 function text_to_url(string $text): string
 {
+    $text = preg_replace('/(&.*?;)|(<.*?>)|[^\w ]/i', '', $text);  // Filter out encoded html characters & tags
     $text = trim(preg_replace('/[^\w\d]+/', ' ', $text));  // Convert other characters to spaces + trim
     $text = preg_replace('/ /', '-', $text);  // Convert space to dashes
     return strtolower($text);  // Lowercase
