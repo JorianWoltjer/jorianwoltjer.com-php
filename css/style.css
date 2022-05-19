@@ -83,7 +83,9 @@ p a:hover, small a:hover {
 footer.bg-dark {
   background-color: var(--background-light) !important;
   margin-top: 2rem;
+  padding: 1.2rem 0;
   z-index: 1030;
+  line-height: normal;
 }
 
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
@@ -250,6 +252,9 @@ p.button i {
 .navbar-brand:hover {
   transform: scale(1.05);
 }
+.navbar-brand img {
+  width: 4rem;
+}
 
 .nav-link {
   font-weight: bold !important;
@@ -283,6 +288,9 @@ p.button i {
   background-color: var(--light-gray);
   border-color: var(--light-gray);
   color: var(--background-light) !important;
+}
+#previewImage {
+  width: 100%;
 }
 
 /* Cards */
@@ -344,6 +352,9 @@ p.button i {
 .card-horizontal .col-sm-9 {
   padding-left: 0;
 }
+.card-img-top {
+  object-fit: cover;
+}
 
 .table-container {
   height: 100%;
@@ -376,16 +387,16 @@ p.button i {
   font-weight: bold;
 }
 
-.tag-green {
+.tag-green, .tag-editing {
   background-color: var(--green);
 }
-.tag-red {
+.tag-red, .tag-utility {
   background-color: var(--red);
 }
-.tag-blue {
+.tag-blue, .tag-coding {
   background-color: var(--blue);
 }
-.tag-yellow {
+.tag-yellow, .tag-encoding {
   background-color: var(--yellow);
 }
 
@@ -424,6 +435,16 @@ p.button i {
 .col-sm-4 {
   max-width: 28%;
 }
+.col-sm-3 {
+  padding: 0;
+}
+.col-sm-2 {
+  padding: 0;
+}
+.col-sm-9 {
+  display: flex;
+  flex-direction: column;
+}
 
 a.folder {
   position: relative;
@@ -447,13 +468,16 @@ a.folder i {
   font-size: 1.5rem;
   color: var(--main-color);
   transform: translate(0, 15%);
-  margin-right: 10px;
 }
 a.folder.brighter {
   border-color: var(--gray);
 }
 a.folder.brighter:hover {
   background-color: var(--gray);
+}
+
+a i {
+  margin-right: 10px
 }
 
 .breadcrumb {
@@ -587,6 +611,10 @@ blockquote code {
   border-color: var(--dark-gray);
 }
 
+label {
+  margin-right: 10px;
+}
+
 .btn-primary {
   background-color: var(--main-color-dark);
   border-color: var(--main-color-dark);
@@ -613,6 +641,10 @@ blockquote code {
   display: inline-block;
   padding: 20px 50px;
   transition: border-color 0.25s ease;
+}
+.boxed input[type=password], .boxed input[type=text] {
+  max-width: 300px;
+  text-align: center;
 }
 
 /* Specific classes */
@@ -680,4 +712,8 @@ span.highlight {
 .hover-only-link:hover {
   color: white;
   text-decoration: underline;
+}
+
+hr.higher-top {
+  margin-top: 1.5rem;
 }

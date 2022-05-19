@@ -19,15 +19,17 @@ if (isset($_GET['code'])) {
 }
 require("include/header.php"); ?>
 
-<style>
-
-</style>
-
 <i class="fa-solid fa-triangle-exclamation big-icon"></i>
 <h1 class="my-4"><code><?= htmlspecialchars($title) ?></code></h1>
 <p class="lead">
     There was an error loading this page.<br>
-    You can try going back to <a href="/">Home</a> or the <a href="#" onclick="history.back()">Previous Page</a>.
+    You can try going back to <a href="/">Home</a> or the <a href="#" id="prev-page">Previous Page</a>.
 </p>
+
+<script nonce="<?=$nonce?>">
+    document.getElementById("prev-page").addEventListener("click", function() {
+        history.back();
+    });
+</script>
 
 <?php require("include/footer.php"); ?>

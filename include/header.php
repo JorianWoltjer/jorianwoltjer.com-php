@@ -4,7 +4,7 @@ $page = preg_match("/\/([\\w_\-\\d]*)/", $_SERVER['REQUEST_URI'], $match);
 $page = ($match[1] === "" ? "home" : $match[1]);
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -29,11 +29,11 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 
     <!-- CSS -->
     <link href="/assets/bootstrap/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet">
+    <link nonce="<?=$nonce?>" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://kit.fontawesome.com/c24bdfb7c7.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
-    <script>
+    <script nonce="<?=$nonce?>">
         // Clean url if message parameter
         const url = new URL(location.href);
         url.searchParams.delete('message');
@@ -47,7 +47,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/img/logo.svg" style="width: 4rem" alt="JW Logo">
+            <img src="/img/logo.svg" alt="JW Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,15 @@ $page = ($match[1] === "" ? "home" : $match[1]);
             <ul class="navbar-nav ms-auto">
                 <?php if (isset($admin) && $admin) { ?>
                     <li class="nav-item">
-                        <a class="nav-link gray" id="logout" href="/logout"
-                           onclick="return confirm('Are you sure you want to log out?')">Logout</a>
-                        <script>document.getElementById("logout").href = "/logout?return=" + encodeURIComponent((location.pathname + location.search).substring(1))</script>
+                        <a class="nav-link gray" id="logout" href="/logout">Logout</a>
+                        <script nonce="<?=$nonce?>">
+                            document.getElementById('logout').addEventListener('click', function (e) {
+                                e.preventDefault();
+                                if (confirm('Are you sure you want to log out?')) {
+                                    window.location.href = "/logout?return=" + encodeURIComponent((location.pathname + location.search).substring(1));
+                                }
+                            });
+                        </script>
                     </li>
                 <?php } ?>
                 <li class="nav-item">

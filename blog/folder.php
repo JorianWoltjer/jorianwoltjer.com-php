@@ -71,7 +71,7 @@ require_once("../include/header.php");
 </p>
 
 <?php if ($admin) { ?>
-    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fa-solid fa-edit"></i>Edit folder</a>
+    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit folder</a>
     <a href="/blog/create_post?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
     <a href="/blog/create_folder?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
 <?php } ?>
@@ -82,16 +82,16 @@ $response_folders = sql_query("SELECT * FROM folders WHERE parent = ? ORDER BY t
 while ($row_folders = $response_folders->fetch_assoc()) { ?>
     <div class="card card-horizontal">
         <div class="row no-gutters">
-            <div class="col-sm-3" style="padding: 0;">
+            <div class="col-sm-3">
                 <a href="/blog/folder/<?= $row_folders['url'] ?>">
-                    <img src="/img/blog/<?= $row_folders['img'] ?? '../placeholder.png' ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Folder thumbnail">
+                    <img src="/img/blog/<?= $row_folders['img'] ?? '../placeholder.png' ?>" class="card-img-top h-100" alt="Folder thumbnail">
                 </a>
             </div>
-            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+            <div class="col-sm-9">
                 <div class="card-body">
                     <h3 class="card-title">
                         <a href="/blog/folder/<?= $row_folders['url'] ?>">
-                            <i class="fa-solid fa-folder-closed" style="margin-right: 10px"></i><code><?= $row_folders['title'] ?></code>
+                            <i class="fa-solid fa-folder-closed"></i><code><?= $row_folders['title'] ?></code>
                         </a>
                     </h3>
                     <p class="card-text"><?= $row_folders['description'] ?></p>
@@ -117,12 +117,12 @@ while ($row_posts = $response_posts->fetch_assoc()) {
     ?>
     <div class="card card-horizontal">
         <div class="row no-gutters">
-            <div class="col-sm-3" style="padding: 0;">
+            <div class="col-sm-3">
                 <a href="/blog/post/<?= $row_posts['url'] ?>">
-                    <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
+                    <img src="/img/blog/<?= $row_posts['img'] ?>" class="card-img-top h-100" alt="Post thumbnail">
                 </a>
             </div>
-            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+            <div class="col-sm-9">
                 <div class="card-body">
                     <p class="card-text tags">
                         <?php

@@ -83,7 +83,7 @@ require_once("../include/header.php");
         <input class="btn btn-primary" type="submit" name="submit" value="Save">
     </form>
 
-    <script>
+    <script nonce="<?=$nonce?>">
         $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);

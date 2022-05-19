@@ -36,7 +36,7 @@ require_once("../include/header.php"); ?>
         </div></a>
     </div>
 
-<script>
+<script nonce="<?=$nonce?>">
     document.addEventListener('keydown', keyPress);
 
     function keyPress(e) {

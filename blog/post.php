@@ -162,15 +162,16 @@ if (!$preview) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="" id="previewImage" style="width: 100%;" alt="">
+                    <img src="" id="previewImage" alt="Unable to load image!">
                 </div>
             </div>
         </div>
     </div>
 
     <script src="/assets/highlight/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <script>
+    <script nonce="<?=$nonce?>">
+        hljs.highlightAll();
+
         // Copy button from code blocks
         function copy_code(element) {
             const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;

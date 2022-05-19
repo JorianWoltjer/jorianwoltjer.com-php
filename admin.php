@@ -37,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 require_once("include/header.php"); ?>
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd"></script>
-    <script>
+    <script nonce="<?=$nonce?>" src="https://www.google.com/recaptcha/api.js?render=6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd"></script>
+    <script nonce="<?=$nonce?>">
         grecaptcha.ready(function () {
             grecaptcha.execute('6LcWXpkeAAAAAB-XCXHn8hgrHh7Mdu7Bf5kubFZd', { action: 'contact' }).then(function (token) {
                 const recaptchaResponse = document.getElementById('recaptchaResponse');
@@ -52,7 +52,7 @@ require_once("include/header.php"); ?>
         <h1><code>Admin login</code></h1>
         <br>
         <form method="post">
-            <input class="form-control" type="password" id="password" name="password" placeholder="Password" style="max-width: 300px; text-align: center">
+            <input class="form-control" type="password" id="password" name="password" placeholder="Password">
             <br>
             <input class="btn btn-secondary" type="submit" value="Submit">
             <input type="hidden" name="recaptcha_response" id="recaptchaResponse">

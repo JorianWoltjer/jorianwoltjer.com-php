@@ -16,7 +16,7 @@ function text_only($html): array|string|null
     Warning: JavaScript is required for this page to work!
 </div></noscript>
 
-<input id="query" type="text" class="form-control" placeholder="Search" oninput="search(this.value)" onblur="saveURL()" autocomplete="off" autofocus>
+<input id="query" type="text" class="form-control" placeholder="Search" autocomplete="off" autofocus>
 
 <div id="results">
 <?php
@@ -33,12 +33,12 @@ while ($row = $response->fetch_assoc()) {
     ?>
     <div class="card card-horizontal">
         <div class="row no-gutters">
-            <div class="col-sm-2" style="padding: 0;">
+            <div class="col-sm-2">
                 <a href="/blog/post/<?= $row['url'] ?>">
-                    <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
+                    <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" alt="Post thumbnail">
                 </a>
             </div>
-            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+            <div class="col-sm-9">
                 <div class="card-body">
                     <div id="post-content-search" class="hidden"><?= text_only($row["html"]) ?></div>
                     <p class="card-text tags">
@@ -67,7 +67,7 @@ while ($row = $response->fetch_assoc()) {
     <p class='lead'>No posts found.</p>
 </div>
 
-<script>
+<script nonce="<?=$nonce?>">
     function reduceQuery(query) {
         /* Reduce query to only useful words
          * - Remove words with only 1 character
@@ -201,6 +201,13 @@ while ($row = $response->fetch_assoc()) {
     document.body.addEventListener('click', () => {
         document.documentElement.style.setProperty("--target-text-color", "");
     }, true);
+
+    document.getElementById("query").addEventListener("input", (event) => {
+        search(event.target.value);
+    });
+    document.getElementById("query").addEventListener("blur", (event) => {
+        saveURL();
+    });
 
     // Put search query from URL into search bar
     const params = new URLSearchParams(window.location.search);

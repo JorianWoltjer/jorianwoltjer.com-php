@@ -34,7 +34,7 @@ require_once("include/header.php"); ?>
     </div>
     <p class="button"><i class="fa-solid fa-envelope"></i><a href="mailto: jorianwoltjer@hotmail.com">jorianwoltjer@hotmail.com</a></p>
 
-<script>
+<script nonce="<?=$nonce?>">
     function copy_discord(e) {
         const tooltip = new bootstrap.Tooltip(document.getElementById("copy"));
         navigator.clipboard.writeText(e.innerText);

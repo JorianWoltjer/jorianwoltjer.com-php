@@ -142,7 +142,7 @@ require_once("../include/header.php");
         </select>
         <br>
         <p class="tags" id="tags">
-            <label for="tag-add" style="margin-right: 10px;">Tags:</label>
+            <label for="tag-add">Tags:</label>
             <?php
             if (!$create_post) {
                 $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
@@ -150,11 +150,11 @@ require_once("../include/header.php");
                 $post_tags = array();
                 foreach ($tags->fetch_all() as $tag) {
                     $post_tags[] = $tag[0];
-                    echo '<span class="tag selected-tag tag-' . $tag[1] . '">' . $tag[0] . '<i class="fa-solid fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
+                    echo '<span class="tag selected-tag tag-' . $tag[1] . '">' . $tag[0] . '<i class="fa-solid fa-times-circle tag-delete"></i></span>';
                 }
             }
             ?>
-            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
+            <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" autocomplete="off">
             <datalist id="tags-list">
                 <?php
                 $response = sql_query("SELECT name, class FROM tags");
@@ -185,11 +185,29 @@ require_once("../include/header.php");
         </div>
         <br>
         <br>
-        <input class="btn btn-primary" type="submit" name="submit" value="Save" onclick="this.form.button=this; this.form.target=''">
-        <input class="btn btn-secondary" type="submit" name="submit" value="Preview" onclick="this.form.button=this; this.form.target='_blank'" formaction="preview">
+        <input class="btn btn-primary" id="save-button" type="submit" name="submit" value="Save">
+        <input class="btn btn-secondary" id="preview-button" type="submit" name="submit" value="Preview" formaction="preview">
     </form>
 
-    <script>
+    <script nonce="<?=$nonce?>">
+        document.getElementById("tag-add").addEventListener("input", function(event) {
+            add_tag(event.target);
+        });
+        document.getElementById("tag-add").addEventListener("input", function(event) {
+            event.target.value = ''
+        });
+        document.querySelectorAll(".tag-delete").forEach(function(element) {
+            element.addEventListener("click", function(event) {
+                delete_tag(event.target.parentElement);
+            });
+        });
+        document.getElementById("save-button").addEventListener("click", function() {
+            document.getElementById("form").target = "";
+        });
+        document.getElementById("preview-button").addEventListener("click", function() {
+            document.getElementById("form").target = "_blank";
+        });
+
         tag_class = {
             <?php
             mysqli_data_seek($response, 0);  // Move pointer back

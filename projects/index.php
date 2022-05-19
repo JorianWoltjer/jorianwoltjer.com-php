@@ -3,7 +3,7 @@ $meta_title = "Projects";
 $meta_description = "Information about a few projects I made, with images and links to the projects. From websites and coding, to video editing, and utilities. These are some projects I have put a lot of time into.";
 require_once("../include/header.php"); ?>
 
-<style>
+<style nonce="<?=$nonce?>">
     .wrap {
         width: 100vw;
         height: 250px;
@@ -41,7 +41,7 @@ require_once("../include/header.php"); ?>
                     </div>
                 <?php }
                 if (isset($_GET['iframe'])) {  // Remove navbar if in iframe ?>
-                    <style>
+                    <style nonce="<?=$nonce?>">
                         .navbar {
                             display: none;
                         }
