@@ -205,12 +205,10 @@ require_once("../include/header.php");
             return true;
         }
 
-        $(document).on("ready", function () {
-            $('input').on('keydown', function (e) {
-                if (e.key === 'Enter') {  // Don't submit on Enter
-                    return false;
-                }
-            });
+        $('input').on('keydown', function (e) {
+            if (e.key === 'Enter') {  // Don't submit on Enter
+                return false;
+            }
         });
 
         $('#image').on("change", function() {
@@ -233,6 +231,21 @@ require_once("../include/header.php");
                     this.selectionEnd = start + 4;
             }
         });
+
+        document.getElementById('text').addEventListener('paste', (event) => {
+            event.preventDefault();
+            let paste = (event.clipboardData || window.clipboardData).getData('text');
+
+            // Take title from paste
+            const titleRegex = /^# (.*)(\r?\n)+/
+            const match = titleRegex.exec(paste)
+            if (match) {
+                document.getElementById("title").value = match[1];
+                paste = paste.replace(titleRegex, "");
+            }
+
+            document.execCommand("insertText", false, paste)
+        })
     </script>
 
 <?php require_once("../include/footer.php"); ?>
