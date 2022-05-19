@@ -17,12 +17,13 @@ if (isset($admin_required) && $admin_required && !$admin) { // Admin only
 }
 
 $html_messages = array(
-    "error_folder" => '<div class="alert alert-danger animated bounceOut" role="alert">This folder does not exist</div>',
-    "error_post" => '<div class="alert alert-danger animated bounceOut" role="alert">This post does not exist</div>',
-    "all_fields" => '<div class="alert alert-danger animated bounceOut" role="alert">Please fill all fields in the form</div>',
+    "error_folder" => '<div class="alert alert-danger animated bounceOut" role="alert">This folder does <b>not exist</b></div>',
+    "error_post" => '<div class="alert alert-danger animated bounceOut" role="alert">This post does <b>not exist</b></div>',
+    "all_fields" => '<div class="alert alert-danger animated bounceOut" role="alert">Please fill <b>all fields<b> in the form</div>',
     "wrong_password" => '<div class="alert alert-danger animated bounceOut" role="alert">Invalid password</div>',
     "captcha" => '<div class="alert alert-danger animated bounceOut" role="alert">reCAPTCHA invalid</div>',
     "login" => '<div class="alert alert-success animated bounceOut" role="alert">Successfully logged in</div>',
+    "error_featured_and_hidden" => '<div class="alert alert-danger animated bounceOut" role="alert">You cannot set a post as both <b>featured</b> and <b>hidden</b></div>',
 );
 
 function get_baseurl(): string

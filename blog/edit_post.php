@@ -1,14 +1,20 @@
 <?php
+if (!isset($create_post)) $create_post = false;
+
 $admin_required = true;
-$title = "Edit post";
-$description = "Form to edit a post on my blog.";
+$title = ($create_post ? "Create" : "Edit")." post";
+$description = "Form to ".($create_post ? "Create" : "Edit")." a post on my blog.";
 require_once("../include/all.php");
 
-$response = sql_query("SELECT * FROM posts WHERE id = ?", [$_GET['id']]);
-$row = $response->fetch_assoc();
+if (!$create_post) {
+    $response = sql_query("SELECT * FROM posts WHERE id = ?", [$_GET['id']]);
+    $row = $response->fetch_assoc();
 
-if ($response->num_rows === 0) {
-    returnMessage("error_post", "/blog/");
+    if ($response->num_rows === 0) {
+        returnMessage("error_post", "/blog/");
+    }
+} else {
+    $row = [];
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
@@ -18,26 +24,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
         $html = md_to_html($_POST["text"]);
         $featured = isset($_POST["featured"]) && $_POST["featured"] === "on";
         $hidden = isset($_POST["hidden"]) && $_POST["hidden"] === "on";
-        $url = text_to_url($_POST["title"]);
 
+        if ($featured and $hidden) {
+            returnMessage("error_featured_and_hidden", "");
+        }
+
+        $url = text_to_url($_POST["title"]);
         $parent = sql_query("SELECT url FROM folders WHERE id=?", [$_POST["folder"]]);
         $parent_url = $parent->fetch_assoc()["url"];
         $url = $parent_url."/".$url;
 
         if ($hidden) {
             $hash = $row["hidden"] ?? random_bytes(32);
-            sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
-                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
-                    $html, $_POST["points"], $featured, $hash, $row['id']]);
-        } else if ($row["hidden"]) {  // If changed from hidden to public
+            if ($create_post) {
+                sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, hidden, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
+                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                        $html, $_POST["points"], $featured, $hash]);
+            } else {
+                sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
+                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                        $html, $_POST["points"], $featured, $hash, $row['id']]);
+            }
+        } else if (!$create_post && $row["hidden"]) {  // If changed from hidden to public
             sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
                 [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
                     $html, $_POST["points"], $featured, $row['id']]);
         } else {
-            sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
-                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
-                    $html, $_POST["points"], $featured, $row['id']]);
+            if ($create_post) {
+                sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
+                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                        $html, $_POST["points"], $featured]);
+            } else {
+                sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
+                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                        $html, $_POST["points"], $featured, $row['id']]);
+            }
         }
+
+        // Save id of post for later
+        $post_id = $row['id'] ?? $dbc->insert_id;
 
         // Convert tags to corresponding ids
         $all_tags = sql_query("SELECT id, name FROM tags")->fetch_all();
@@ -47,10 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
             $tag_to_id[$tag[1]] = $tag[0];
         }
 
+        if (!$create_post) {  // Delete previous tags
+            sql_query("DELETE FROM post_tags WHERE post=?", [$row['id']]);
+        }
         // Create tag entries in database
-        sql_query("DELETE FROM post_tags WHERE post=?", [$row['id']]);
         $stmt = $dbc->prepare("INSERT INTO post_tags(post, tag) VALUES (?, ?)");
-        $stmt->bind_param("ii", $row['id'], $tag_id);
+        $stmt->bind_param("ii", $post_id, $tag_id);
 
         foreach ($_POST["tags"] as $tag) {
             if (array_key_exists($tag, $tag_to_id)) {
@@ -72,17 +99,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
 require_once("../include/header.php");
 ?>
 
-    <h1 class="my-4"><code>Edit post</code></h1>
+    <h1 class="my-4"><code><?= $create_post ? "Create" : "Edit" ?> post</code></h1>
+
+    <?php displayMessage() ?>
 
     <form method="POST" id="form">
         <label for="title">Title</label>
-        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?>">
+        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?? "" ?>">
         <br>
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?></textarea>
+        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?? "" ?></textarea>
         <br>
         <label for="image">Image</label>
-        <input class="form-control" id="image" type="text" name="image" required autocomplete="off" value="<?= $row["img"] ?>">
+        <input class="form-control" id="image" type="text" name="image" required autocomplete="off" value="<?= $row["img"] ?? "../placeholder.png" ?>">
         <br>
         <img id="preview" src="" alt="Unable to load image!" class="rounded" width="300px">
         <br>
@@ -93,7 +122,7 @@ require_once("../include/header.php");
             $response = sql_query("SELECT id, title FROM folders");
 
             while($row_folder = $response->fetch_assoc()) {
-                if ($row_folder['id'] === $row['parent']) {
+                if ((isset($row['parent']) && $row_folder['id'] === $row['parent']) || (isset($_GET["parent"]) && $row_folder["id"] == $_GET["parent"])) {
                     echo "<option value='$row_folder[id]' selected>$row_folder[title]</option>";
                 } else {
                     echo "<option value='$row_folder[id]'>$row_folder[title]</option>";
@@ -105,12 +134,14 @@ require_once("../include/header.php");
         <p class="tags" id="tags">
             <label for="tag-add" style="margin-right: 10px;">Tags:</label>
             <?php
-            $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
+            if (!$create_post) {
+                $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
 
-            $post_tags = array();
-            foreach ($tags->fetch_all() as $tag) {
-                $post_tags[] = $tag[0];
-                echo '<span class="tag selected-tag tag-'.$tag[1].'">'.$tag[0].'<i class="fa-solid fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
+                $post_tags = array();
+                foreach ($tags->fetch_all() as $tag) {
+                    $post_tags[] = $tag[0];
+                    echo '<span class="tag selected-tag tag-' . $tag[1] . '">' . $tag[0] . '<i class="fa-solid fa-times-circle tag-delete" onclick="delete_tag(this.parentElement)"></i></span>';
+                }
             }
             ?>
             <input class="tag tag-add" id="tag-add" list="tags-list" placeholder="+ Add" oninput="add_tag(this)" onclick="this.value = ''" autocomplete="off">
@@ -119,7 +150,7 @@ require_once("../include/header.php");
                 $response = sql_query("SELECT name, class FROM tags");
 
                 while($row_tag = $response->fetch_assoc()) {
-                    if (!in_array($row_tag['name'], $post_tags)) {
+                    if ($create_post || !in_array($row_tag['name'], $post_tags)) {
                         echo "<option value='$row_tag[name]'>";
                     }
                 }
@@ -129,17 +160,17 @@ require_once("../include/header.php");
         <input type="hidden" name="tags[]">
         <div id="tag-inputs"></div>
         <label for="text">Text (Markdown)</label>
-        <pre><textarea class="form-control" id="text" name="text" spellcheck="true" rows="10" required><?= $row["markdown"] ?></textarea></pre>
+        <pre><textarea class="form-control" id="text" name="text" spellcheck="true" rows="10" required><?= $row["markdown"] ?? "" ?></textarea></pre>
         <br>
         <label for="points">Points (optional)</label>
-        <input class="form-control" id="points" type="number" name="points" autocomplete="off" value="<?= $row["points"] ?>">
+        <input class="form-control" id="points" type="number" name="points" autocomplete="off" value="<?= $row["points"] ?? "" ?>">
         <br>
         <div class="form-check">
-            <input class="form-check-input" id="featured" type="checkbox" name="featured"<?= $row["featured"] ? " checked" : "" ?>>
+            <input class="form-check-input" id="featured" type="checkbox" name="featured"<?= ($row["featured"] ?? "") ? " checked" : "" ?>>
             <label class="form-check-label" for="featured">Featured</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= $row["hidden"] !== NULL ? " checked" : "" ?>>
+            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= ($row["hidden"] ?? null) !== null ? " checked" : "" ?>>
             <label class="form-check-label" for="hidden">Hidden</label>
         </div>
         <br>
