@@ -1,14 +1,20 @@
 <?php
+if (!isset($create_folder)) $create_folder = false;
+
 $admin_required = true;
-$title = "Edit folder";
-$description = "Form to edit a folder for posts on my blog.";
+$title = ($create_folder ? "Create" : "Edit")." folder";
+$description = "Form to ".($create_folder ? "create" : "edit")." a folder for posts on my blog.";
 require_once("../include/all.php");
 
-$response = sql_query("SELECT * FROM folders WHERE id = ?", [$_GET['id']]);
-$row = $response->fetch_assoc();
+if (!$create_folder) {
+    $response = sql_query("SELECT * FROM folders WHERE id = ?", [$_GET['id']]);
+    $row = $response->fetch_assoc();
 
-if ($response->num_rows === 0) {
-    returnMessage("error_post", "/blog/");
+    if ($response->num_rows === 0) {
+        returnMessage("error_folder", "/blog/");
+    }
+} else {
+    $row = [];
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -22,8 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_POST['parent'] = null;
         }
 
-        $response = sql_query("UPDATE folders SET title=?, description=?, img=?, url=?, parent=? WHERE id=?",
-            [$_POST["title"], $_POST["description"], $_POST["image"], $url, $_POST["parent"], $_GET["id"]]);
+        if ($create_folder) {
+            sql_query("INSERT INTO folders(title, description, img, url, parent, timestamp) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
+                [$_POST['title'], $_POST['description'], $_POST['image'], $url, $_POST['parent']]);
+        } else {
+            $response = sql_query("UPDATE folders SET title=?, description=?, img=?, url=?, parent=? WHERE id=?",
+                [$_POST["title"], $_POST["description"], $_POST["image"], $url, $_POST["parent"], $_GET["id"]]);
+        }
 
         header("Location: /blog/folder/".$url);
         exit();
@@ -33,17 +44,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 require_once("../include/header.php");
 ?>
 
-    <h1 class="my-4"><code>Edit folder</code></h1>
+    <h1 class="my-4"><code><?= $create_folder ? "Create" : "Edit" ?> folder</code></h1>
 
     <form method="POST" id="form">
         <label for="title">Title</label>
-        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?>">
+        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?? "" ?>">
         <br>
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?></textarea>
+        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?? "" ?></textarea>
         <br>
         <label for="image">Image</label>
-        <input class="form-control" id="image" type="text" name="image" autocomplete="off" value="<?= $row["img"] ?>">
+        <input class="form-control" id="image" type="text" name="image" autocomplete="off" value="<?= $row["img"] ?? "../placeholder.png" ?>">
         <br>
         <img id="preview" src="" alt="Unable to load image!" class="rounded" width="300px">
         <br>
@@ -55,7 +66,7 @@ require_once("../include/header.php");
             $response = sql_query("SELECT id, title FROM folders");
 
             while($row_folder = $response->fetch_assoc()) {
-                if ($row_folder['id'] === $row['parent']) {
+                if ((isset($row['parent']) && $row_folder['id'] === $row['parent']) || (isset($_GET["parent"]) && $row_folder["id"] == $_GET["parent"])) {
                     echo "<option value='$row_folder[id]' selected>$row_folder[title]</option>";
                 } elseif ($row_folder['id'] !== $row['id']) {
                     echo "<option value='$row_folder[id]'>$row_folder[title]</option>";

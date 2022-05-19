@@ -3,7 +3,7 @@ if (!isset($create_post)) $create_post = false;
 
 $admin_required = true;
 $title = ($create_post ? "Create" : "Edit")." post";
-$description = "Form to ".($create_post ? "Create" : "Edit")." a post on my blog.";
+$description = "Form to ".($create_post ? "create" : "edit")." a post on my blog.";
 require_once("../include/all.php");
 
 if (!$create_post) {
@@ -246,22 +246,6 @@ require_once("../include/header.php");
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
         }).change();
-
-        document.getElementById('text').addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
-
-                // set textarea value to: text before caret + tab + text after caret
-                this.value = this.value.substring(0, start) +
-                    "    " + this.value.substring(end);
-
-                // put caret at right position again
-                this.selectionStart =
-                    this.selectionEnd = start + 4;
-            }
-        });
 
         document.getElementById('text').addEventListener('paste', (event) => {
             event.preventDefault();
