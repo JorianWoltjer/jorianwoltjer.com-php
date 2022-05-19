@@ -20,41 +20,47 @@ function text_only($html): array|string|null
 
 <div id="results">
 <?php
-$response = sql_query("SELECT * FROM posts WHERE hidden IS NULL ORDER BY timestamp DESC");
+if ($admin) {
+    $response = sql_query("SELECT * FROM posts ORDER BY timestamp DESC");
+} else {
+    $response = sql_query("SELECT * FROM posts WHERE hidden IS NULL ORDER BY timestamp DESC");
+}
 
-if ($response->num_rows > 0) {
-    while ($row = $response->fetch_assoc()) { ?>
-        <div class="card card-horizontal">
-            <div class="row no-gutters">
-                <div class="col-sm-2" style="padding: 0;">
-                    <a href="/blog/post/<?= $row['url'] ?>">
-                        <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
-                    </a>
-                </div>
-                <div class="col-sm-9" style="display: flex; flex-direction: column;">
-                    <div class="card-body">
-                        <div id="post-content-search" class="hidden"><?= text_only($row["html"]) ?></div>
-                        <p class="card-text tags">
-                            <?php
-                            $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
+while ($row = $response->fetch_assoc()) {
+    if ($row['hidden'] && $admin) {
+        $row['url'] .= "?hidden=" . bin2hex($row['hidden']);
+    }
+    ?>
+    <div class="card card-horizontal">
+        <div class="row no-gutters">
+            <div class="col-sm-2" style="padding: 0;">
+                <a href="/blog/post/<?= $row['url'] ?>">
+                    <img src="/img/blog/<?= $row['img'] ?>" class="card-img-top h-100" style="object-fit: cover;" alt="Post thumbnail">
+                </a>
+            </div>
+            <div class="col-sm-9" style="display: flex; flex-direction: column;">
+                <div class="card-body">
+                    <div id="post-content-search" class="hidden"><?= text_only($row["html"]) ?></div>
+                    <p class="card-text tags">
+                        <?php
+                        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
 
-                            while ($tag_row = $tags->fetch_assoc()) {
-                                echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";
-                            }
-                            ?>
-                            <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
-                        </p>
-                        <h3 class="card-title">
-                            <a href="/blog/post/<?= $row['url'] ?>"><code><?= $row['title'] ?></code></a>
-                        </h3>
-                        <p class="card-text hidden" id="post-content-preview"><a href="" class="hover-only-link"></a></p>
-                        <p class="card-text" id="post-description"><?= $row['description'] ?></p>
-                    </div>
+                        while ($tag_row = $tags->fetch_assoc()) {
+                            echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";
+                        }
+                        ?>
+                        <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
+                    </p>
+                    <h3 class="card-title">
+                        <a href="/blog/post/<?= $row['url'] ?>"><code><?= $row['title'] ?></code></a>
+                    </h3>
+                    <p class="card-text hidden" id="post-content-preview"><a href="" class="hover-only-link"></a></p>
+                    <p class="card-text" id="post-description"><?= $row['description'] ?></p>
                 </div>
             </div>
         </div>
-<?php }
-}?>
+    </div>
+<?php } ?>
 </div>
 <div id="no-posts" class="hidden">
     <br>

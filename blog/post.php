@@ -75,7 +75,7 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
 
     <p class="tags">
         <?php
-        $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
+        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
 
         while ($row_tag = $tags->fetch_assoc()) {
             echo "<span class='tag tag-$row_tag[class]'>$row_tag[name]</span>";

@@ -79,6 +79,8 @@ $title = $folder." - ".$row['title'];
 
 <?php if ($admin) { ?>
     <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder" style="margin-bottom: 0"><i class="fa-solid fa-edit"></i>Edit folder</a>
+    <a href="/blog/create_post?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
+    <a href="/blog/create_folder?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
 <?php } ?>
 
 <?php
@@ -95,7 +97,9 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
             <div class="col-sm-9" style="display: flex; flex-direction: column;">
                 <div class="card-body">
                     <h3 class="card-title">
-                        <a href="/blog/folder/<?= $row_folders['url'] ?>"><code><?= $row_folders['title'] ?></code></a>
+                        <a href="/blog/folder/<?= $row_folders['url'] ?>">
+                            <i class="fa-solid fa-folder" style="margin-right: 10px"></i><code><?= $row_folders['title'] ?></code>
+                        </a>
                     </h3>
                     <p class="card-text"><?= $row_folders['description'] ?></p>
                 </div>
@@ -113,7 +117,11 @@ if ($admin) {
     $response_posts = sql_query("SELECT * FROM posts WHERE hidden IS NULL AND parent = ? ORDER BY timestamp DESC", [$row["id"]]);
 }
 
-while ($row_posts = $response_posts->fetch_assoc()) { ?>
+while ($row_posts = $response_posts->fetch_assoc()) {
+    if ($row_posts['hidden'] && $admin) {
+        $row_posts['url'] .= "?hidden=" . bin2hex($row_posts['hidden']);
+    }
+    ?>
     <div class="card card-horizontal">
         <div class="row no-gutters">
             <div class="col-sm-3" style="padding: 0;">
@@ -125,7 +133,7 @@ while ($row_posts = $response_posts->fetch_assoc()) { ?>
                 <div class="card-body">
                     <p class="card-text tags">
                         <?php
-                        $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row_posts['id']]);
+                        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row_posts['id']]);
 
                         while ($tag_row = $tags->fetch_assoc()) {
                             echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";

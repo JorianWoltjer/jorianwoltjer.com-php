@@ -105,7 +105,7 @@ require_once("../include/header.php");
         <p class="tags" id="tags">
             <label for="tag-add" style="margin-right: 10px;">Tags:</label>
             <?php
-            $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
+            $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$_GET['id']]);
 
             $post_tags = array();
             foreach ($tags->fetch_all() as $tag) {

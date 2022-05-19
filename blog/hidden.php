@@ -22,7 +22,7 @@ while ($row = $response_posts->fetch_assoc()) { ?>
                             <div class="card-body">
                                 <p class="card-text tags">
                                     <?php
-                                    $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
+                                    $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
 
                                     while ($tag_row = $tags->fetch_assoc()) {
                                         echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";

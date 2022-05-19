@@ -25,12 +25,7 @@ require_once("../include/header.php"); ?>
     </div>
     <hr class="higher-top">
     <a class='folder brighter' href='/blog/search'><i class="fa-solid fa-magnifying-glass"></i>Search</a>
-
-
 <?php if ($admin) { ?>
-    <h3 class="my-4"><code>Admin</code></h3>
-    <a href="/blog/create_post" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
-    <a href="/blog/create_folder" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
     <a href="/blog/hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
 <?php } ?>
 
@@ -50,7 +45,7 @@ if ($response->num_rows > 0) {
                 <div class="card-body">
                     <p class="card-text tags">
                         <?php
-                        $tags = sql_query("SElECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
+                        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row['id']]);
 
                         while ($tag_row = $tags->fetch_assoc()) {
                             echo "<span class='tag tag-$tag_row[class]'>$tag_row[name]</span>";

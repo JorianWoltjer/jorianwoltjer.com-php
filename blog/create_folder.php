@@ -42,7 +42,11 @@ require_once("../include/header.php");
             $response = sql_query("SELECT id, title FROM folders");
 
             while($row = $response->fetch_assoc()) {
-                echo "<option value='$row[id]'>$row[title]</option>";
+                if (isset($_GET["parent"]) && $row["id"] == $_GET["parent"]) {
+                    echo "<option value='$row[id]' selected>$row[title]</option>";
+                } else {
+                    echo "<option value='$row[id]'>$row[title]</option>";
+                }
             }
             ?>
         </select>
