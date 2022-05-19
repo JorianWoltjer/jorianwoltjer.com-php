@@ -1,6 +1,6 @@
 <?php
-$title = "Admin Login";
-$description = "The administrator login page to manage my website.";
+$meta_title = "Admin Login";
+$meta_description = "The administrator login page to manage my website.";
 $centerPage = true;
 require_once("include/all.php");
 

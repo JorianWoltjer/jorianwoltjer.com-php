@@ -2,8 +2,8 @@
 if (!isset($create_post)) $create_post = false;
 
 $admin_required = true;
-$title = ($create_post ? "Create" : "Edit")." post";
-$description = "Form to ".($create_post ? "create" : "edit")." a post on my blog.";
+$meta_title = ($create_post ? "Create" : "Edit")." post";
+$meta_description = "Form to ".($create_post ? "create" : "edit")." a post on my blog.";
 require_once("../include/all.php");
 
 if (!$create_post) {
@@ -28,7 +28,7 @@ if (!$create_post) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
-    if (isset($_POST['title'], $_POST['description'], $_POST['image'], $_POST['folder'], $_POST['tags'],
+    if (isset($_POST['title'], $_POST['description'], $_POST['img'], $_POST['parent'], $_POST['tags'],
         $_POST['text'], $_POST['points'])) {
 
         $html = md_to_html($_POST["text"]);
@@ -36,11 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
         $hidden = isset($_POST["hidden"]) && $_POST["hidden"] === "on";
 
         if ($featured and $hidden) {
-            returnMessage("error_featured_and_hidden", "");
+            returnMessage("error_featured_and_hidden");
         }
 
         $url = text_to_url($_POST["title"]);
-        $parent = sql_query("SELECT url FROM folders WHERE id=?", [$_POST["folder"]]);
+        $parent = sql_query("SELECT url FROM folders WHERE id=?", [$_POST["parent"]]);
         $parent_url = $parent->fetch_assoc()["url"];
         $url = $parent_url."/".$url;
 
@@ -48,25 +48,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
             $hash = $row["hidden"] ?? random_bytes(32);
             if ($create_post) {
                 sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, hidden, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
-                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    [$_POST["parent"], $url, $_POST["title"], $_POST["description"], $_POST["img"], $_POST["text"],
                         $html, $_POST["points"], $featured, $hash]);
             } else {
                 sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=? WHERE id=?",
-                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    [$_POST["parent"], $url, $_POST["title"], $_POST["description"], $_POST["img"], $_POST["text"],
                         $html, $_POST["points"], $featured, $hash, $row['id']]);
             }
         } else if (!$create_post && $row["hidden"]) {  // If changed from hidden to public
             sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL, timestamp=CURRENT_TIMESTAMP() WHERE id=?",
-                [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                [$_POST["parent"], $url, $_POST["title"], $_POST["description"], $_POST["img"], $_POST["text"],
                     $html, $_POST["points"], $featured, $row['id']]);
         } else {
             if ($create_post) {
                 sql_query("INSERT INTO posts(parent, url, title, description, img, markdown, html, points, featured, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())",
-                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    [$_POST["parent"], $url, $_POST["title"], $_POST["description"], $_POST["img"], $_POST["text"],
                         $html, $_POST["points"], $featured]);
             } else {
                 sql_query("UPDATE posts SET parent=?, url=?, title=?, description=?, img=?, markdown=?, html=?, points=?, featured=?, hidden=NULL WHERE id=?",
-                    [$_POST["folder"], $url, $_POST["title"], $_POST["description"], $_POST["image"], $_POST["text"],
+                    [$_POST["parent"], $url, $_POST["title"], $_POST["description"], $_POST["img"], $_POST["text"],
                         $html, $_POST["points"], $featured, $row['id']]);
             }
         }
@@ -120,14 +120,14 @@ require_once("../include/header.php");
         <label for="description">Description</label>
         <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?></textarea>
         <br>
-        <label for="image">Image</label>
-        <input class="form-control" id="image" type="text" name="image" required autocomplete="off" value="<?= $row["img"] ?>">
+        <label for="img">Image</label>
+        <input class="form-control" id="img" type="text" name="img" required autocomplete="off" value="<?= $row["img"] ?>">
         <br>
         <img id="preview" src="/img/blog/<?= $row["img"] ?>" alt="Unable to load image!" class="rounded" width="300px">
         <br>
         <br>
-        <label for="folder">Folder</label>
-        <select class="form-control" id="folder" name="folder">
+        <label for="parent">Folder</label>
+        <select class="form-control" id="parent" name="parent">
             <?php
             $response = sql_query("SELECT id, title FROM folders");
 
@@ -252,7 +252,7 @@ require_once("../include/header.php");
             }
         });
 
-        $('#image').on("change", function() {
+        $('#img').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
         });

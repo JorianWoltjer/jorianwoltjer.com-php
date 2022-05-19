@@ -1,6 +1,6 @@
 <?php
-$title = "Blog - Search";
-$description = "Search through all posts on my blog about cybersecurity. Quickly find what you're looking for by typing in the search bar.";
+$meta_title = "Blog - Search";
+$meta_description = "Search through all posts on my blog about cybersecurity. Quickly find what you're looking for by typing in the search bar.";
 require_once("../include/header.php");
 
 function text_only($html): array|string|null

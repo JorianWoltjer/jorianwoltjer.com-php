@@ -1,4 +1,4 @@
-<?php require_once("../include/header.php");
+<?php require_once("../include/all.php");
 
 if (isset($_GET["url"])) {
     $response = sql_query("SELECT * FROM folders WHERE url=?", [$_GET["url"]]);
@@ -28,21 +28,26 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
                                     ON T1._id = T2.id 
                                     ORDER BY T1.lvl DESC", [$row["id"]]);
 
-?>
+// Title: folder + title
+if ($response_breadcrumbs->num_rows >= 2) {
+    $all_breadcrumbs = $response_breadcrumbs->fetch_all(MYSQLI_ASSOC);
+    $folder_title = $all_breadcrumbs[$response_breadcrumbs->num_rows-2]["title"];
+} else {
+    $folder_title = "Blog";  // If no parent
+}
+$meta_title = $folder_title." - ".$row['title'];
+$meta_description = $row['description'];
+$meta_image = "/img/blog/".$row['img'];
+$meta_large_card = true;
 
-    <meta name="og:type" content="article" />
-    <meta name="description" content="<?= htmlspecialchars($row['description']) ?>">
-    <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
-    <meta name="og:image" content="<?= get_baseurl() ?>/img/blog/<?= $row['img'] ?>" />
-    <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
-    <meta property="og:article:section" content="1" />
-    <meta property="og:article:author" content="Jorian Woltjer" />
-    <meta name="twitter:card" content="summary_large_image">
+require_once("../include/header.php");
+?>
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-4">
         <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
         <?php
+        $response_breadcrumbs->data_seek(0);  // Reset pointer
         $i = 0;
         while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
             $i++;
@@ -54,18 +59,6 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
         } ?>
     </ol>
 </nav>
-
-<?php  // Title: folder + title
-if ($response_breadcrumbs->num_rows >= 2) {
-    $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-2);
-    $folder = $response_breadcrumbs->fetch_assoc()['title'];
-} else {
-    $folder = "Blog";  // If no parent
-}
-$title = $folder." - ".$row['title'];
-?>
-<title><?= $title ?> | Jorian Woltjer</title>
-<meta name="og:title" content="<?= $title ?> | Jorian Woltjer" />
 
 <hr>
 <p class="lead">

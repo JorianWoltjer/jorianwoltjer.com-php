@@ -1,7 +1,7 @@
 <?php
 $admin_required = true;
-$title = "Hidden posts";
-$description = "List of all blog posts set to hidden";
+$meta_title = "Hidden posts";
+$meta_description = "List of all blog posts set to hidden";
 require_once("../include/header.php");
 ?>
 

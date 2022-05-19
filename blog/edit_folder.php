@@ -2,8 +2,8 @@
 if (!isset($create_folder)) $create_folder = false;
 
 $admin_required = true;
-$title = ($create_folder ? "Create" : "Edit")." folder";
-$description = "Form to ".($create_folder ? "create" : "edit")." a folder for posts on my blog.";
+$meta_title = ($create_folder ? "Create" : "Edit")." folder";
+$meta_description = "Form to ".($create_folder ? "create" : "edit")." a folder for posts on my blog.";
 require_once("../include/all.php");
 
 if (!$create_folder) {

@@ -1,6 +1,6 @@
 <?php
-$title = "Blog";
-$description = "A blog with cybersecurity-related articles. Writeups of challenges in Capture The Flag (CTF) events, stories about hacking and guides with code examples and detailed explanations.";
+$meta_title = "Blog";
+$meta_description = "A blog with cybersecurity-related articles. Writeups of challenges in Capture The Flag (CTF) events, stories about hacking and guides with code examples and detailed explanations.";
 require_once("../include/header.php"); ?>
 
 <style>

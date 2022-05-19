@@ -9,20 +9,20 @@ $page = ($match[1] === "" ? "home" : $match[1]);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php if (isset($title)) { ?>
-        <title><?= htmlspecialchars($title) ?> | Jorian Woltjer</title>
-        <meta property="og:title" content="<?= htmlspecialchars($title) ?> | Jorian Woltjer">
-        <meta name="twitter:title" content="<?= htmlspecialchars($title) ?> | Jorian Woltjer">
-    <?php if (isset($description)) { ?>
-        <meta name="description" content="<?= htmlspecialchars($description) ?>">
-        <meta property="og:description" content="<?= htmlspecialchars($description) ?>">
-        <meta name="twitter:description" content="<?= htmlspecialchars($description) ?>">
+    <?php if (isset($meta_title)) { ?>
+        <title><?= htmlspecialchars($meta_title) ?> | Jorian Woltjer</title>
+        <meta property="og:title" content="<?= htmlspecialchars($meta_title) ?> | Jorian Woltjer">
+        <meta name="twitter:title" content="<?= htmlspecialchars($meta_title) ?> | Jorian Woltjer">
+    <?php if (isset($meta_description)) { ?>
+        <meta name="description" content="<?= htmlspecialchars($meta_description) ?>">
+        <meta property="og:description" content="<?= htmlspecialchars($meta_description) ?>">
+        <meta name="twitter:description" content="<?= htmlspecialchars($meta_description) ?>">
         <meta property="og:type" content="website">
-        <meta name="twitter:card" content="summary">
+        <meta name="twitter:card" content="<?= (isset($meta_large_card) && $meta_large_card) ? "summary_large_image" : "summary" ?>">
         <meta property="og:url" content="<?= htmlspecialchars(get_baseurl().$_SERVER["REQUEST_URI"]) ?>">
         <meta property="twitter:url" content="<?= htmlspecialchars(get_baseurl().$_SERVER["REQUEST_URI"]) ?>">
-        <meta property="og:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
-        <meta name="twitter:image" content="<?= htmlspecialchars(get_baseurl()) ?>/img/round_logo.png">
+        <meta property="og:image" content="<?= htmlspecialchars(get_baseurl()) . ($meta_image ?? "/img/round_logo.png") ?>">
+        <meta name="twitter:image" content="<?= htmlspecialchars(get_baseurl()) . ($meta_image ?? "/img/round_logo.png") ?>">
         <meta property="twitter:domain" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
         <meta property="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>">
     <?php }} ?>

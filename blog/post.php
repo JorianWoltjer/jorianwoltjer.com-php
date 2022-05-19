@@ -1,42 +1,43 @@
-<?php require_once("../include/header.php");
+<?php require_once("../include/all.php");
+if (!isset($preview)) $preview = false;
 
-# Find post
-if (isset($_GET["url"])) {
-    $response = sql_query("SELECT * FROM posts WHERE url=?", [$_GET["url"]]);
-} else if (isset($_GET["id"])) {  # id for backwards compatibility
-    $response = sql_query("SELECT * FROM posts WHERE id=?", [$_GET["id"]]);
-} else {
-    returnMessage("error_post", "/blog/");
-}
-
-$row = $response->fetch_assoc();
-
-if ($response->num_rows === 0) {
-    returnMessage("error_post", "/blog/");
-}
-
-// Verify hidden hash
-if ($row["hidden"] !== NULL) {
-    $hash = $_GET["hidden"] ?? $_GET["hash"];  // Get hidden parameter or hash for backwards compatibility
-    if ($hash !== bin2hex($row["hidden"])) {
+if (!$preview) {  // If from SQL
+    if (isset($_GET["url"])) {
+        $response = sql_query("SELECT * FROM posts WHERE url=?", [$_GET["url"]]);
+    } else if (isset($_GET["id"])) {  # id for backwards compatibility
+        $response = sql_query("SELECT * FROM posts WHERE id=?", [$_GET["id"]]);
+    } else {
         returnMessage("error_post", "/blog/");
     }
+
+    if ($response->num_rows === 0) {
+        returnMessage("error_post", "/blog/");
+    }
+
+    $row = $response->fetch_assoc();
+
+    // Verify hidden hash
+    if ($row["hidden"] !== NULL) {
+        $hash = $_GET["hidden"] ?? $_GET["hash"] ?? "";  // Get hidden parameter or hash for backwards compatibility
+        if ($hash !== bin2hex($row["hidden"])) {
+            returnMessage("error_post", "/blog/");
+        }
+    }
+
+    sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]]);
+} else {  // If preview from POST
+    if (!isset($_POST['title'], $_POST['description'], $_POST['img'], $_POST['parent'], $_POST['tags'],
+        $_POST['text'], $_POST['points'])) {
+        returnMessage("all_fields", "/blog/");
+    }
+
+    $row = $_POST;  // Take values from POST if preview
+    $row["hidden"] = (isset($_POST["hidden"]) && $_POST["hidden"] === "on") ? true : null;
+    $row['timestamp'] = "0 sec";
+    $row['views'] = 0;
+    $row["html"] = md_to_html($row["text"]);
 }
 
-sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]])
-?>
-
-    <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
-    <meta name="og:type" content="article" />
-    <meta name="description" content="<?= htmlspecialchars($row['description']) ?>" />
-    <meta name="og:description" content="<?= htmlspecialchars($row['description']) ?>" />
-    <meta name="og:image" content="<?= get_baseurl() ?>/img/blog/<?= $row['img'] ?>" />
-    <meta name="og:site_name" content="<?= htmlspecialchars($_SERVER["SERVER_NAME"]) ?>" />
-    <meta property="og:article:section" content="1" />
-    <meta property="og:article:author" content="Jorian Woltjer" />
-    <meta name="twitter:card" content="summary_large_image">
-
-<?php
 $response_breadcrumbs = sql_query("SELECT T2.url, T2.title 
                                     FROM ( 
                                         SELECT 
@@ -50,12 +51,25 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
                                     JOIN folders T2 
                                     ON T1._id = T2.id 
                                     ORDER BY T1.lvl DESC", [$row['parent']]);
+
+// Title: folder + title + 'writeup' if ctf
+$all_breadcrumbs = $response_breadcrumbs->fetch_all(MYSQLI_ASSOC);
+$folder = $all_breadcrumbs[$response_breadcrumbs->num_rows-1];
+$meta_title = $folder['title']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+$meta_description = $row['description'];
+$meta_image = "/img/blog/".$row['img'];
+$meta_large_card = true;
+
+require_once("../include/header.php");
 ?>
+
+    <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb my-4">
             <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
             <?php
+            $response_breadcrumbs->data_seek(0);  // Reset pointer
             while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
                 echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
             }
@@ -65,30 +79,37 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
     </nav>
     <br>
 
-    <?php  // Title: folder + title + 'writeup' if ctf
-    $response_breadcrumbs->data_seek($response_breadcrumbs->num_rows-1);
-    $folder = $response_breadcrumbs->fetch_assoc();
-    $title = $folder['title']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
-    ?>
-    <title><?= $title ?> | Jorian Woltjer</title>
-    <meta name="og:title" content="<?= $title ?> | Jorian Woltjer" />
-
     <p class="tags">
         <?php
-        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
+        if ($preview) {
+            $all_tags = sql_query("SELECT name, class FROM tags")->fetch_all();
 
-        while ($row_tag = $tags->fetch_assoc()) {
-            echo "<span class='tag tag-$row_tag[class]'>$row_tag[name]</span>";
+            $tag_to_class = array();
+            foreach ($all_tags as $tag) {
+                $tag_to_class[$tag[0]] = $tag[1];
+            }
+
+            foreach ($_POST["tags"] as $tag) {
+                if (isset($tag_to_class[$tag])) {
+                    echo "<span class='tag tag-$tag_to_class[$tag]'>$tag</span>";
+                }
+            }
+        } else {
+            $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
+
+            while ($row_tag = $tags->fetch_assoc()) {
+                echo "<span class='tag tag-$row_tag[class]'>$row_tag[name]</span>";
+            }
         }
         ?>
         <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
     </p>
 
     <div class="text-muted">
-        <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === NULL ? $row["views"]." views" : "<b>Hidden</b>" ?>
+        <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === null ? $row["views"]." views" : "<b>Hidden</b>" ?>
     </div>
 
-<?php if (isset($admin) && $admin) { ?>
+<?php if (!$preview && isset($admin) && $admin) { ?>
     <a href="/blog/edit_post?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit post</a>
     <br>
     <br>
@@ -100,18 +121,20 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
     </div>
 
 <?php
-$response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hidden IS NULL;",
-    [$row["id"], $row["parent"]]);
-$prev = $response_prev->fetch_assoc();
+if (!$preview) {
+    $response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hidden IS NULL;",
+        [$row["id"], $row["parent"]]);
+    $prev = $response_prev->fetch_assoc();
 
-$response_next = sql_query("SELECT url FROM posts WHERE id = (SELECT min(id) FROM posts WHERE id > ?) AND parent=? AND hidden IS NULL;",
-    [$row["id"], $row["parent"]]);
-$next = $response_next->fetch_assoc();
+    $response_next = sql_query("SELECT url FROM posts WHERE id = (SELECT min(id) FROM posts WHERE id > ?) AND parent=? AND hidden IS NULL;",
+        [$row["id"], $row["parent"]]);
+    $next = $response_next->fetch_assoc();
+}
 ?>
     <div class="pagination">
         <div class="left">
             <?php
-            if ($prev) {
+            if (isset($prev) && $prev) {
                 echo '<a href="/blog/post/'.$prev["url"].'"><i class="fa-solid fa-caret-left"></i> Previous</a>';
             }
             ?>
@@ -123,7 +146,7 @@ $next = $response_next->fetch_assoc();
         </div>
         <div class="right">
             <?php
-            if ($next) {
+            if (isset($next) && $next) {
                 echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fa-solid fa-caret-right"></i></a>';
             }
             ?>
