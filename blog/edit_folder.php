@@ -14,7 +14,12 @@ if (!$create_folder) {
         returnMessage("error_folder", "/blog/");
     }
 } else {
-    $row = [];
+    $row = [
+        "title" => "",
+        "description" => "",
+        "img" => "../placeholder.png",
+        "parent" => $_GET["parent"] ?? null,
+    ];
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -48,15 +53,15 @@ require_once("../include/header.php");
 
     <form method="POST" id="form">
         <label for="title">Title</label>
-        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?? "" ?>">
+        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?>">
         <br>
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?? "" ?></textarea>
+        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?></textarea>
         <br>
         <label for="image">Image</label>
-        <input class="form-control" id="image" type="text" name="image" autocomplete="off" value="<?= $row["img"] ?? "../placeholder.png" ?>">
+        <input class="form-control" id="image" type="text" name="image" autocomplete="off" value="<?= $row["img"] ?>">
         <br>
-        <img id="preview" src="" alt="Unable to load image!" class="rounded" width="300px">
+        <img id="preview" src="/img/blog/<?= $row["img"] ?>" alt="Unable to load image!" class="rounded" width="300px">
         <br>
         <br>
         <label for="parent">Parent folder</label>
@@ -66,7 +71,7 @@ require_once("../include/header.php");
             $response = sql_query("SELECT id, title FROM folders");
 
             while($row_folder = $response->fetch_assoc()) {
-                if ((isset($row['parent']) && $row_folder['id'] === $row['parent']) || (isset($_GET["parent"]) && $row_folder["id"] == $_GET["parent"])) {
+                if ($row_folder['id'] == $row['parent']) {
                     echo "<option value='$row_folder[id]' selected>$row_folder[title]</option>";
                 } elseif ($row_folder['id'] !== $row['id']) {
                     echo "<option value='$row_folder[id]'>$row_folder[title]</option>";
@@ -82,7 +87,7 @@ require_once("../include/header.php");
         $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
-        }).change();
+        });
     </script>
 
 <?php require_once("../include/footer.php"); ?>

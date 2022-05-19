@@ -14,7 +14,17 @@ if (!$create_post) {
         returnMessage("error_post", "/blog/");
     }
 } else {
-    $row = [];
+    $row = [
+        "url" => "",
+        "parent" => $_GET["parent"] ?? null,
+        "title" => "",
+        "markdown" => "",
+        "img" => "../placeholder.png",
+        "description" => "",
+        "points" => "",
+        "featured" => false,
+        "hidden" => null,
+    ];
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
@@ -105,15 +115,15 @@ require_once("../include/header.php");
 
     <form method="POST" id="form">
         <label for="title">Title</label>
-        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?? "" ?>">
+        <input class="form-control" id="title" type="text" name="title" required autocomplete="off" autofocus value="<?= $row["title"] ?>">
         <br>
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?? "" ?></textarea>
+        <textarea class="form-control" id="description" name="description" spellcheck="true" rows="2" required><?= $row["description"] ?></textarea>
         <br>
         <label for="image">Image</label>
-        <input class="form-control" id="image" type="text" name="image" required autocomplete="off" value="<?= $row["img"] ?? "../placeholder.png" ?>">
+        <input class="form-control" id="image" type="text" name="image" required autocomplete="off" value="<?= $row["img"] ?>">
         <br>
-        <img id="preview" src="" alt="Unable to load image!" class="rounded" width="300px">
+        <img id="preview" src="/img/blog/<?= $row["img"] ?>" alt="Unable to load image!" class="rounded" width="300px">
         <br>
         <br>
         <label for="folder">Folder</label>
@@ -122,7 +132,7 @@ require_once("../include/header.php");
             $response = sql_query("SELECT id, title FROM folders");
 
             while($row_folder = $response->fetch_assoc()) {
-                if ((isset($row['parent']) && $row_folder['id'] === $row['parent']) || (isset($_GET["parent"]) && $row_folder["id"] == $_GET["parent"])) {
+                if ($row_folder['id'] == $row['parent']) {
                     echo "<option value='$row_folder[id]' selected>$row_folder[title]</option>";
                 } else {
                     echo "<option value='$row_folder[id]'>$row_folder[title]</option>";
@@ -160,17 +170,17 @@ require_once("../include/header.php");
         <input type="hidden" name="tags[]">
         <div id="tag-inputs"></div>
         <label for="text">Text (Markdown)</label>
-        <pre><textarea class="form-control" id="text" name="text" spellcheck="true" rows="10" required><?= $row["markdown"] ?? "" ?></textarea></pre>
+        <pre><textarea class="form-control" id="text" name="text" spellcheck="true" rows="10" required><?= $row["markdown"] ?></textarea></pre>
         <br>
         <label for="points">Points (optional)</label>
-        <input class="form-control" id="points" type="number" name="points" autocomplete="off" value="<?= $row["points"] ?? "" ?>">
+        <input class="form-control" id="points" type="number" name="points" autocomplete="off" value="<?= $row["points"] ?>">
         <br>
         <div class="form-check">
-            <input class="form-check-input" id="featured" type="checkbox" name="featured"<?= ($row["featured"] ?? "") ? " checked" : "" ?>>
+            <input class="form-check-input" id="featured" type="checkbox" name="featured"<?= $row["featured"] ? " checked" : "" ?>>
             <label class="form-check-label" for="featured">Featured</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= ($row["hidden"] ?? null) !== null ? " checked" : "" ?>>
+            <input class="form-check-input" id="hidden" type="checkbox" name="hidden"<?= $row["hidden"] !== null ? " checked" : "" ?>>
             <label class="form-check-label" for="hidden">Hidden</label>
         </div>
         <br>
@@ -245,7 +255,7 @@ require_once("../include/header.php");
         $('#image').on("change", function() {
             const src = $(this).val();
             $("#preview").attr('src', "/img/blog/"+src);
-        }).change();
+        });
 
         document.getElementById('text').addEventListener('paste', (event) => {
             event.preventDefault();
