@@ -11,6 +11,11 @@ function text_only($html): array|string|null
 ?>
 
 <h1 class="my-4"><code>Search posts</code></h1>
+
+<noscript><div class="alert alert-danger" role="alert">
+    Warning: JavaScript is required for this page to work!
+</div></noscript>
+
 <input id="query" type="text" class="form-control" placeholder="Search" oninput="search(this.value)" onblur="saveURL()" autocomplete="off" autofocus>
 
 <div id="results">
