@@ -476,8 +476,8 @@ a.folder.brighter:hover {
   background-color: var(--gray);
 }
 
-a i {
-  margin-right: 10px
+a>i {
+  margin-right: 10px;
 }
 
 .breadcrumb {
