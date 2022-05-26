@@ -115,9 +115,6 @@ textarea {
   cursor: auto;
 }
 
-pre {
-  font-size: .81em;
-}
 pre code {
   font-family: "Fira Code", monospace;
   padding: 1ch 1.5ch !important;
