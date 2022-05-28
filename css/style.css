@@ -65,16 +65,17 @@ p.lead {
   color: var(--foreground);
 }
 
-p a, small a {
+p a, p a *, small a, small a * {
   color: white;
   text-decoration: underline;
   transition: 0.2s ease;
 }
+p a:hover, p a:hover *, small a:hover, small a:hover * {
+  color: var(--main-color) !important;
+}
+
 .text-white-50 a {
   color: var(--foreground-light);
-}
-p a:hover, small a:hover {
-  color: var(--main-color) !important;
 }
 
 footer.bg-dark {
