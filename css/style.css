@@ -70,7 +70,7 @@ p a, p a *, small a, small a * {
   text-decoration: underline;
   transition: 0.2s ease;
 }
-p a:hover, p a:hover *, small a:hover, small a:hover * {
+p a:hover, p a:hover code, small a:hover, small a:hover code {
   color: var(--main-color) !important;
 }
 
