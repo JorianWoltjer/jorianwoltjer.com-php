@@ -6,6 +6,7 @@ require_once("../include/header.php"); ?>
     <h1 class="my-4"><code>Blog</code></h1>
     <?php displayMessage() ?>
 
+    <!-- Categories -->
     <div>
         <?php
         $response = sql_query("SELECT * FROM folders WHERE parent IS NULL");
@@ -23,6 +24,7 @@ require_once("../include/header.php"); ?>
     <a href="/blog/hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
 <?php } ?>
 
+    <!-- New posts -->
     <br>
     <h3 class="my-4"><code>New posts</code></h3>
 <?php

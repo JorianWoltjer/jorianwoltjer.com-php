@@ -43,6 +43,7 @@ $meta_large_card = true;
 require_once("../include/header.php");
 ?>
 
+<!-- Breadcumbs -->
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb my-4">
         <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
@@ -60,6 +61,7 @@ require_once("../include/header.php");
     </ol>
 </nav>
 
+<!-- Desription -->
 <hr>
 <p class="lead">
     <?php
@@ -71,11 +73,13 @@ require_once("../include/header.php");
 </p>
 
 <?php if ($admin) { ?>
+<!-- Admin buttons -->
     <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit folder</a>
     <a href="/blog/create_post?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
     <a href="/blog/create_folder?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
 <?php } ?>
 
+<!-- Folder cards -->
 <?php
 $response_folders = sql_query("SELECT * FROM folders WHERE parent = ? ORDER BY timestamp DESC", [$row["id"]]);
 
@@ -102,8 +106,10 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
             </div>
         </div>
     </div>
-<?php }
+<?php } ?>
 
+<!-- Post cards -->
+<?php
 if ($admin) {
     $response_posts = sql_query("SELECT * FROM posts WHERE parent = ? ORDER BY timestamp DESC", [$row["id"]]);
 } else {

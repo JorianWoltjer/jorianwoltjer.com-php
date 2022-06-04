@@ -65,6 +65,7 @@ require_once("../include/header.php");
 
     <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
 
+<!-- Breadcrumbs -->
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb my-4">
             <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
@@ -79,6 +80,7 @@ require_once("../include/header.php");
     </nav>
     <br>
 
+<!-- Tags -->
     <p class="tags">
         <?php
         if ($preview) {
@@ -105,11 +107,13 @@ require_once("../include/header.php");
         <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
     </p>
 
+    <!-- Date & View Count -->
     <div class="text-muted">
         <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === null ? $row["views"]." views" : "<b>Hidden</b>" ?>
     </div>
 
 <?php if (!$preview && isset($admin) && $admin) { ?>
+<!-- Admin buttons -->
     <a href="/blog/edit_post?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit post</a>
     <br>
     <br>
@@ -120,6 +124,7 @@ require_once("../include/header.php");
 preg_match_all('/<h[1-6] id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h[1-6]>/', $row['html'], $matches, PREG_SET_ORDER);
 if ($matches) {
 ?>
+<!-- Table of Contents -->
     <div class="table-of-contents">
         <h3><code>Contents</code></h3>
         <ol>
@@ -132,11 +137,13 @@ if ($matches) {
     </div>
 <?php } ?>
 
+<!-- Blog content -->
     <h1><?= $row['title'] ?></h1>
     <div class='blog-content'>
         <?= $row['html'] ?>
     </div>
 
+<!-- Pagination -->
 <?php
 if (!$preview) {
     $response_prev = sql_query("SELECT url FROM posts WHERE id = (SELECT max(id) FROM posts WHERE id < ?) AND parent=? AND hidden IS NULL;",
@@ -185,6 +192,7 @@ if (!$preview) {
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script src="/assets/highlight/highlight.min.js"></script>
     <script nonce="<?=$nonce?>">
         hljs.highlightAll();
