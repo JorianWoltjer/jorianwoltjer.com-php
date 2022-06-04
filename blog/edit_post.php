@@ -275,19 +275,15 @@ require_once("../include/header.php");
             $("#preview").attr('src', "/img/blog/"+src);
         });
 
-        document.getElementById('text').addEventListener('paste', (event) => {
-            event.preventDefault();
-            let paste = (event.clipboardData || window.clipboardData).getData('text');
-
-            // Take title from paste
+        document.getElementById('text').addEventListener('change', (event) => {
+            // Extract title from paste
+            const text = event.target.value;
             const titleRegex = /^# (.*)(\r?\n)+/
-            const match = titleRegex.exec(paste)
+            const match = titleRegex.exec(text)
             if (match) {
                 document.getElementById("title").value = match[1];
-                paste = paste.replace(titleRegex, "");
+                event.target.value = text.replace(titleRegex, "");
             }
-
-            document.execCommand("insertText", false, paste)
         })
     </script>
 
