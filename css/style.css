@@ -82,8 +82,12 @@ footer.bg-dark {
   line-height: normal;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
 h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
   color: var(--main-color);
+  font-weight: 500;
 }
 
 .alert code {
@@ -602,6 +606,30 @@ blockquote code {
   padding: 0;
   border-radius: 0 0 .2rem .2rem;
   overflow: hidden;
+}
+
+.table-of-contents {
+  float: right;
+  width: 350px;
+  max-width: 50%;
+  background-color: #1e1e1e;
+  border: 2px solid var(--background-light);
+  border-radius: 10px;
+  padding: 0.8em 1.2em 0.4em 1.2em;
+  margin: 0 0 1em 1em;
+  overflow-y: clip;
+}
+.table-of-contents a h6 {
+  padding: 8px 0;
+  margin: 0;
+  display: inline-block;
+}
+.table-of-contents a {
+  text-decoration: none;
+}
+.table-of-contents a:hover * {
+  color: var(--main-color);
+  text-decoration: underline;
 }
 
 /* Forms */

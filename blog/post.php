@@ -115,6 +115,23 @@ require_once("../include/header.php");
     <br>
 <?php } ?>
 
+<?php
+// Match any <h1> to <h6>
+preg_match_all('/<h[1-6] id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h[1-6]>/', $row['html'], $matches, PREG_SET_ORDER);
+if ($matches) {
+?>
+    <div class="table-of-contents">
+        <h3><code>Contents</code></h3>
+        <ol>
+            <?php
+            foreach ($matches as $match) {
+                echo "<li><a href='#$match[1]'><h6>$match[2]</h6></a></li>";
+            }
+            ?>
+        </ol>
+    </div>
+<?php } ?>
+
     <h1><?= $row['title'] ?></h1>
     <div class='blog-content'>
         <?= $row['html'] ?>
