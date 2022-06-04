@@ -40,6 +40,7 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         window.history.replaceState({}, null, url.toString());
     </script>
     <script src="/assets/jquery/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/bootstrap/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="d-flex flex-column">
 

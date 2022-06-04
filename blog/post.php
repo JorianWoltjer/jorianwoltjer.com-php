@@ -173,15 +173,27 @@ if (!$preview) {
         hljs.highlightAll();
 
         // Copy button from code blocks
-        function copy_code(element) {
+        function copy_code(element, tooltip) {
             const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;
             navigator.clipboard.writeText(code);
-            const tooltip = new bootstrap.Tooltip(element);
+
             tooltip.show();
             setTimeout(function() {
-                tooltip.dispose();
-            }, 2000);
+                tooltip.hide();
+            }, 1000);
         }
+        // Add copy_code function to all code blocks
+        $(".copy").each(function() {
+            var tooltip = new bootstrap.Tooltip(this, {
+                title: "Copied!",
+                placement: "top",
+                trigger: "manual"
+            });
+
+            $(this).on("click", function() {
+                copy_code(this, tooltip);
+            });
+        });
 
         // Open all links in new tab
         window.addEventListener('DOMContentLoaded', () => {

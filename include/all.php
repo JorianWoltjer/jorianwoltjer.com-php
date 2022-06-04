@@ -148,7 +148,7 @@ function md_to_html(string $text): array|string|null
 
     // Style code blocks
     return preg_replace('/<pre><code class="language-(.*?)">(.*?)<\/code><\/pre>/s',
-        '<div class="code-block"><p>$1<a class="copy" id="copy" onclick="copy_code(this)" data-bs-toggle="tooltip" data-bs-placement="top" title="Copied!"><i class="fa-solid fa-copy"></i></a style="float: right"></p><pre><code class="language-$1">$2</code></pre></div>',
+        '<div class="code-block"><p>$1<a class="copy" data-bs-toggle="tooltip" data-bs-placement="top" title="Copied!"><i class="fa-solid fa-copy"></i></a></p><pre><code class="language-$1">$2</code></pre></div>',
         $text);
 }
 

@@ -457,6 +457,7 @@ a.folder:hover {
 }
 a.folder i {
   font-size: 1.5rem;
+  margin-right: 10px;
   color: var(--main-color);
   transform: translate(0, 15%);
 }
@@ -467,7 +468,7 @@ a.folder.brighter:hover {
   background-color: var(--gray);
 }
 
-a>i {
+i.text-icon {
   margin-right: 10px;
 }
 
@@ -556,6 +557,9 @@ a>i {
   float: right;
   color: var(--foreground);
   cursor: pointer;
+}
+.code-block .copy:hover {
+  color: var(--foreground-light);
 }
 
 .code-block pre {
