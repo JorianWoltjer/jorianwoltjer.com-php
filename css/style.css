@@ -51,11 +51,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-a {
-  color: var(--main-color);
-  transition: color 0.2s;
-}
-
 p, .blog-content {
   font-family: var(--bs-font-sans-serif);
 }
@@ -65,17 +60,18 @@ p.lead {
   color: var(--foreground);
 }
 
-p a, p a *, small a, small a * {
+a {
   color: white;
-  text-decoration: underline;
-  transition: 0.2s ease;
+  transition: color 0.2s;
 }
-p a:hover, p a:hover code, small a:hover, small a:hover code {
-  color: var(--main-color) !important;
+a:hover {
+  color: var(--main-color-light);
 }
-
 .text-white-50 a {
   color: var(--foreground-light);
+}
+.text-white-50 a:hover {
+  color: var(--main-color-light);
 }
 
 footer.bg-dark {
@@ -582,6 +578,16 @@ blockquote code {
   cursor: pointer;
   border: 2px solid var(--background-light);
   border-radius: 10px;
+}
+
+.blog-content p a:not(.copy), .blog-content p a:not(.copy) * {
+  color: var(--main-color-light) !important;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+.blog-content p a:not(.copy):hover, .blog-content p a:not(.copy):hover * {
+  color: var(--main-color-light) !important;
+  text-decoration: underline;
 }
 
 .modal-header {

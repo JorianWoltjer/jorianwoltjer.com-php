@@ -141,7 +141,7 @@ if (!$preview) {
         </div>
         <div class="center">
             <div class="text-white-50">
-                <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank">Contacts</a></p>
+                <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank" class="white-link">Contacts</a></p>
             </div>
         </div>
         <div class="right">
