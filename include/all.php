@@ -5,7 +5,7 @@ require_once(__DIR__."/../../mysqli_connect.php"); require_once(__DIR__."/../../
 // HTTP Headers
 $nonce = str_replace("=", "", base64_encode(random_bytes(20)));
 $csp = "Content-Security-Policy: frame-ancestors 'self'; script-src 'self' 'nonce-".$nonce."'; 
-style-src 'self' 'nonce-".$nonce."'; base-uri 'self'; object-src 'none'";
+style-src 'self' 'nonce-".$nonce."' https://fonts.googleapis.com/; base-uri 'self'; object-src 'none'";
 header(str_replace(array("\r","\n"), "", $csp));
 
 $admin = false;
