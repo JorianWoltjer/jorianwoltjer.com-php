@@ -622,7 +622,6 @@ blockquote code {
 .table-of-contents a h6 {
   padding: 8px 0;
   margin: 0;
-  display: inline-block;
 }
 .table-of-contents a {
   text-decoration: none;
