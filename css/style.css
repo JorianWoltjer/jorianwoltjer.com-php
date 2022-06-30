@@ -610,8 +610,6 @@ blockquote code {
 
 .table-of-contents {
   float: right;
-  width: 350px;
-  max-width: 50%;
   background-color: #1e1e1e;
   border: 2px solid var(--background-light);
   border-radius: 10px;

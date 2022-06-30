@@ -119,6 +119,7 @@ require_once("../include/header.php");
     <br>
 <?php } ?>
 
+    <h1 class="blog-title"><?= $row['title'] ?></h1>
 <?php
 // Match any <h1> to <h6>
 preg_match_all('/<h[1-6] id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h[1-6]>/', $row['html'], $matches, PREG_SET_ORDER);
@@ -138,7 +139,6 @@ if ($matches) {
 <?php } ?>
 
 <!-- Blog content -->
-    <h1><?= $row['title'] ?></h1>
     <div class='blog-content'>
         <?= $row['html'] ?>
     </div>
