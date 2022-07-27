@@ -587,12 +587,12 @@ blockquote code {
   border-radius: 10px;
 }
 
-.blog-content p a:not(.copy), .blog-content p a:not(.copy) * {
+.blog-content a:not(.copy), .blog-content a:not(.copy) * {
   color: var(--main-color-light) !important;
   text-decoration: none;
   transition: 0.2s ease;
 }
-.blog-content p a:not(.copy):hover, .blog-content p a:not(.copy):hover * {
+.blog-content a:not(.copy):hover, .blog-content a:not(.copy):hover * {
   color: var(--main-color-light) !important;
   text-decoration: underline;
 }
