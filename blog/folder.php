@@ -74,9 +74,9 @@ require_once("../include/header.php");
 
 <?php if ($admin) { ?>
 <!-- Admin buttons -->
-    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit folder</a>
     <a href="/blog/create_post?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-plus"></i>Create post</a>
     <a href="/blog/create_folder?parent=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-folder-plus"></i>Create folder</a>
+    <a href="/blog/edit_folder?id=<?= $row['id'] ?>" class="folder"><i class="fa-solid fa-edit"></i>Edit folder</a>
 <?php } ?>
 
 <!-- Folder cards -->
