@@ -272,7 +272,7 @@ require_once("../include/header.php");
 
         $('#img').on("change", function() {
             const src = $(this).val();
-            $("#preview").attr('src', "/img/blog/"+src);
+            $("#preview").attr('src', `/img/blog/${src}?${Math.random()}`);  // Avoid loading from cache
         });
 
         document.getElementById('text').addEventListener('change', (event) => {
