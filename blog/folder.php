@@ -28,14 +28,14 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
                                     ON T1._id = T2.id 
                                     ORDER BY T1.lvl DESC", [$row["id"]]);
 
-// Title: folder + title
+// Title: title + folder
 if ($response_breadcrumbs->num_rows >= 2) {
     $all_breadcrumbs = $response_breadcrumbs->fetch_all(MYSQLI_ASSOC);
     $folder_title = $all_breadcrumbs[$response_breadcrumbs->num_rows-2]["title"];
 } else {
     $folder_title = "Blog";  // If no parent
 }
-$meta_title = $folder_title." - ".$row['title'];
+$meta_title = $row['title']." - ".$folder_title;
 $meta_description = $row['description'];
 $meta_image = "/img/blog/".$row['img'];
 $meta_large_card = true;

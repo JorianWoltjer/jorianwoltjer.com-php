@@ -52,10 +52,10 @@ $response_breadcrumbs = sql_query("SELECT T2.url, T2.title
                                     ON T1._id = T2.id 
                                     ORDER BY T1.lvl DESC", [$row['parent']]);
 
-// Title: folder + title + 'writeup' if ctf
+// Title: title + 'writeup' if ctf + folder
 $all_breadcrumbs = $response_breadcrumbs->fetch_all(MYSQLI_ASSOC);
 $folder = $all_breadcrumbs[$response_breadcrumbs->num_rows-1];
-$meta_title = $folder['title']." - ".$row['title'] . (str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '');
+$meta_title = $row['title'].(str_starts_with($folder['url'], "ctf") ? ' (Writeup)' : '') . " - " . $folder['title'];
 $meta_description = $row['description'];
 $meta_image = "/img/blog/".$row['img'];
 $meta_large_card = true;
