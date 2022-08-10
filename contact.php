@@ -38,6 +38,6 @@ require_once("include/header.php"); ?>
             <div class="button-text">Github</div>
         </div></a>
     </div>
-    <p class="button"><i class="fa-solid fa-envelope"></i><a href="mailto: jorianwoltjer@hotmail.com">jorianwoltjer@hotmail.com</a></p>
+    <p class="button"><i class="fa-solid fa-envelope"></i><a href="mailto: contact@jorianwoltjer.com">contact@jorianwoltjer.com</a></p>
 
 <?php require_once("include/footer.php"); ?>
