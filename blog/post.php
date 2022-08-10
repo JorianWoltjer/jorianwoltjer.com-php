@@ -63,54 +63,54 @@ $meta_large_card = true;
 require_once("../include/header.php");
 ?>
 
-    <link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
+<link rel="stylesheet" href="/assets/highlight/github-dark.min.css">
 
 <!-- Breadcrumbs -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb my-4">
-            <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
-            <?php
-            $response_breadcrumbs->data_seek(0);  // Reset pointer
-            while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
-                echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
-            }
-            ?>
-            <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $row['title'] ?></code></h1></li>
-        </ol>
-    </nav>
-    <br>
-
-<!-- Tags -->
-    <p class="tags">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item"><a href="/blog"><code>Blog</code></a></li>
         <?php
-        if ($preview) {
-            $all_tags = sql_query("SELECT name, class FROM tags")->fetch_all();
-
-            $tag_to_class = array();
-            foreach ($all_tags as $tag) {
-                $tag_to_class[$tag[0]] = $tag[1];
-            }
-
-            foreach ($_POST["tags"] as $tag) {
-                if (isset($tag_to_class[$tag])) {
-                    echo "<span class='tag tag-$tag_to_class[$tag]'>$tag</span>";
-                }
-            }
-        } else {
-            $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
-
-            while ($row_tag = $tags->fetch_assoc()) {
-                echo "<span class='tag tag-$row_tag[class]'>$row_tag[name]</span>";
-            }
+        $response_breadcrumbs->data_seek(0);  // Reset pointer
+        while ($row_bc = $response_breadcrumbs->fetch_assoc()) {
+            echo "<li class='breadcrumb-item'><a href='/blog/folder/$row_bc[url]'><code>$row_bc[title]</code></a></li>";
         }
         ?>
-        <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
-    </p>
+        <li class='breadcrumb-item active' aria-current='page'><h1><code><?= $row['title'] ?></code></h1></li>
+    </ol>
+</nav>
+<br>
 
-    <!-- Date & View Count -->
-    <div class="text-muted">
-        <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === null ? $row["views"]." views" : "<b>Hidden</b>" ?>
-    </div>
+<!-- Tags -->
+<p class="tags">
+    <?php
+    if ($preview) {
+        $all_tags = sql_query("SELECT name, class FROM tags")->fetch_all();
+
+        $tag_to_class = array();
+        foreach ($all_tags as $tag) {
+            $tag_to_class[$tag[0]] = $tag[1];
+        }
+
+        foreach ($_POST["tags"] as $tag) {
+            if (isset($tag_to_class[$tag])) {
+                echo "<span class='tag tag-$tag_to_class[$tag]'>$tag</span>";
+            }
+        }
+    } else {
+        $tags = sql_query("SELECT t.name, t.class FROM post_tags pt JOIN tags t on pt.tag = t.id WHERE pt.post = ?", [$row["id"]]);
+
+        while ($row_tag = $tags->fetch_assoc()) {
+            echo "<span class='tag tag-$row_tag[class]'>$row_tag[name]</span>";
+        }
+    }
+    ?>
+    <?= $row['points'] ? '+'.$row['points'].' points' : '' ?>
+</p>
+
+<!-- Date & View Count -->
+<div class="text-muted">
+    <?= time_to_ago($row['timestamp']) ?> - <i class="far fa-eye"></i> <?= $row["hidden"] === null ? $row["views"]." views" : "<b>Hidden</b>" ?>
+</div>
 
 <?php if (!$preview && isset($admin) && $admin) { ?>
 <!-- Admin buttons -->
@@ -119,14 +119,13 @@ require_once("../include/header.php");
     <br>
 <?php } ?>
 
-    <h1 class="blog-title"><?= $row['title'] ?></h1>
 <?php
 // Match any <h1> to <h6>
 preg_match_all('/<h[1-6] id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h[1-6]>/', $row['html'], $matches, PREG_SET_ORDER);
 if ($matches) {
-?>
-<!-- Table of Contents -->
-    <div class="table-of-contents">
+    ?>
+    <!-- Table of Contents -->
+    <div class="table-of-contents desktop-only">
         <h3><code>Contents</code></h3>
         <ol>
             <?php
@@ -138,10 +137,12 @@ if ($matches) {
     </div>
 <?php } ?>
 
+<h1 class="blog-title"><?= $row['title'] ?></h1>
+
 <!-- Blog content -->
-    <div class='blog-content'>
-        <?= $row['html'] ?>
-    </div>
+<div class='blog-content'>
+    <?= $row['html'] ?>
+</div>
 
 <!-- Pagination -->
 <?php
@@ -155,91 +156,91 @@ if (!$preview) {
     $next = $response_next->fetch_assoc();
 }
 ?>
-    <div class="pagination">
-        <div class="left">
-            <?php
-            if (isset($prev) && $prev) {
-                echo '<a href="/blog/post/'.$prev["url"].'"><i class="fa-solid fa-caret-left"></i> Previous</a>';
-            }
-            ?>
-        </div>
-        <div class="center">
-            <div class="text-white-50">
-                <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank" class="white-link">Contacts</a></p>
-            </div>
-        </div>
-        <div class="right">
-            <?php
-            if (isset($next) && $next) {
-                echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fa-solid fa-caret-right"></i></a>';
-            }
-            ?>
-        </div>
-    </div>
-
-    <!-- Image Preview Modal -->
-    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="previewModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="" id="previewImage" alt="Unable to load image!">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script src="/assets/highlight/highlight.min.js"></script>
-    <script nonce="<?=$nonce?>">
-        hljs.highlightAll();
-
-        // Copy button from code blocks
-        function copy_code(element, tooltip) {
-            const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;
-            navigator.clipboard.writeText(code);
-
-            tooltip.show();
-            setTimeout(function() {
-                tooltip.hide();
-            }, 1000);
+<div class="pagination">
+    <div class="left">
+        <?php
+        if (isset($prev) && $prev) {
+            echo '<a href="/blog/post/'.$prev["url"].'"><i class="fa-solid fa-caret-left"></i> Previous</a>';
         }
-        // Add copy_code function to all code blocks
-        $(".copy").each(function() {
-            var tooltip = new bootstrap.Tooltip(this, {
-                title: "Copied!",
-                placement: "top",
-                trigger: "manual"
-            });
+        ?>
+    </div>
+    <div class="center">
+        <div class="text-white-50">
+            <p>The end! If you have any questions feel free to ask me anywhere on my <a href="/contact" target="_blank" class="white-link">Contacts</a></p>
+        </div>
+    </div>
+    <div class="right">
+        <?php
+        if (isset($next) && $next) {
+            echo '<a href="/blog/post/'.$next["url"].'">Next <i class="fa-solid fa-caret-right"></i></a>';
+        }
+        ?>
+    </div>
+</div>
 
-            $(this).on("click", function() {
-                copy_code(this, tooltip);
-            });
+<!-- Image Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="previewImage" alt="Unable to load image!">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="/assets/highlight/highlight.min.js"></script>
+<script nonce="<?=$nonce?>">
+    hljs.highlightAll();
+
+    // Copy button from code blocks
+    function copy_code(element, tooltip) {
+        const code = element.parentElement.parentElement.getElementsByTagName("code")[0].innerText;
+        navigator.clipboard.writeText(code);
+
+        tooltip.show();
+        setTimeout(function() {
+            tooltip.hide();
+        }, 1000);
+    }
+    // Add copy_code function to all code blocks
+    $(".copy").each(function() {
+        var tooltip = new bootstrap.Tooltip(this, {
+            title: "Copied!",
+            placement: "top",
+            trigger: "manual"
         });
 
-        // Open all links in new tab
-        window.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll(".blog-content a:not(.copy)").forEach((e) => {
-                e.target = "_blank";
-            });
+        $(this).on("click", function() {
+            copy_code(this, tooltip);
         });
+    });
 
-        // Modal
-        $(function() {
-            // Show modal on image click
-            $('.lightbox').on('click', function() {
-                $('#previewImage').attr('src', $(this).attr('src'));
-                $('#previewModalLabel').text($(this).attr('alt'));
-                $('#previewModal').modal('show');
-            });
-            // Hide modal if clicked anywhere
-            $('#previewModal').on('click', function() {
-                $(this).modal('hide');
-            });
+    // Open all links in new tab
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll(".blog-content a:not(.copy)").forEach((e) => {
+            e.target = "_blank";
         });
-    </script>
+    });
+
+    // Modal
+    $(function() {
+        // Show modal on image click
+        $('.lightbox').on('click', function() {
+            $('#previewImage').attr('src', $(this).attr('src'));
+            $('#previewModalLabel').text($(this).attr('alt'));
+            $('#previewModal').modal('show');
+        });
+        // Hide modal if clicked anywhere
+        $('#previewModal').on('click', function() {
+            $(this).modal('hide');
+        });
+    });
+</script>
 
 <?php require_once("../include/footer.php"); ?>

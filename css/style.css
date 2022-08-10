@@ -700,7 +700,7 @@ label {
   z-index: 10000;
 }
 
-@media (max-width: 100ch) {
+@media (max-width: 576px) {
   .desktop-only {
     display: none;
   }
