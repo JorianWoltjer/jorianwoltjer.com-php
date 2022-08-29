@@ -27,7 +27,7 @@ require_once("include/header.php"); ?>
         </div></a>
         <a href="https://discordapp.com/users/298743112421867521" target="_blank"><div class="button discord-blue">
             <div class="button-icon"><i class="fa-brands fa-discord"></i></div>
-            <div class="button-text">Jorian#0135</div>
+            <div class="button-text">Discord</div>
         </div></a>
         <a href="https://stackoverflow.com/users/10508498" target="_blank"><div class="button light-green">
             <div class="button-icon"><i class="fa-brands fa-stack-overflow"></i></div>
