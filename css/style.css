@@ -23,12 +23,6 @@
   --foreground-light: #cccccc;
 }
 
-/* Fonts */
-@font-face {
-  font-family: "Fira Code";
-  src: local("Fira Code"), local("FiraCode-Regular");
-}
-
 /* General styling */
 html,
 body {
@@ -116,7 +110,6 @@ textarea {
 }
 
 pre code {
-  font-family: "Fira Code", monospace;
   padding: 1ch 1.5ch !important;
 }
 
