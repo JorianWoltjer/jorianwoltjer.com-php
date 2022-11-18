@@ -17,6 +17,7 @@ RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^.]+)$ $1.php [NC,L]
 # Map sitemap.xml to sitemap.php file (dynamically updates)
 RewriteRule sitemap.xml sitemap.php [L]
+RewriteRule blog/rss.xml blog/rss.php [L]
 # Redirect for /sw
 Redirect 301 /sw /projects/school_websites
 

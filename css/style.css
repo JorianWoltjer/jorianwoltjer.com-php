@@ -457,11 +457,13 @@ a.folder i {
   color: var(--main-color);
   transform: translate(0, 15%);
 }
-a.folder.brighter {
+a.folder.folder-big {
+  padding: 20px 50px;
   border-color: var(--gray);
 }
-a.folder.brighter:hover {
-  background-color: var(--gray);
+a.folder.folder-icon-only i {
+  margin-right: 0;
+  color: var(--orange);
 }
 
 i.text-icon {

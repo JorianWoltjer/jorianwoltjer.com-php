@@ -19,7 +19,8 @@ require_once("../include/header.php"); ?>
         ?>
     </div>
     <hr class="higher-top">
-    <a class='folder brighter' href='/blog/search'><i class="fa-solid fa-magnifying-glass"></i>Search</a>
+    <a class='folder folder-big' href='/blog/search'><i class="fa-solid fa-magnifying-glass"></i>Search</a>
+    <a class='folder folder-icon-only' href='/blog/rss.xml' title="RSS Feed"><i class="fa-solid fa-square-rss"></i></a>
 <?php if ($admin) { ?>
     <a href="/blog/hidden" class="folder"><i class="fa-solid fa-eye-slash"></i>Hidden posts</a>
 <?php } ?>
