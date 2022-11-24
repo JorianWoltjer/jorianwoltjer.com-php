@@ -23,11 +23,6 @@ if (!$preview) {  // If from SQL
             returnMessage("error_post", "/blog/");
         }
     }
-
-    // Increment view count if not a bot
-    if (!preg_match('/bot\W/i', $_SERVER["HTTP_USER_AGENT"])) {
-        sql_query("UPDATE posts SET views = views+1 WHERE id = ?", [$row["id"]]);
-    }
 } else {  // If preview from POST
     if (!isset($_POST['title'], $_POST['description'], $_POST['img'], $_POST['parent'], $_POST['tags'],
         $_POST['text'], $_POST['points'])) {
@@ -244,6 +239,9 @@ if (!$preview) {
             $(this).modal('hide');
         });
     });
+
+    // Increment view counter
+    fetch("/blog/add_view?id=<?= $row['id'] ?>")
 </script>
 
 <?php require_once("../include/footer.php"); ?>
