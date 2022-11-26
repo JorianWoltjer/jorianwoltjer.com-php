@@ -118,8 +118,8 @@ require_once("../include/header.php");
 <?php } ?>
 
 <?php
-// Match any <h1> to <h6>
-preg_match_all('/<h[1-6] id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h[1-6]>/', $row['html'], $matches, PREG_SET_ORDER);
+// Match any <h2> to add to table of contents
+preg_match_all('/<h2 id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h2>/', $row['html'], $matches, PREG_SET_ORDER);
 if ($matches) {
     ?>
     <!-- Table of Contents -->
@@ -221,7 +221,7 @@ if (!$preview) {
 
     // Open all links in new tab
     window.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll(".blog-content a:not(.copy)").forEach((e) => {
+        document.querySelectorAll(".blog-content a:not(.copy, .no-style)").forEach((e) => {
             e.target = "_blank";
         });
     });
@@ -240,8 +240,10 @@ if (!$preview) {
         });
     });
 
+    <?php if (!$preview) { ?>
     // Increment view counter
     fetch("/blog/add_view?id=<?= $row['id'] ?>")
+    <?php } ?>
 </script>
 
 <?php require_once("../include/footer.php"); ?>

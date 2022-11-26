@@ -27,7 +27,7 @@ if (!$create_post) {
     ];
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {  # On submit
+if ($_SERVER["REQUEST_METHOD"] === "POST") {  // On submit
     if (isset($_POST['title'], $_POST['description'], $_POST['img'], $_POST['parent'], $_POST['tags'],
         $_POST['text'], $_POST['points'])) {
 

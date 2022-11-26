@@ -583,12 +583,12 @@ blockquote code {
   border-radius: 10px;
 }
 
-.blog-content a:not(.copy), .blog-content a:not(.copy) * {
+.blog-content a:not(.copy, .no-style), .blog-content a:not(.copy, .no-style) * {
   color: var(--main-color-light) !important;
   text-decoration: none;
   transition: 0.2s ease;
 }
-.blog-content a:not(.copy):hover, .blog-content a:not(.copy):hover * {
+.blog-content a:not(.copy, .no-style):hover, .blog-content a:not(.copy, .no-style):hover * {
   color: var(--main-color-light) !important;
   text-decoration: underline;
 }
@@ -741,4 +741,9 @@ span.highlight {
 
 hr.higher-top {
   margin-top: 1.5rem;
+}
+
+a.no-style {
+  text-decoration: none !important;
+  color: white !important;
 }

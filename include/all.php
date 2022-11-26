@@ -136,10 +136,10 @@ function md_to_html(string $text): array|string|null
     $Parsedown = new Parsedown();
     $text = $Parsedown->text($text);
 
-    // Add id attribute to h2 headers
-    $text = preg_replace_callback( '/<h2>(.*?)<\/h2>/i', function( $matches ) {
-        $id = text_to_url($matches[1]);
-        return '<h2 id="'.$id.'">'.$matches[1].'</h2>';
+    // Add id attribute to headers
+    $text = preg_replace_callback( '/<h([2-6])>(.*?)<\/h[2-6]>/i', function( $matches ) {
+        $id = text_to_url($matches[2]);
+        return "<h$matches[1] id=\"$id\"><a class=\"no-style\" href=\"#$id\">$matches[2]</a></h$matches[1]>";
     }, $text);
 
     // Image lightbox
