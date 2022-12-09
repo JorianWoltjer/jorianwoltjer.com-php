@@ -119,7 +119,7 @@ require_once("../include/header.php");
 
 <?php
 // Match any <h2> to add to table of contents
-preg_match_all('/<h2 id="(.*?)">(?:\d+\.\s*)?(.*?)<\/h2>/', $row['html'], $matches, PREG_SET_ORDER);
+preg_match_all('/<h2 id="(.*?)"><a.*?>(?:\d+\.\s*)?(.*?)<\/a><\/h2>/', $row['html'], $matches, PREG_SET_ORDER);
 if ($matches) {
     ?>
     <!-- Table of Contents -->
