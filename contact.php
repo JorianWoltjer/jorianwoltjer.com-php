@@ -1,7 +1,7 @@
 <?php
 $centerPage = true;
 $meta_title = "Contact";
-$meta_description = "A list of accounts you can use to contact me. Discord, Github, email, etc. If you have any questions or want to reach out, feel free to use any of these accounts.";
+$meta_description = "A list of accounts you can use to contact me. Discord, GitHub, email, etc. If you have any questions or want to reach out, feel free to use any of these accounts.";
 require_once("include/header.php"); ?>
 
 <style nonce="<?= $nonce ?>">
@@ -35,7 +35,7 @@ require_once("include/header.php"); ?>
         </div></a>
         <a href="https://github.com/JorianWoltjer" target="_blank"><div class="button gray">
             <div class="button-icon"><i class="fa-brands fa-github"></i></div>
-            <div class="button-text">Github</div>
+            <div class="button-text">GitHub</div>
         </div></a>
     </div>
     <p class="button"><i class="fa-solid fa-envelope"></i><a href="mailto: contact@jorianwoltjer.com">contact@jorianwoltjer.com</a></p>

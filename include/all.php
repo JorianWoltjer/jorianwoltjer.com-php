@@ -78,10 +78,8 @@ function time_to_ago($time): string
 function displayMessage(): void
 {
     global $html_messages;
-    if (isset($_GET["message"])) {
-        if (array_key_exists($_GET["message"], $html_messages)) {
-            echo $html_messages[$_GET["message"]];
-        }
+    if (isset($_GET["message"]) && array_key_exists($_GET["message"], $html_messages)) {
+        echo $html_messages[$_GET["message"]];
     }
 }
 
