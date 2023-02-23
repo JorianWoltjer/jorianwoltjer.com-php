@@ -23,8 +23,8 @@ if (isset($admin_required) && $admin_required && !$admin) { // Admin only
 }
 
 $html_messages = array(
-    "error_folder" => '<div class="alert alert-danger animated bounceOut" role="alert">This folder does <b>not exist</b></div>',
-    "error_post" => '<div class="alert alert-danger animated bounceOut" role="alert">This post does <b>not exist</b></div>',
+    "error_folder" => '<div class="alert alert-danger animated bounceOut" role="alert">This folder <b>does not exist</b></div>',
+    "error_post" => '<div class="alert alert-danger animated bounceOut" role="alert">This post <b>does not exist</b></div>',
     "all_fields" => '<div class="alert alert-danger animated bounceOut" role="alert">Please fill <b>all fields</b> in the form</div>',
     "wrong_password" => '<div class="alert alert-danger animated bounceOut" role="alert">Invalid password</div>',
     "captcha" => '<div class="alert alert-danger animated bounceOut" role="alert">reCAPTCHA invalid</div>',
@@ -79,7 +79,9 @@ function displayMessage(): void
 {
     global $html_messages;
     if (isset($_GET["message"])) {
-        echo $html_messages[$_GET["message"]];
+        if (array_key_exists($_GET["message"], $html_messages)) {
+            echo $html_messages[$_GET["message"]];
+        }
     }
 }
 
@@ -129,7 +131,7 @@ function md_to_html(string $text): array|string|null
     require_once("../include/Parsedown.php");
 
     // Replace images with /img/blog URL
-    $text = preg_replace('/!\[(.*?)\]\((.*\/)*(.*?)\)/',
+    $text = preg_replace('/!\[(.*?)]\((.*\/)*(.*?)\)/',
         '![$1](/img/blog/$3)', $text);
 
     // Markdown to HTML
