@@ -1,4 +1,7 @@
 User-agent: *
+Disallow: /blog/add_view
+
+User-agent: *
 Allow: /
 
 Sitemap: https://jorianwoltjer.com/sitemap.xml
