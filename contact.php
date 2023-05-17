@@ -8,6 +8,11 @@ require_once("include/header.php"); ?>
     .fa-flag, .fa-discord {
         font-size: 95%;
     }
+    .fa-hackthebox {
+        width: 1.2em;
+        height: 1.2em;
+        transform: translateX(0.2em);
+    }
 </style>
 
     <h1 class="my-4"><code>Contact</code></h1>
@@ -21,6 +26,10 @@ require_once("include/header.php"); ?>
             <div class="button-icon"><i class="fa-solid fa-flag"></i></div>
             <div class="button-text">CTFtime</div>
         </div></a>
+        <a href="https://app.hackthebox.com/profile/178368" target="_blank"><div class="button light-green">
+            <div class="button-icon"><img class="fa-hackthebox" src="/assets/hackthebox.svg" alt="Logo"></div>
+            <div class="button-text">HackTheBox</div>
+        </div></a>
         <a href="https://twitter.com/J0R1AN" target="_blank"><div class="button blue">
             <div class="button-icon"><i class="fa-brands fa-twitter"></i></div>
             <div class="button-text">Twitter</div>
@@ -28,10 +37,6 @@ require_once("include/header.php"); ?>
         <a href="https://discordapp.com/users/298743112421867521" target="_blank"><div class="button discord-blue">
             <div class="button-icon"><i class="fa-brands fa-discord"></i></div>
             <div class="button-text">Discord</div>
-        </div></a>
-        <a href="https://stackoverflow.com/users/10508498" target="_blank"><div class="button light-green">
-            <div class="button-icon"><i class="fa-brands fa-stack-overflow"></i></div>
-            <div class="button-text">Stack Overflow</div>
         </div></a>
         <a href="https://github.com/JorianWoltjer" target="_blank"><div class="button gray">
             <div class="button-icon"><i class="fa-brands fa-github"></i></div>
