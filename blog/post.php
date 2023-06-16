@@ -128,7 +128,7 @@ if ($matches) {
         <ol>
             <?php
             foreach ($matches as $match) {
-                echo "<li><a href='#$match[1]'><h6>$match[2]</h6></a></li>";
+                echo "<li><a href='#$match[1]'>$match[2]</a></li>";
             }
             ?>
         </ol>
