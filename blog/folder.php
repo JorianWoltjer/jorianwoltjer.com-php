@@ -95,10 +95,10 @@ while ($row_folders = $response_folders->fetch_assoc()) { ?>
                 <div class="card-body">
                     <h3 class="card-title">
                         <a href="/blog/folder/<?= $row_folders['url'] ?>">
-                            <i class="fa-solid fa-folder-closed text-icon"></i><code><?= $row_folders['title'] ?></code>
+                            <i class="fa-solid fa-folder-closed text-icon"></i><code><?= htmlspecialchars($row_folders['title']) ?></code>
                         </a>
                     </h3>
-                    <p class="card-text"><?= $row_folders['description'] ?></p>
+                    <p class="card-text"><?= htmlspecialchars($row_folders['description']) ?></p>
                 </div>
                 <div class="card-footer text-muted">
                     <?= time_to_ago($row_folders['timestamp']) ?>
@@ -141,9 +141,9 @@ while ($row_posts = $response_posts->fetch_assoc()) {
                         <?= $row_posts['points'] ? '+'.$row_posts['points'].' points' : '' ?>
                     </p>
                     <h3 class="card-title">
-                        <a href="/blog/post/<?= $row_posts['url'] ?>"><code><?= $row_posts['title'] ?></code></a>
+                        <a href="/blog/post/<?= $row_posts['url'] ?>"><code><?= htmlspecialchars($row_posts['title']) ?></code></a>
                     </h3>
-                    <p class="card-text"><?= $row_posts['description'] ?></p>
+                    <p class="card-text"><?= htmlspecialchars($row_posts['description']) ?></p>
                 </div>
                 <div class="card-footer text-muted">
                     <?= time_to_ago($row_posts['timestamp']) ?> -

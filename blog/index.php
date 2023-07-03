@@ -51,10 +51,10 @@ if ($response->num_rows > 0) {
                     </p>
                     <h4 class="card-title">
                         <a href="/blog/post/<?= $row['url'] ?>">
-                            <code><?= $row['title'] ?></code>
+                            <code><?= htmlspecialchars($row['title']) ?></code>
                         </a>
                     </h4>
-                    <p class="card-text"><?= $row['description'] ?></p>
+                    <p class="card-text"><?= htmlspecialchars($row['description']) ?></p>
                 </div>
                 <div class="card-footer text-muted">
                     <?= time_to_ago($row['timestamp']) ?> -

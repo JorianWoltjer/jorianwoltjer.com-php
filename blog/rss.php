@@ -21,8 +21,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>';  // `echo` to escape '<?'
 
         echo "<item>
   <media:thumbnail url=\"".get_baseurl()."/img/blog/$row[img]\" />
-  <title>$row[title]</title>
-  <description>$row[description]</description>
+  <title>".htmlspecialchars($row["title"])."</title>
+  <description>".htmlspecialchars($row["description"])."</description>
   <link>".get_baseurl()."/blog/post/$row[url]</link>
   <guid isPermaLink=\"true\">".get_baseurl()."/blog/post?id=$row[id]</guid>
   <pubDate>$pubDate</pubDate>
