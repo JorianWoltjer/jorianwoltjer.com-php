@@ -4,6 +4,7 @@ $meta_title = "Home";
 $meta_description = "I'm a Dutch programmer and Ethical Hacker. I'm interested in security and have a blog all about it, with writeups of challenges, tools and stories. You can also find information about how to contact me or the projects I've done.";
 require_once("include/header.php"); ?>
 
+    <link rel="me" href="https://infosec.exchange/@jorian">
     <style nonce="<?=$nonce?>">
         body {
             background: none;
