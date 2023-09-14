@@ -287,11 +287,10 @@ p.button i {
   background-color: var(--background-light);
   border: 2px solid var(--main-color);
   border-radius: 5px;
-  padding: 1px 3px;
+  padding: 1px 4px;
   font-size: x-small;
   font-weight: bold;
   position: absolute;
-  transition: opacity 2s;
 }
 
 /* Cards */

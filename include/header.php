@@ -38,11 +38,6 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         const url = new URL(location.href);
         url.searchParams.delete('message');
         window.history.replaceState({}, null, url.toString());
-
-        // Hide NEW tag after 5 seconds to not be distracting
-        setTimeout(function () {
-            document.querySelector('.new-nav-tag').style.opacity = "0";
-        }, 5000);
     </script>
     <script src="/assets/jquery/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="/assets/bootstrap/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
