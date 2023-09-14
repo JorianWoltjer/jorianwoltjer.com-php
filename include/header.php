@@ -38,6 +38,11 @@ $page = ($match[1] === "" ? "home" : $match[1]);
         const url = new URL(location.href);
         url.searchParams.delete('message');
         window.history.replaceState({}, null, url.toString());
+
+        // Hide NEW tag after 5 seconds to not be distracting
+        setTimeout(function () {
+            document.querySelector('.new-nav-tag').style.opacity = "0";
+        }, 5000);
     </script>
     <script src="/assets/jquery/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="/assets/bootstrap/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -71,6 +76,10 @@ $page = ($match[1] === "" ? "home" : $match[1]);
                 <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link<?= $page == 'home' ? ' active' : '' ?>" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <span class="new-nav-tag">NEW</span>
+                    <a class="nav-link" href="https://book.jorianwoltjer.com/" target="_blank">Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link<?= $page == 'blog' ? ' active' : '' ?>" href="/blog/">Blog</a>
