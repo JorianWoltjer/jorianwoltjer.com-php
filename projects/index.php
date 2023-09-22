@@ -61,7 +61,7 @@ require_once("../include/header.php"); ?>
                     <p class="card-text">To learn PHP and have a portfolio in the process, I made this site. At first,
                         it was completely static, but later I added more and more functionality. Nowadays, I mostly use
                         it for my blog to post hacking-related articles. The whole site and its history are now
-                        open-source and viewable on <a href="https://github.com/JorianWoltjer/jorianwoltjer.com" target="_blank">GitHub</a>.</p>
+                        open-source and viewable on <a href="https://github.com/JorianWoltjer/jorianwoltjer.com-php" target="_blank">GitHub</a>.</p>
                 </div>
             </div>
         </div>
